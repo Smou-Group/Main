@@ -13,6 +13,8 @@
       --text:#ffffff;
       --muted: rgba(255,255,255,.80);
       --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --accent: rgba(40,150,255,.55);
+      --accent2: rgba(17,120,214,.35);
     }
 
     *{box-sizing:border-box}
@@ -31,7 +33,7 @@
       display:flex;
       align-items:center;
       z-index:50;
-      background: rgba(10, 20, 33, .40);
+      background: rgba(10, 20, 33, .42);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255,255,255,.10);
@@ -127,19 +129,16 @@
       padding-top:74px;
     }
 
-    /* الخلفية (الصورة في نفس المجلد) */
     .hero::before{
       content:"";
       position:absolute;
       inset:0;
       background: url("back.png") center/cover no-repeat;
-      /* لو الخلفية عندك back.png بدل back.jpg غيّر الاسم هنا */
       transform: scale(1.03);
       filter: saturate(1.08) contrast(1.08);
       z-index:0;
     }
 
-    /* Overlay فخم مثل DAMAC */
     .hero::after{
       content:"";
       position:absolute;
@@ -147,7 +146,7 @@
       background:
         radial-gradient(1200px 600px at 75% 40%, rgba(12,110,210,.30), transparent 60%),
         linear-gradient(90deg, rgba(5,10,18,.86) 0%, rgba(5,10,18,.56) 45%, rgba(5,10,18,.25) 100%),
-        linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,.10) 45%, rgba(0,0,0,.50) 100%);
+        linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,.10) 45%, rgba(0,0,0,.55) 100%);
       z-index:1;
     }
 
@@ -162,10 +161,11 @@
       padding: 40px 0 70px;
     }
 
+    /* ======= Slider Badge ======= */
     .badge{
       display:inline-flex;
       align-items:center;
-      gap:8px;
+      gap:10px;
       padding:10px 14px;
       border-radius:999px;
       background: rgba(255,255,255,.10);
@@ -176,21 +176,65 @@
       color: rgba(255,255,255,.92);
       width: fit-content;
     }
+    .badge .pulse{
+      width:10px;height:10px;border-radius:50%;
+      background: rgba(255,255,255,.95);
+      box-shadow: 0 0 0 8px rgba(255,255,255,.10);
+    }
+
+    /* ======= Text Slider (Title + Sub) ======= */
+    .slider{
+      position:relative;
+      min-height: 260px;
+    }
+
+    .slide{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      transform: translateY(10px);
+      transition: .55s ease;
+      pointer-events:none;
+    }
+    .slide.active{
+      opacity:1;
+      transform: translateY(0);
+      pointer-events:auto;
+    }
 
     h1{
       margin:16px 0 10px;
-      font-size: clamp(34px, 4.3vw, 58px);
-      line-height:1.08;
-      letter-spacing: -.3px;
+      font-size: clamp(34px, 4.5vw, 60px);
+      line-height:1.05;
+      letter-spacing:-.3px;
       text-shadow: 0 20px 60px rgba(0,0,0,.35);
     }
-
     .sub{
       margin: 0 0 22px;
       font-size: clamp(15px, 1.35vw, 18px);
-      line-height:1.8;
+      line-height:1.9;
       color: var(--muted);
-      max-width: 56ch;
+      max-width: 64ch;
+    }
+
+    /* Slider dots */
+    .dots{
+      display:flex;
+      gap:8px;
+      margin-top: 10px;
+      align-items:center;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: rgba(255,255,255,.28);
+      border: 1px solid rgba(255,255,255,.20);
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .dot.active{
+      width:28px;
+      background: rgba(255,255,255,.75);
+      border-color: rgba(255,255,255,.55);
     }
 
     /* ======= Glass Buttons ======= */
@@ -199,12 +243,13 @@
       flex-wrap:wrap;
       gap:12px;
       align-items:center;
+      margin-top: 18px;
     }
 
     .btn{
       appearance:none;
       border:1px solid var(--border);
-      background: linear-gradient(180deg, var(--glass2), var(--glass));
+      background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
       color:#fff;
       padding: 12px 18px;
       border-radius: 999px;
@@ -224,24 +269,24 @@
 
     .btn:hover{
       transform: translateY(-1px);
-      background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.12));
-      border-color: rgba(255,255,255,.38);
+      background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.10));
+      border-color: rgba(255,255,255,.40);
     }
 
     .btn.primary{
-      border-color: rgba(120,190,255,.55);
-      background: linear-gradient(180deg, rgba(17,120,214,.35), rgba(255,255,255,.10));
+      border-color: var(--accent);
+      background: linear-gradient(180deg, var(--accent2), rgba(255,255,255,.10));
     }
 
-    .btn .dot{
+    .btn .dot-i{
       width:10px;height:10px;border-radius:50%;
       background: rgba(255,255,255,.85);
       box-shadow: 0 0 0 6px rgba(255,255,255,.12);
     }
 
-    /* ======= RIGHT CARD ======= */
+    /* ======= LEFT CARD ======= */
     .hero-card{
-      justify-self:start; /* كرت يسار مثل الصورة */
+      justify-self:start;
       width:min(460px, 100%);
       border-radius: 28px;
       padding: 18px;
@@ -283,7 +328,7 @@
     }
     .mini:hover{
       background: rgba(255,255,255,.10);
-      border-color: rgba(255,255,255,.20);
+      border-color: rgba(255,255,255,.22);
       transform: translateY(-1px);
     }
     .mini b{
@@ -298,7 +343,7 @@
       color:rgba(255,255,255,.78);
     }
 
-    /* ======= Sections (Placeholder) ======= */
+    /* ======= Sections placeholders ======= */
     section.block{
       position:relative;
       z-index:2;
@@ -329,15 +374,14 @@
         padding: 28px 0 60px;
       }
       .hero-card{justify-self:stretch}
+      .slider{min-height: 300px;}
     }
   </style>
 </head>
 
 <body>
-  <!-- TOP BAR -->
   <header class="topbar">
     <div class="wrap">
-      <!-- Logo + Name -->
       <div class="brand">
         <img src="logo.png" alt="SMOU GROUP" />
         <div class="brand-text">
@@ -361,31 +405,55 @@
     </div>
   </header>
 
-  <!-- HERO -->
   <main id="home" class="hero">
     <section class="hero-content">
-      <!-- Right Text -->
+
+      <!-- RIGHT: TEXT SLIDER -->
       <div>
-        <div class="badge">SMOU GROUP • Elevators & AC</div>
+        <div class="badge"><span class="pulse"></span> SMOU GROUP • Elevators & AC</div>
 
-        <h1>ارتقِ بمشروعك<br/>إلى مستويات جديدة</h1>
+        <div class="slider" id="heroSlider">
+          <!-- Slide 1 -->
+          <div class="slide active">
+            <h1>ارتقِ مع سمو<br/>بمشروعك إلى الأفضل</h1>
+            <p class="sub">
+              نُقدّم حلول المصاعد والتكييف بمنهج احترافي يجمع بين الدقة والجمال،
+              مع التزام صارم بمعايير <b>الأمن والسلامة</b> في كل مرحلة.
+            </p>
+          </div>
 
-        <p class="sub">
-          حلول مصاعد وتكييف بمعايير عالية، تصميم احترافي، تنفيذ مضبوط، وخدمة ما بعد البيع.
-          هدفنا تجربة سلسة من أول خطوة حتى التسليم.
-        </p>
+          <!-- Slide 2 -->
+          <div class="slide">
+            <h1>الجودة مع سمو<br/>ليست خيارًا.. بل معيار</h1>
+            <p class="sub">
+              من التصميم إلى التنفيذ، نضمن جودة ثابتة وموثوقة،
+              ونُطبّق أفضل الممارسات لضمان <b>اعتمادية التشغيل</b> وراحة المستخدم.
+            </p>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="slide">
+            <h1>حلول متكاملة<br/>بأعلى معايير الاستدامة</h1>
+            <p class="sub">
+              حلول ذكية ترفع كفاءة الطاقة وتدعم <b>الاستدامة</b>،
+              مع أنظمة حديثة تُحقق أداءً أعلى وتكلفة تشغيل أقل على المدى الطويل.
+            </p>
+          </div>
+
+          <div class="dots" id="sliderDots" aria-label="Slider dots"></div>
+        </div>
 
         <div class="cta-row">
-          <a class="btn primary" href="#services"><span class="dot"></span> خدماتنا</a>
-          <a class="btn" href="#contact"><span class="dot"></span> تواصل معنا</a>
-          <a class="btn" href="#products"><span class="dot"></span> استعرض المنتجات</a>
+          <a class="btn primary" href="#services"><span class="dot-i"></span> خدماتنا</a>
+          <a class="btn" href="#contact"><span class="dot-i"></span> تواصل معنا</a>
+          <a class="btn" href="#products"><span class="dot-i"></span> استعرض المنتجات</a>
         </div>
       </div>
 
-      <!-- Left Card -->
+      <!-- LEFT CARD -->
       <aside class="hero-card">
-        <h3>جودة تليق باسم سمو</h3>
-        <p>اعتمادية، أمان، والتزام بالمواعيد — مع فريق دعم جاهز دائمًا.</p>
+        <h3>سمو… خبرة تُترجم إلى ثقة</h3>
+        <p>حلول مصاعد وتكييف بمعايير عالية — فريق متخصص، تنفيذ مضبوط، ودعم مستمر.</p>
 
         <div class="mini-grid">
           <div class="mini">
@@ -406,16 +474,17 @@
           </div>
         </div>
       </aside>
+
     </section>
   </main>
 
-  <!-- Sections (اختياري — placeholders) -->
+  <!-- Sections -->
   <section id="about" class="block">
     <div class="wrap">
       <div>
         <h2 class="title">من نحن</h2>
         <p class="desc">
-          مجموعة سمو تقدم حلول المصاعد والتكييف بأعلى المعايير، مع خبرة واسعة في التوريد والتركيب والصيانة،
+          مجموعة سمو تقدم حلول المصاعد والتكييف بأعلى المعايير، مع خبرة في التوريد والتركيب والصيانة،
           وتركيز كامل على الجودة وتجربة العميل.
         </p>
       </div>
@@ -448,9 +517,7 @@
     <div class="wrap">
       <div>
         <h2 class="title">الإعلام</h2>
-        <p class="desc">
-          أحدث الأخبار، المشاريع، والمواد التعريفية الخاصة بمجموعة سمو.
-        </p>
+        <p class="desc">أحدث الأخبار، المشاريع، والمواد التعريفية الخاصة بمجموعة سمو.</p>
       </div>
     </div>
   </section>
@@ -466,6 +533,52 @@
     </div>
   </section>
 
+  <script>
+    (function(){
+      const slider = document.getElementById('heroSlider');
+      const slides = Array.from(slider.querySelectorAll('.slide'));
+      const dotsWrap = document.getElementById('sliderDots');
+
+      let index = 0;
+      let timer = null;
+
+      // build dots
+      slides.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'dot' + (i === 0 ? ' active' : '');
+        d.addEventListener('click', () => go(i, true));
+        dotsWrap.appendChild(d);
+      });
+      const dots = Array.from(dotsWrap.querySelectorAll('.dot'));
+
+      function setActive(i){
+        slides.forEach((s, k) => s.classList.toggle('active', k === i));
+        dots.forEach((d, k) => d.classList.toggle('active', k === i));
+        index = i;
+      }
+
+      function next(){
+        setActive((index + 1) % slides.length);
+      }
+
+      function go(i, reset){
+        setActive(i);
+        if(reset){
+          clearInterval(timer);
+          timer = setInterval(next, 4500);
+        }
+      }
+
+      // auto
+      timer = setInterval(next, 4500);
+
+      // pause on hover (nice touch)
+      slider.addEventListener('mouseenter', () => clearInterval(timer));
+      slider.addEventListener('mouseleave', () => {
+        clearInterval(timer);
+        timer = setInterval(next, 4500);
+      });
+    })();
+  </script>
 </body>
 </html>
-
