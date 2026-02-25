@@ -3,15 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SMOU GROUP</title>
+  <title>SMOU GROUP | مجموعة سمو</title>
 
   <style>
     :root{
-      --brand:#0b2f57;     /* أزرق سمو */
-      --brand2:#0a2747;
-      --glass: rgba(255,255,255,.12);
-      --glass2: rgba(255,255,255,.18);
-      --border: rgba(255,255,255,.28);
+      --glass: rgba(255,255,255,.10);
+      --glass2: rgba(255,255,255,.16);
+      --border: rgba(255,255,255,.22);
       --text:#ffffff;
       --muted: rgba(255,255,255,.80);
       --shadow: 0 18px 50px rgba(0,0,0,.35);
@@ -20,12 +18,12 @@
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: "Tajawal", "Cairo", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+      font-family: "Tajawal","Cairo",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
       background:#0a0f17;
       color:var(--text);
     }
 
-    /* ======= TOP BAR (مثل DAMAC) ======= */
+    /* ======= TOP BAR ======= */
     .topbar{
       position:fixed;
       inset:0 0 auto 0;
@@ -38,6 +36,7 @@
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255,255,255,.10);
     }
+
     .wrap{
       width:min(1200px, 92vw);
       margin:0 auto;
@@ -46,17 +45,36 @@
       gap:16px;
     }
 
+    /* BRAND (Logo + Text) */
     .brand{
       display:flex;
       align-items:center;
       gap:12px;
-      min-width: 220px;
+      min-width: 260px;
     }
     .brand img{
-      height:42px;
+      height:44px;
       width:auto;
       display:block;
       filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+      white-space:nowrap;
+    }
+    .brand-text strong{
+      font-size:15px;
+      font-weight:1000;
+      letter-spacing:.6px;
+    }
+    .brand-text span{
+      font-size:13px;
+      opacity:.82;
+      font-weight:800;
+      margin-top:2px;
     }
 
     .nav{
@@ -69,7 +87,7 @@
     .nav a{
       color:rgba(255,255,255,.92);
       text-decoration:none;
-      font-weight:700;
+      font-weight:800;
       font-size:15px;
       padding:10px 10px;
       border-radius:12px;
@@ -83,7 +101,7 @@
       display:flex;
       align-items:center;
       gap:10px;
-      min-width: 220px;
+      min-width: 260px;
       justify-content:flex-end;
     }
 
@@ -93,7 +111,7 @@
       color:#fff;
       border-radius:999px;
       padding:10px 14px;
-      font-weight:800;
+      font-weight:900;
       cursor:pointer;
       transition:.2s;
     }
@@ -106,31 +124,30 @@
       place-items:center;
       position:relative;
       overflow:hidden;
-      padding-top:74px; /* مساحة للـ topbar */
+      padding-top:74px;
     }
 
-    /* الخلفية: back.jpg أو back.png */
+    /* الخلفية (الصورة في نفس المجلد) */
     .hero::before{
       content:"";
       position:absolute;
       inset:0;
-      background:
-        url("back.jpg") center/cover no-repeat;
-      /* لو عندك back.png بدل back.jpg غيّر الاسم هنا */
+      background: url("back.jpg") center/cover no-repeat;
+      /* لو الخلفية عندك back.png بدل back.jpg غيّر الاسم هنا */
       transform: scale(1.03);
-      filter: saturate(1.05) contrast(1.05);
+      filter: saturate(1.08) contrast(1.08);
       z-index:0;
     }
 
-    /* overlay مثل DAMAC */
+    /* Overlay فخم مثل DAMAC */
     .hero::after{
       content:"";
       position:absolute;
       inset:0;
       background:
-        radial-gradient(1200px 600px at 80% 40%, rgba(16,92,164,.35), transparent 60%),
-        linear-gradient(90deg, rgba(6,14,26,.82) 0%, rgba(6,14,26,.55) 45%, rgba(6,14,26,.25) 100%),
-        linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.10) 40%, rgba(0,0,0,.45) 100%);
+        radial-gradient(1200px 600px at 75% 40%, rgba(12,110,210,.30), transparent 60%),
+        linear-gradient(90deg, rgba(5,10,18,.86) 0%, rgba(5,10,18,.56) 45%, rgba(5,10,18,.25) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,.10) 45%, rgba(0,0,0,.50) 100%);
       z-index:1;
     }
 
@@ -155,7 +172,7 @@
       border:1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      font-weight:800;
+      font-weight:900;
       color: rgba(255,255,255,.92);
       width: fit-content;
     }
@@ -176,7 +193,7 @@
       max-width: 56ch;
     }
 
-    /* ======= Glass Buttons (شفافة) ======= */
+    /* ======= Glass Buttons ======= */
     .cta-row{
       display:flex;
       flex-wrap:wrap;
@@ -191,7 +208,7 @@
       color:#fff;
       padding: 12px 18px;
       border-radius: 999px;
-      font-weight: 900;
+      font-weight: 1000;
       font-size: 15px;
       cursor:pointer;
       transition: .2s ease;
@@ -222,11 +239,11 @@
       box-shadow: 0 0 0 6px rgba(255,255,255,.12);
     }
 
-    /* ======= RIGHT SIDE CARD (اختياري) ======= */
+    /* ======= RIGHT CARD ======= */
     .hero-card{
-      justify-self:end;
-      width:min(420px, 100%);
-      border-radius: 26px;
+      justify-self:start; /* كرت يسار مثل الصورة */
+      width:min(460px, 100%);
+      border-radius: 28px;
       padding: 18px;
       background: rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.16);
@@ -238,29 +255,69 @@
     .hero-card h3{
       margin: 6px 0 8px;
       font-size: 18px;
-      font-weight: 1000;
+      font-weight: 1100;
+      text-align:center;
     }
     .hero-card p{
-      margin:0;
+      margin:0 0 14px;
       color: rgba(255,255,255,.82);
       line-height:1.8;
       font-size:14px;
+      text-align:center;
     }
 
     .mini-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-top:14px;
+      gap:12px;
+      margin-top:10px;
     }
+
     .mini{
       border-radius: 18px;
-      padding:12px;
+      padding:14px;
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.12);
+      text-align:center;
+      transition:.2s ease;
     }
-    .mini b{display:block; font-size:14px}
-    .mini span{display:block; margin-top:6px; font-size:13px; color:rgba(255,255,255,.78)}
+    .mini:hover{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.20);
+      transform: translateY(-1px);
+    }
+    .mini b{
+      display:block;
+      font-size:15px;
+      font-weight:1100;
+      margin-bottom:6px;
+    }
+    .mini span{
+      display:block;
+      font-size:13px;
+      color:rgba(255,255,255,.78);
+    }
+
+    /* ======= Sections (Placeholder) ======= */
+    section.block{
+      position:relative;
+      z-index:2;
+      padding: 80px 0;
+      background: #0b1220;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    section.block .wrap{justify-content:space-between}
+    .title{
+      font-size:28px;
+      font-weight:1000;
+      margin:0;
+    }
+    .desc{
+      margin:10px 0 0;
+      color:rgba(255,255,255,.75);
+      line-height:1.9;
+      max-width:70ch;
+    }
 
     /* ======= Responsive ======= */
     @media (max-width: 980px){
@@ -280,8 +337,13 @@
   <!-- TOP BAR -->
   <header class="topbar">
     <div class="wrap">
+      <!-- Logo + Name -->
       <div class="brand">
         <img src="logo.png" alt="SMOU GROUP" />
+        <div class="brand-text">
+          <strong>SMOU GROUP</strong>
+          <span>مجموعة سمو</span>
+        </div>
       </div>
 
       <nav class="nav" aria-label="Main">
@@ -302,6 +364,7 @@
   <!-- HERO -->
   <main id="home" class="hero">
     <section class="hero-content">
+      <!-- Right Text -->
       <div>
         <div class="badge">SMOU GROUP • Elevators & AC</div>
 
@@ -319,30 +382,89 @@
         </div>
       </div>
 
+      <!-- Left Card -->
       <aside class="hero-card">
         <h3>جودة تليق باسم سمو</h3>
         <p>اعتمادية، أمان، والتزام بالمواعيد — مع فريق دعم جاهز دائمًا.</p>
 
         <div class="mini-grid">
           <div class="mini">
-            <b>مصاعد</b>
-            <span>توريد • تركيب • تحديث</span>
-          </div>
-          <div class="mini">
             <b>تكييف</b>
             <span>توريد • تركيب • صيانة</span>
           </div>
           <div class="mini">
-            <b>تصميم</b>
-            <span>كبائن • بانوراما • ديكور</span>
+            <b>مصاعد</b>
+            <span>توريد • تركيب • تحديث</span>
           </div>
           <div class="mini">
             <b>صيانة</b>
             <span>عقود • زيارات • طوارئ</span>
           </div>
+          <div class="mini">
+            <b>تصميم</b>
+            <span>كبائن • بانوراما • ديكور</span>
+          </div>
         </div>
       </aside>
     </section>
   </main>
+
+  <!-- Sections (اختياري — placeholders) -->
+  <section id="about" class="block">
+    <div class="wrap">
+      <div>
+        <h2 class="title">من نحن</h2>
+        <p class="desc">
+          مجموعة سمو تقدم حلول المصاعد والتكييف بأعلى المعايير، مع خبرة واسعة في التوريد والتركيب والصيانة،
+          وتركيز كامل على الجودة وتجربة العميل.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="block">
+    <div class="wrap">
+      <div>
+        <h2 class="title">خدماتنا</h2>
+        <p class="desc">
+          توريد وتركيب المصاعد، تحديث المصاعد، صيانة شاملة، حلول تكييف للمشاريع السكنية والتجارية.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="products" class="block">
+    <div class="wrap">
+      <div>
+        <h2 class="title">منتجاتنا</h2>
+        <p class="desc">
+          كبائن متنوعة وتشطيبات فاخرة، حلول بانوراما، وموديلات متعددة تناسب كل مشروع.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="media" class="block">
+    <div class="wrap">
+      <div>
+        <h2 class="title">الإعلام</h2>
+        <p class="desc">
+          أحدث الأخبار، المشاريع، والمواد التعريفية الخاصة بمجموعة سمو.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="block">
+    <div class="wrap">
+      <div>
+        <h2 class="title">التواصل</h2>
+        <p class="desc">
+          تواصل معنا لطلب عرض سعر أو استشارة فنية. WhatsApp: +971 50 103 5499
+        </p>
+      </div>
+    </div>
+  </section>
+
 </body>
 </html>
