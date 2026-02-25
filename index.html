@@ -129,6 +129,7 @@
       padding-top:74px;
     }
 
+    /* الخلفية (الصورة في نفس المجلد) */
     .hero::before{
       content:"";
       position:absolute;
@@ -139,6 +140,7 @@
       z-index:0;
     }
 
+    /* Overlay فخم مثل DAMAC */
     .hero::after{
       content:"";
       position:absolute;
@@ -161,7 +163,6 @@
       padding: 40px 0 70px;
     }
 
-    /* ======= Slider Badge ======= */
     .badge{
       display:inline-flex;
       align-items:center;
@@ -182,7 +183,7 @@
       box-shadow: 0 0 0 8px rgba(255,255,255,.10);
     }
 
-    /* ======= Text Slider (Title + Sub) ======= */
+    /* ======= Text Slider ======= */
     .slider{
       position:relative;
       min-height: 260px;
@@ -217,7 +218,6 @@
       max-width: 64ch;
     }
 
-    /* Slider dots */
     .dots{
       display:flex;
       gap:8px;
@@ -343,7 +343,7 @@
       color:rgba(255,255,255,.78);
     }
 
-    /* ======= Sections placeholders ======= */
+    /* ======= Sections (Placeholder) ======= */
     section.block{
       position:relative;
       z-index:2;
@@ -380,8 +380,10 @@
 </head>
 
 <body>
+  <!-- TOP BAR -->
   <header class="topbar">
     <div class="wrap">
+      <!-- Logo + Name -->
       <div class="brand">
         <img src="logo.png" alt="SMOU GROUP" />
         <div class="brand-text">
@@ -400,11 +402,12 @@
       </nav>
 
       <div class="actions">
-        <button class="lang" type="button">EN</button>
+        <button class="lang" id="langToggle" type="button" aria-label="Change language">EN</button>
       </div>
     </div>
   </header>
 
+  <!-- HERO -->
   <main id="home" class="hero">
     <section class="hero-content">
 
@@ -415,29 +418,32 @@
         <div class="slider" id="heroSlider">
           <!-- Slide 1 -->
           <div class="slide active">
-            <h1>ارتقِ مع سمو<br/>بمشروعك إلى الأفضل</h1>
-            <p class="sub">
-              نُقدّم حلول المصاعد والتكييف بمنهج احترافي يجمع بين الدقة والجمال،
-              مع التزام صارم بمعايير <b>الأمن والسلامة</b> في كل مرحلة.
-            </p>
+            <h1 data-ar="ارتقِ مع سمو<br/>بمشروعك إلى الأفضل"
+                data-en="Elevate with SMOU<br/>to the next level"></h1>
+
+            <p class="sub"
+               data-ar="نُقدّم حلول المصاعد والتكييف بمنهج احترافي يجمع بين الدقة والجمال، مع التزام صارم بمعايير <b>الأمن والسلامة</b> في كل مرحلة."
+               data-en="We deliver elevators and AC solutions with a professional approach that blends precision and aesthetics, with strict commitment to <b>safety & compliance</b> at every step."></p>
           </div>
 
           <!-- Slide 2 -->
           <div class="slide">
-            <h1>الجودة مع سمو<br/>ليست خيارًا.. بل معيار</h1>
-            <p class="sub">
-              من التصميم إلى التنفيذ، نضمن جودة ثابتة وموثوقة،
-              ونُطبّق أفضل الممارسات لضمان <b>اعتمادية التشغيل</b> وراحة المستخدم.
-            </p>
+            <h1 data-ar="الجودة مع سمو<br/>ليست خيارًا.. بل معيار"
+                data-en="Quality with SMOU<br/>is not an option—it's the standard"></h1>
+
+            <p class="sub"
+               data-ar="من التصميم إلى التنفيذ، نضمن جودة ثابتة وموثوقة، ونُطبّق أفضل الممارسات لضمان <b>اعتمادية التشغيل</b> وراحة المستخدم."
+               data-en="From design to delivery, we ensure consistent quality and apply best practices to maximize <b>reliability</b> and user comfort."></p>
           </div>
 
           <!-- Slide 3 -->
           <div class="slide">
-            <h1>حلول متكاملة<br/>بأعلى معايير الاستدامة</h1>
-            <p class="sub">
-              حلول ذكية ترفع كفاءة الطاقة وتدعم <b>الاستدامة</b>،
-              مع أنظمة حديثة تُحقق أداءً أعلى وتكلفة تشغيل أقل على المدى الطويل.
-            </p>
+            <h1 data-ar="حلول متكاملة<br/>بأعلى معايير الاستدامة"
+                data-en="Integrated solutions<br/>built for sustainability"></h1>
+
+            <p class="sub"
+               data-ar="حلول ذكية ترفع كفاءة الطاقة وتدعم <b>الاستدامة</b>، مع أنظمة حديثة تُحقق أداءً أعلى وتكلفة تشغيل أقل على المدى الطويل."
+               data-en="Smart solutions that enhance energy efficiency and support <b>sustainability</b>, delivering higher performance and lower operating cost over time."></p>
           </div>
 
           <div class="dots" id="sliderDots" aria-label="Slider dots"></div>
@@ -478,7 +484,7 @@
     </section>
   </main>
 
-  <!-- Sections -->
+  <!-- Sections (placeholders) -->
   <section id="about" class="block">
     <div class="wrap">
       <div>
@@ -534,51 +540,120 @@
   </section>
 
   <script>
-    (function(){
-      const slider = document.getElementById('heroSlider');
-      const slides = Array.from(slider.querySelectorAll('.slide'));
-      const dotsWrap = document.getElementById('sliderDots');
+  (function(){
+    // ===== Slider =====
+    const slider = document.getElementById('heroSlider');
+    const slides = Array.from(slider.querySelectorAll('.slide'));
+    const dotsWrap = document.getElementById('sliderDots');
+    let index = 0;
+    let timer = null;
 
-      let index = 0;
-      let timer = null;
+    slides.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => go(i, true));
+      dotsWrap.appendChild(d);
+    });
+    const dots = Array.from(dotsWrap.querySelectorAll('.dot'));
 
-      // build dots
-      slides.forEach((_, i) => {
-        const d = document.createElement('div');
-        d.className = 'dot' + (i === 0 ? ' active' : '');
-        d.addEventListener('click', () => go(i, true));
-        dotsWrap.appendChild(d);
-      });
-      const dots = Array.from(dotsWrap.querySelectorAll('.dot'));
-
-      function setActive(i){
-        slides.forEach((s, k) => s.classList.toggle('active', k === i));
-        dots.forEach((d, k) => d.classList.toggle('active', k === i));
-        index = i;
-      }
-
-      function next(){
-        setActive((index + 1) % slides.length);
-      }
-
-      function go(i, reset){
-        setActive(i);
-        if(reset){
-          clearInterval(timer);
-          timer = setInterval(next, 4500);
-        }
-      }
-
-      // auto
-      timer = setInterval(next, 4500);
-
-      // pause on hover (nice touch)
-      slider.addEventListener('mouseenter', () => clearInterval(timer));
-      slider.addEventListener('mouseleave', () => {
+    function setActive(i){
+      slides.forEach((s, k) => s.classList.toggle('active', k === i));
+      dots.forEach((d, k) => d.classList.toggle('active', k === i));
+      index = i;
+    }
+    function next(){ setActive((index + 1) % slides.length); }
+    function go(i, reset){
+      setActive(i);
+      if(reset){
         clearInterval(timer);
         timer = setInterval(next, 4500);
+      }
+    }
+    timer = setInterval(next, 4500);
+    slider.addEventListener('mouseenter', () => clearInterval(timer));
+    slider.addEventListener('mouseleave', () => {
+      clearInterval(timer);
+      timer = setInterval(next, 4500);
+    });
+
+    // ===== Language Toggle =====
+    const btn = document.getElementById('langToggle');
+    const html = document.documentElement;
+
+    const navLinks = Array.from(document.querySelectorAll('.nav a'));
+    const ctaBtns = {
+      services: document.querySelector('.cta-row a[href="#services"]'),
+      contact:  document.querySelector('.cta-row a[href="#contact"]'),
+      products: document.querySelector('.cta-row a[href="#products"]'),
+    };
+
+    const secAbout = document.querySelector('#about .title');
+    const secServices = document.querySelector('#services .title');
+    const secProducts = document.querySelector('#products .title');
+    const secMedia = document.querySelector('#media .title');
+    const secContact = document.querySelector('#contact .title');
+
+    const cardTitle = document.querySelector('.hero-card h3');
+    const cardPara  = document.querySelector('.hero-card p');
+    const miniTitles = Array.from(document.querySelectorAll('.mini b'));
+    const miniSubs   = Array.from(document.querySelectorAll('.mini span'));
+
+    function applyHeroLang(lang){
+      slides.forEach(slide => {
+        const h = slide.querySelector('h1');
+        const p = slide.querySelector('.sub');
+        if(h) h.innerHTML = (lang === 'en') ? h.dataset.en : h.dataset.ar;
+        if(p) p.innerHTML = (lang === 'en') ? p.dataset.en : p.dataset.ar;
       });
-    })();
+    }
+
+    function setLang(lang){
+      const isEn = lang === 'en';
+
+      html.lang = isEn ? 'en' : 'ar';
+      html.dir  = isEn ? 'ltr' : 'rtl';
+
+      btn.textContent = isEn ? 'AR' : 'EN';
+
+      applyHeroLang(lang);
+
+      const arNav = ['الرئيسية','من نحن','خدماتنا','منتجاتنا','الإعلام','التواصل'];
+      const enNav = ['Home','About','Services','Products','Media','Contact'];
+      navLinks.forEach((a,i)=> a.textContent = (isEn ? enNav[i] : arNav[i]));
+
+      if(ctaBtns.services) ctaBtns.services.innerHTML = `<span class="dot-i"></span> ${isEn ? 'Our Services' : 'خدماتنا'}`;
+      if(ctaBtns.contact)  ctaBtns.contact.innerHTML  = `<span class="dot-i"></span> ${isEn ? 'Contact Us' : 'تواصل معنا'}`;
+      if(ctaBtns.products) ctaBtns.products.innerHTML = `<span class="dot-i"></span> ${isEn ? 'Browse Products' : 'استعرض المنتجات'}`;
+
+      if(secAbout)    secAbout.textContent    = isEn ? 'About' : 'من نحن';
+      if(secServices) secServices.textContent = isEn ? 'Services' : 'خدماتنا';
+      if(secProducts) secProducts.textContent = isEn ? 'Products' : 'منتجاتنا';
+      if(secMedia)    secMedia.textContent    = isEn ? 'Media' : 'الإعلام';
+      if(secContact)  secContact.textContent  = isEn ? 'Contact' : 'التواصل';
+
+      if(cardTitle) cardTitle.textContent = isEn ? 'SMOU… Experience You Can Trust' : 'سمو… خبرة تُترجم إلى ثقة';
+      if(cardPara)  cardPara.textContent  = isEn ? 'Premium elevators & AC solutions — expert team, precise execution, and continuous support.'
+                                                : 'حلول مصاعد وتكييف بمعايير عالية — فريق متخصص، تنفيذ مضبوط، ودعم مستمر.';
+
+      const arMiniT = ['تكييف','مصاعد','صيانة','تصميم'];
+      const enMiniT = ['Air Conditioning','Elevators','Maintenance','Design'];
+      const arMiniS = ['توريد • تركيب • صيانة','توريد • تركيب • تحديث','عقود • زيارات • طوارئ','كبائن • بانوراما • ديكور'];
+      const enMiniS = ['Supply • Installation • Service','Supply • Installation • Modernization','Contracts • Visits • Emergency','Cabins • Panoramic • Décor'];
+
+      miniTitles.forEach((el,i)=> el.textContent = (isEn ? enMiniT[i] : arMiniT[i]));
+      miniSubs.forEach((el,i)=> el.textContent   = (isEn ? enMiniS[i] : arMiniS[i]));
+
+      localStorage.setItem('smou_lang', lang);
+    }
+
+    const saved = localStorage.getItem('smou_lang') || 'ar';
+    setLang(saved);
+
+    btn.addEventListener('click', () => {
+      const current = localStorage.getItem('smou_lang') || 'ar';
+      setLang(current === 'ar' ? 'en' : 'ar');
+    });
+  })();
   </script>
 </body>
 </html>
