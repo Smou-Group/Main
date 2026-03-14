@@ -112,12 +112,15 @@
       min-width:max-content;
     }
     .brand-icon{
-      width:46px;height:46px;border-radius:18px;
+      width:54px;height:54px;border-radius:18px;
       display:grid;place-items:center;
-      background:linear-gradient(135deg,#9be7ff,#38bdf8,#1d4ed8);
-      color:#05111f;font-weight:900;font-size:20px;
-      box-shadow:0 12px 30px rgba(34,211,238,.25);
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      overflow:hidden;
+      box-shadow:0 12px 30px rgba(34,211,238,.18);
+      flex-shrink:0;
     }
+    .brand-icon img{width:100%;height:100%;object-fit:contain;padding:7px}
     .brand small{display:block;color:#97b7cf;font-size:13px}
     .brand strong{display:block;letter-spacing:.18em;font-size:12px;color:#d8f3ff}
     .nav-links{
@@ -143,7 +146,23 @@
       align-items:center;
       gap:34px;
       padding:50px 0 70px;
+      position:relative;
     }
+    .hero-bg{
+      position:absolute;
+      inset:0;
+      border-radius:34px;
+      overflow:hidden;
+      z-index:-1;
+      background:
+        linear-gradient(90deg, rgba(6,16,29,.86), rgba(6,16,29,.58)),
+        url('back.jpg') center/cover no-repeat,
+        url('back.png') center/cover no-repeat,
+        linear-gradient(180deg,#0d1f33,#06101d);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:var(--shadow);
+    }
+    .hero-content{padding:42px 34px}
     .hero h1{
       margin:0;
       font-size:clamp(42px,6vw,74px);
@@ -180,6 +199,7 @@
       border-radius:34px;
       padding:16px;
       overflow:hidden;
+      margin:24px;
     }
     .hero-card::before{
       content:"";
@@ -202,6 +222,7 @@
       border-radius:28px;
       padding:22px;
       background:linear-gradient(180deg,var(--scene-a,#dce3ea),var(--scene-b,#7a8795),var(--scene-c,#293544));
+      perspective:1200px;
     }
     .elevator-scene::before{
       content:"";
@@ -210,18 +231,47 @@
       background:radial-gradient(circle at top, rgba(255,255,255,.38), transparent 35%);
       pointer-events:none;
     }
+    .three-stage{
+      width:min(100%,420px);
+      margin:auto;
+      transform-style:preserve-3d;
+      transform:rotateX(7deg) rotateY(-18deg);
+      position:relative;
+      padding-top:16px;
+    }
     .elevator-box{
       margin:auto;
       height:100%;
       max-width:360px;
-      min-height:510px;
-      border-radius:32px;
+      min-height:470px;
+      border-radius:26px;
       border:1px solid rgba(255,255,255,.25);
       background:rgba(0,0,0,.22);
       padding:16px;
       display:flex;
       flex-direction:column;
       box-shadow:0 30px 70px rgba(0,0,0,.26);
+      position:relative;
+      transform:translateZ(20px);
+    }
+    .cab-side{
+      position:absolute;
+      top:36px;
+      width:34px;
+      height:82%;
+      border-radius:16px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:inset 0 0 18px rgba(255,255,255,.05);
+    }
+    .cab-side.left{left:-18px;transform:rotateY(55deg) translateZ(-12px)}
+    .cab-side.right{right:-18px;transform:rotateY(-55deg) translateZ(-12px)}
+    .floor-shadow{
+      position:absolute;
+      left:50%;bottom:8px;
+      transform:translateX(-50%) translateZ(-25px);
+      width:82%;height:30px;border-radius:50%;
+      background:rgba(0,0,0,.32);filter:blur(12px)
     }
     .ceiling-light{
       margin:auto;
@@ -242,8 +292,16 @@
     .door-panel{
       border-radius:18px;
       border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
       box-shadow:inset 0 0 20px rgba(255,255,255,.05);
+      position:relative;
+      overflow:hidden;
+    }
+    .door-panel::after{
+      content:"";
+      position:absolute; inset:0;
+      background:linear-gradient(100deg, transparent 10%, rgba(255,255,255,.22) 45%, transparent 70%);
+      opacity:.55;
     }
     .door-gap{border-radius:999px;background:rgba(255,255,255,.3)}
     .panel-row{display:grid;grid-template-columns:1fr auto;gap:14px;margin-top:16px}
@@ -296,12 +354,12 @@
     .option-grid-3,.option-grid-2{display:grid;gap:14px}
     .option-grid-3{grid-template-columns:repeat(3,1fr)}
     .option-grid-2{grid-template-columns:repeat(2,1fr)}
-    .type-card,.collection-tile,.option-btn{
+    .type-card,.collection-tile,.option-btn,.color-btn{
       width:100%;cursor:pointer;transition:.25s ease;border-radius:24px;
       border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;
       font-family:inherit;
     }
-    .type-card:hover,.collection-tile:hover,.option-btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.08)}
+    .type-card:hover,.collection-tile:hover,.option-btn:hover,.color-btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.08)}
     .active{
       border-color:#8be3ff !important;
       background:rgba(125,211,252,.14) !important;
@@ -317,6 +375,9 @@
     .option-btn{padding:14px 16px;font-size:14px;font-weight:600}
     .columns-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
     .stack{display:flex;flex-direction:column;gap:12px}
+    .color-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .color-btn{padding:10px 8px;text-align:center;font-size:12px;font-weight:700}
+    .color-chip{width:100%;height:28px;border-radius:999px;border:1px solid rgba(255,255,255,.18);margin-bottom:8px}
     .range-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .range-card{
       border:1px solid var(--line);
@@ -347,12 +408,14 @@
       background:linear-gradient(180deg,var(--scene-a,#dce3ea),var(--scene-b,#7a8795),var(--scene-c,#293544));
       position:relative;
       overflow:hidden;
+      perspective:1200px;
     }
     .live-preview::before{
       content:"";
       position:absolute;inset-inline:0;top:0;height:110px;
       background:radial-gradient(circle at top, rgba(255,255,255,.44), transparent 60%);
     }
+    .mini-stage{max-width:280px;margin:auto;transform-style:preserve-3d;transform:rotateX(7deg) rotateY(-16deg)}
     .live-preview .mini-box{
       position:relative;
       max-width:260px;
@@ -363,10 +426,15 @@
       border:1px solid rgba(255,255,255,.2);
       background:rgba(0,0,0,.22);
       padding:14px;
+      transform:translateZ(20px);
     }
+    .mini-side{position:absolute;top:24px;width:26px;height:82%;border-radius:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.14)}
+    .mini-side.left{left:-12px;transform:rotateY(52deg) translateZ(-10px)}
+    .mini-side.right{right:-12px;transform:rotateY(-52deg) translateZ(-10px)}
+    .mini-shadow{position:absolute;left:50%;bottom:6px;transform:translateX(-50%) translateZ(-20px);width:80%;height:24px;border-radius:50%;background:rgba(0,0,0,.35);filter:blur(10px)}
     .mini-box .top{height:34px;border-radius:16px;background:rgba(255,255,255,.18)}
     .mini-box .doors{margin-top:12px;height:72%;display:grid;grid-template-columns:1fr 8px 1fr;gap:8px;padding:10px;border-radius:20px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.10)}
-    .mini-box .doors span{border-radius:16px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.10)}
+    .mini-box .doors span{border-radius:16px;border:1px solid rgba(255,255,255,.16);background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06))}
     .mini-box .doors em{border-radius:999px;background:rgba(255,255,255,.35);display:block}
     .mini-bottom{display:grid;grid-template-columns:1fr 58px;gap:12px;margin-top:12px}
     .mini-info,.mini-lop{border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(0,0,0,.2);padding:10px;font-size:11px;color:rgba(255,255,255,.8)}
@@ -380,7 +448,7 @@
       background:rgba(0,0,0,.20);font-size:14px
     }
     .summary-item span:first-child{color:var(--muted)}
-    .summary-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+    .summary-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
 
     .collections-grid,.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
     .services-grid{grid-template-columns:repeat(4,1fr)}
@@ -447,20 +515,23 @@
       .collections-grid{grid-template-columns:repeat(2,1fr)}
       .option-grid-3,.range-grid,.columns-3{grid-template-columns:repeat(2,1fr)}
       .footer-grid{grid-template-columns:repeat(2,1fr)}
+      .hero-card{margin:0}
     }
 
     @media (max-width: 780px){
       .nav-links,.nav-actions{display:none}
       .menu-btn{display:inline-flex}
       .mobile-menu.show{display:flex}
-      .stats,.cards-4,.collections-grid,.services-grid,.why-points,.footer-grid,.option-grid-3,.option-grid-2,.range-grid,.columns-3,.summary-actions,.form-grid{grid-template-columns:1fr}
-      .hero{padding-top:28px}
+      .stats,.cards-4,.collections-grid,.services-grid,.why-points,.footer-grid,.option-grid-3,.option-grid-2,.range-grid,.columns-3,.summary-actions,.form-grid,.color-grid{grid-template-columns:1fr}
+      .hero{padding-top:20px}
+      .hero-content{padding:22px}
       .hero p{font-size:16px}
       .elevator-scene{min-height:460px}
       .summary-item{flex-direction:column;align-items:flex-start}
       .span-2{grid-column:span 1}
       .container{width:min(1280px,calc(100% - 20px))}
       .section{padding:70px 0}
+      .hero-bg{border-radius:24px}
     }
   </style>
 </head>
@@ -468,7 +539,7 @@
   <header>
     <div class="container nav">
       <div class="brand">
-        <div class="brand-icon">S</div>
+        <div class="brand-icon"><img src="logo.png" alt="SMOU GROUP Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='S';"></div>
         <div>
           <strong>SMOU GROUP</strong>
           <small>Elevator Designer Platform</small>
@@ -501,51 +572,57 @@
 
   <main>
     <section class="container hero" id="home">
-      <div>
-        <div class="eyebrow">✨ منصة تصميم مصاعد تفاعلية لمجموعة سمو</div>
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <div class="eyebrow">✨ منصة تصميم مصاعد تفاعلية ثلاثية الأبعاد لمجموعة سمو</div>
         <h1>صمّم مصعدك مع <span class="accent-text">SMOU GROUP</span></h1>
         <p>
-          موقع احترافي كامل لعرض خدمات SMOU GROUP في المصاعد والتحديث والصيانة، مع مصمم تفاعلي يساعد العميل على اختيار نوع المصعد، المقاسات، الأبواب، التشطيبات، والإضاءة ثم إرسال الطلب مباشرة إلى فريقكم.
+          مصمم احترافي بواجهة 3D تفاعلية يتيح تغيير الكابينة مباشرة، تغيير الباب، تغيير اللون، حفظ التصميم، وإرسال الطلب مباشرة إلى الشركة، مع استخدام خلفية <b>back.jpg / back.png</b> وشعار <b>logo.png</b> من ملفاتك داخل الموقع.
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#designer">ابدأ التصميم الآن</a>
-          <a class="btn btn-secondary" href="#contact">اطلب استشارة</a>
+          <button class="btn btn-secondary" id="saveTopBtn">حفظ التصميم</button>
         </div>
 
         <div class="stats">
-          <div class="stat glass"><strong>8+</strong><span>Branches</span></div>
-          <div class="stat glass"><strong>1650+</strong><span>Projects</span></div>
-          <div class="stat glass"><strong>900+</strong><span>Consultants & Contractors</span></div>
-          <div class="stat glass"><strong>3</strong><span>Countries</span></div>
+          <div class="stat glass"><strong>3D</strong><span>Live Preview</span></div>
+          <div class="stat glass"><strong>6+</strong><span>Cabin Styles</span></div>
+          <div class="stat glass"><strong>Instant</strong><span>Door & Color Change</span></div>
+          <div class="stat glass"><strong>Direct</strong><span>Request Send</span></div>
         </div>
       </div>
 
       <div class="hero-card glass">
         <div class="preview-shell">
           <div class="elevator-scene" id="heroScene">
-            <div class="elevator-box">
-              <div class="ceiling-light"></div>
-              <div class="door-area" id="heroDoorArea">
-                <div class="door-panel" id="heroDoorLeft"></div>
-                <div class="door-gap"></div>
-                <div class="door-panel" id="heroDoorRight"></div>
-              </div>
-              <div class="panel-row">
-                <div class="info-panel">
-                  <strong id="heroCollectionName">الكابينة الفضية</strong>
-                  <div id="heroWall">Wall: Mirror Stainless Steel</div>
-                  <div id="heroFloor">Floor: Marble Grey</div>
-                  <div id="heroCeiling">Ceiling: Hidden Acrylic Light</div>
+            <div class="three-stage">
+              <div class="cab-side left" id="heroSideLeft"></div>
+              <div class="cab-side right" id="heroSideRight"></div>
+              <div class="elevator-box">
+                <div class="ceiling-light"></div>
+                <div class="door-area" id="heroDoorArea">
+                  <div class="door-panel" id="heroDoorLeft"></div>
+                  <div class="door-gap"></div>
+                  <div class="door-panel" id="heroDoorRight"></div>
                 </div>
-                <div class="lop-panel">
-                  <div>
-                    <div>10</div>
-                    <div>9</div>
-                    <div>8</div>
-                    <span class="active-floor">G</span>
+                <div class="panel-row">
+                  <div class="info-panel">
+                    <strong id="heroCollectionName">الكابينة الفضية</strong>
+                    <div id="heroWall">Wall: Mirror Stainless Steel</div>
+                    <div id="heroFloor">Floor: Marble Grey</div>
+                    <div id="heroCeiling">Ceiling: Hidden Acrylic Light</div>
+                  </div>
+                  <div class="lop-panel">
+                    <div>
+                      <div>10</div>
+                      <div>9</div>
+                      <div>8</div>
+                      <span class="active-floor">G</span>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div class="floor-shadow"></div>
             </div>
           </div>
           <div class="hero-mini-stats">
@@ -617,6 +694,10 @@
             </div>
 
             <div style="height:22px"></div>
+            <div class="box-title">🎨 تغيير اللون مباشرة</div>
+            <div class="color-grid" id="colorOptions"></div>
+
+            <div style="height:22px"></div>
             <div class="columns-3">
               <div>
                 <div class="box-title">💡 السقف والإضاءة</div>
@@ -644,27 +725,45 @@
               </div>
 
               <div class="live-preview" id="liveScene">
-                <div class="mini-box">
-                  <div class="top"></div>
-                  <div class="doors" id="liveDoors">
-                    <span id="liveDoorL"></span>
-                    <em></em>
-                    <span id="liveDoorR"></span>
-                  </div>
-                  <div class="mini-bottom">
-                    <div class="mini-info">
-                      <div id="miniFinish">Mirror Stainless Steel</div>
-                      <div id="miniFloor">Marble Grey</div>
-                      <div id="miniCeiling">Acrylic Hidden Light</div>
+                <div class="mini-stage">
+                  <div class="mini-side left" id="miniSideLeft"></div>
+                  <div class="mini-side right" id="miniSideRight"></div>
+                  <div class="mini-box">
+                    <div class="top"></div>
+                    <div class="doors" id="liveDoors">
+                      <span id="liveDoorL"></span>
+                      <em></em>
+                      <span id="liveDoorR"></span>
                     </div>
-                    <div class="mini-lop">
-                      <div>9</div>
-                      <div>8</div>
-                      <div>7</div>
-                      <b>G</b>
+                    <div class="mini-bottom">
+                      <div class="mini-info">
+                        <div id="miniFinish">Mirror Stainless Steel</div>
+                        <div id="miniFloor">Marble Grey</div>
+                        <div id="miniCeiling">Acrylic Hidden Light</div>
+                      </div>
+                      <div class="mini-lop">
+                        <div>9</div>
+                        <div>8</div>
+                        <div>7</div>
+                        <b>G</b>
+                      </div>
                     </div>
                   </div>
+                  <div class="mini-shadow"></div>
                 </div>
+              </div>
+            </div>
+
+            <div class="summary-card">
+              <div class="box-title">📋 ملخص الطلب</div>
+              <div class="summary-list" id="summaryList"></div>
+              <div class="summary-actions">
+                <a class="btn btn-primary" id="whatsappBtn" href="#" target="_blank">إرسال واتساب</a>
+                <button class="btn btn-secondary" id="saveBtn">حفظ التصميم</button>
+                <button class="btn btn-secondary" id="downloadBtn">تنزيل المواصفات</button>
+              </div>
+            </div>
+          </div>
               </div>
             </div>
 
@@ -902,6 +1001,16 @@
     const finishOptions = ["Mirror Stainless Steel", "Hairline Stainless Steel", "Etched Stainless Steel", "Glass + Steel", "Wood + Stainless", "Matte Gold Stainless"];
     const ceilingOptions = ["Acrylic Hidden Light", "Crystal Ceiling", "LED Strip Frame", "Linear Spot Light", "Backlit Panel"];
     const floorOptions = ["Marble Grey", "Royal Stone", "Dark Marble", "PVC Heavy Duty", "Granite Black", "Custom Finish"];
+    const colorOptions = [
+      { id: 'silver', name: 'Silver', color: '#cfd8e3' },
+      { id: 'gold', name: 'Gold', color: '#d8ab42' },
+      { id: 'black', name: 'Black', color: '#3b3b44' },
+      { id: 'rose', name: 'Rose Gold', color: '#d69174' },
+      { id: 'blue', name: 'Sky Blue', color: '#60c5e8' },
+      { id: 'white', name: 'White Pearl', color: '#e9edf2' },
+      { id: 'bronze', name: 'Bronze', color: '#9b6b4f' },
+      { id: 'graphite', name: 'Graphite', color: '#5f6672' }
+    ];
 
     const faqs = [
       {
@@ -936,6 +1045,7 @@
       doorWidth: 800,
       pit: 1000,
       oh: 3600,
+      color: '#cfd8e3',
     };
 
     const typeGrid = document.getElementById("typeGrid");
@@ -943,12 +1053,15 @@
     const capacityWrap = document.getElementById("capacityOptions");
     const doorWrap = document.getElementById("doorOptions");
     const finishWrap = document.getElementById("finishOptions");
+    const colorWrap = document.getElementById("colorOptions");
     const ceilingWrap = document.getElementById("ceilingOptions");
     const floorWrap = document.getElementById("floorOptions");
     const rangeWrap = document.getElementById("rangeOptions");
     const summaryList = document.getElementById("summaryList");
     const whatsappBtn = document.getElementById("whatsappBtn");
     const downloadBtn = document.getElementById("downloadBtn");
+    const saveBtn = document.getElementById("saveBtn");
+    const saveTopBtn = document.getElementById("saveTopBtn");
     const collectionsShowcase = document.getElementById("collectionsShowcase");
     const faqList = document.getElementById("faqList");
 
@@ -963,6 +1076,14 @@
     const heroShaft = document.getElementById("heroShaft");
     const heroStops = document.getElementById("heroStops");
     const liveBadge = document.getElementById("liveBadge");
+    const heroDoorLeft = document.getElementById('heroDoorLeft');
+    const heroDoorRight = document.getElementById('heroDoorRight');
+    const liveDoorL = document.getElementById('liveDoorL');
+    const liveDoorR = document.getElementById('liveDoorR');
+    const heroSideLeft = document.getElementById('heroSideLeft');
+    const heroSideRight = document.getElementById('heroSideRight');
+    const miniSideLeft = document.getElementById('miniSideLeft');
+    const miniSideRight = document.getElementById('miniSideRight');
     const miniFinish = document.getElementById("miniFinish");
     const miniFloor = document.getElementById("miniFloor");
     const miniCeiling = document.getElementById("miniCeiling");
@@ -1012,6 +1133,22 @@
       container.querySelectorAll('[data-key]').forEach(btn => {
         btn.addEventListener('click', () => {
           state[key] = btn.dataset.value;
+          renderAll();
+        });
+      });
+    }
+
+    function renderColors(){
+      colorWrap.innerHTML = colorOptions.map(item => `
+        <button class="color-btn ${state.color === item.color ? 'active' : ''}" data-color="${item.color}">
+          <div class="color-chip" style="background:${item.color}"></div>
+          ${item.name}
+        </button>
+      `).join('');
+
+      colorWrap.querySelectorAll('[data-color]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.color = btn.dataset.color;
           renderAll();
         });
       });
@@ -1069,12 +1206,10 @@
         </div>
       `).join('');
 
-      const txt = encodeURIComponent(
-        'السلام عليكم، أريد عرض سعر من SMOU GROUP.
-' +
-        summary.map(item => `${item[0]}: ${item[1]}`).join('
-')
-      );
+      const requestText = 'السلام عليكم، أريد عرض سعر من SMOU GROUP.
+' + summary.map(item => `${item[0]}: ${item[1]}`).join('
+');
+      const txt = encodeURIComponent(requestText);
       whatsappBtn.href = `https://wa.me/971501035499?text=${txt}`;
       downloadBtn.onclick = () => {
         const content = 'SMOU GROUP - Elevator Designer Request
@@ -1089,6 +1224,13 @@
         a.click();
         URL.revokeObjectURL(url);
       };
+
+      const saveAction = () => {
+        localStorage.setItem('smouDesignerState', JSON.stringify(state));
+        alert('تم حفظ التصميم على هذا الجهاز بنجاح');
+      };
+      saveBtn.onclick = saveAction;
+      if (saveTopBtn) saveTopBtn.onclick = saveAction;
 
       heroCap.textContent = state.capacity;
       heroDoor.textContent = state.door;
@@ -1113,6 +1255,28 @@
         el.style.setProperty('--scene-b', b);
         el.style.setProperty('--scene-c', c);
       });
+
+      const chosenColor = state.color || '#cfd8e3';
+      const doorStyle = state.door.toLowerCase();
+      const isGlass = doorStyle.includes('glass');
+      const isBlack = chosenColor.toLowerCase() === '#3b3b44';
+      const panelBg = isGlass
+        ? `linear-gradient(180deg, rgba(180,225,255,.45), rgba(255,255,255,.12))`
+        : `linear-gradient(180deg, ${chosenColor}, rgba(255,255,255,.08))`;
+      const sideBg = isGlass
+        ? 'linear-gradient(180deg, rgba(180,225,255,.35), rgba(255,255,255,.10))'
+        : `linear-gradient(180deg, ${chosenColor}, rgba(255,255,255,.06))`;
+      const borderClr = isBlack ? 'rgba(255,255,255,.10)' : 'rgba(255,255,255,.22)';
+
+      [heroDoorLeft, heroDoorRight, liveDoorL, liveDoorR].forEach(el => {
+        el.style.background = panelBg;
+        el.style.borderColor = borderClr;
+      });
+      [heroSideLeft, heroSideRight, miniSideLeft, miniSideRight].forEach(el => {
+        el.style.background = sideBg;
+        el.style.borderColor = borderClr;
+      });
+    });
     }
 
     function renderCollectionsShowcase(){
@@ -1162,6 +1326,7 @@
       renderOptionButtons(finishWrap, finishOptions, 'finish');
       renderOptionButtons(ceilingWrap, ceilingOptions, 'ceiling');
       renderOptionButtons(floorWrap, floorOptions, 'floor');
+      renderColors();
       renderRanges();
       renderSummary();
       renderScene();
@@ -1172,6 +1337,13 @@
     document.getElementById('menuBtn').addEventListener('click', () => {
       document.getElementById('mobileMenu').classList.toggle('show');
     });
+
+    const savedState = localStorage.getItem('smouDesignerState');
+    if (savedState) {
+      try {
+        Object.assign(state, JSON.parse(savedState));
+      } catch (e) {}
+    }
 
     renderAll();
   </script>
