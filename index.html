@@ -1027,7 +1027,7 @@
       },
       {
         q: "هل يمكن تطويره إلى 3D كامل؟",
-        a: "نعم، المرحلة الحالية واجهة احترافية، والمرحلة التالية يمكن أن تتضمن عارض 3D حقيقي."
+        a: "نعم، المرحلة الحالية واجهة تفاعلية، ويمكن تطويرها لاحقاً إلى عارض 3D متقدم."
       }
     ];
 
@@ -1045,7 +1045,7 @@
       doorWidth: 800,
       pit: 1000,
       oh: 3600,
-      color: '#cfd8e3',
+      color: '#cfd8e3'
     };
 
     const typeGrid = document.getElementById("typeGrid");
@@ -1053,9 +1053,9 @@
     const capacityWrap = document.getElementById("capacityOptions");
     const doorWrap = document.getElementById("doorOptions");
     const finishWrap = document.getElementById("finishOptions");
-    const colorWrap = document.getElementById("colorOptions");
     const ceilingWrap = document.getElementById("ceilingOptions");
     const floorWrap = document.getElementById("floorOptions");
+    const colorWrap = document.getElementById("colorOptions");
     const rangeWrap = document.getElementById("rangeOptions");
     const summaryList = document.getElementById("summaryList");
     const whatsappBtn = document.getElementById("whatsappBtn");
@@ -1076,6 +1076,9 @@
     const heroShaft = document.getElementById("heroShaft");
     const heroStops = document.getElementById("heroStops");
     const liveBadge = document.getElementById("liveBadge");
+    const miniFinish = document.getElementById("miniFinish");
+    const miniFloor = document.getElementById("miniFloor");
+    const miniCeiling = document.getElementById("miniCeiling");
     const heroDoorLeft = document.getElementById('heroDoorLeft');
     const heroDoorRight = document.getElementById('heroDoorRight');
     const liveDoorL = document.getElementById('liveDoorL');
@@ -1084,13 +1087,10 @@
     const heroSideRight = document.getElementById('heroSideRight');
     const miniSideLeft = document.getElementById('miniSideLeft');
     const miniSideRight = document.getElementById('miniSideRight');
-    const miniFinish = document.getElementById("miniFinish");
-    const miniFloor = document.getElementById("miniFloor");
-    const miniCeiling = document.getElementById("miniCeiling");
 
-    function renderTypes(){
+    function renderTypes() {
       typeGrid.innerHTML = productTypes.map(item => `
-        <button class="type-card ${state.selectedType === item.id ? 'active' : ''}" data-type="${item.id}">
+        <button type="button" class="type-card ${state.selectedType === item.id ? 'active' : ''}" data-type="${item.id}">
           <div class="image" style="background-image:url('${item.image}')"></div>
           <div class="content">
             <h4>${item.nameAr}</h4>
@@ -1108,9 +1108,9 @@
       });
     }
 
-    function renderCollections(){
+    function renderCollections() {
       collectionGrid.innerHTML = cabinCollections.map(item => `
-        <button class="collection-tile ${state.selectedCollection === item.id ? 'active' : ''}" data-collection="${item.id}">
+        <button type="button" class="collection-tile ${state.selectedCollection === item.id ? 'active' : ''}" data-collection="${item.id}">
           <div class="collection-swatch" style="background:linear-gradient(135deg, ${item.scene[0]}, ${item.scene[1]}, ${item.scene[2]})"></div>
           <h4>${item.ar}</h4>
           <small>${item.name}</small>
@@ -1125,9 +1125,9 @@
       });
     }
 
-    function renderOptionButtons(container, arr, key){
-      container.innerHTML = arr.map(item => `
-        <button class="option-btn ${state[key] === item ? 'active' : ''}" data-key="${key}" data-value="${item}">${item}</button>
+    function renderOptionButtons(container, items, key) {
+      container.innerHTML = items.map(item => `
+        <button type="button" class="option-btn ${state[key] === item ? 'active' : ''}" data-key="${key}" data-value="${item}">${item}</button>
       `).join('');
 
       container.querySelectorAll('[data-key]').forEach(btn => {
@@ -1138,9 +1138,9 @@
       });
     }
 
-    function renderColors(){
+    function renderColors() {
       colorWrap.innerHTML = colorOptions.map(item => `
-        <button class="color-btn ${state.color === item.color ? 'active' : ''}" data-color="${item.color}">
+        <button type="button" class="color-btn ${state.color === item.color ? 'active' : ''}" data-color="${item.color}">
           <div class="color-chip" style="background:${item.color}"></div>
           ${item.name}
         </button>
@@ -1154,14 +1154,14 @@
       });
     }
 
-    function renderRanges(){
+    function renderRanges() {
       const ranges = [
         { label: "عدد الوقفات", key: "stops", min: 2, max: 20, step: 1 },
         { label: "عرض البئر (mm)", key: "shaftWidth", min: 1200, max: 3000, step: 50 },
         { label: "عمق البئر (mm)", key: "shaftDepth", min: 1200, max: 3000, step: 50 },
         { label: "فتحة الباب (mm)", key: "doorWidth", min: 700, max: 1600, step: 50 },
         { label: "الحفرة PIT (mm)", key: "pit", min: 200, max: 2000, step: 50 },
-        { label: "الأوفر هيد OH (mm)", key: "oh", min: 2800, max: 6000, step: 100 },
+        { label: "الأوفر هيد OH (mm)", key: "oh", min: 2800, max: 6000, step: 100 }
       ];
 
       rangeWrap.innerHTML = ranges.map(r => `
@@ -1175,29 +1175,35 @@
       rangeWrap.querySelectorAll('[data-range]').forEach(input => {
         input.addEventListener('input', () => {
           state[input.dataset.range] = Number(input.value);
-          renderAll();
+          renderSummaryAndScene();
+          renderRanges();
         });
       });
     }
 
-    function renderSummary(){
+    function getSummary() {
       const activeType = productTypes.find(i => i.id === state.selectedType);
       const activeCollection = cabinCollections.find(i => i.id === state.selectedCollection);
-
-      const summary = [
+      return [
         ["نوع المصعد", `${activeType.nameAr} / ${activeType.nameEn}`],
         ["التصميم", `${activeCollection.ar} / ${activeCollection.name}`],
         ["الحمولة", state.capacity],
         ["الباب", state.door],
         ["التشطيب", state.finish],
+        ["اللون", state.color],
         ["السقف", state.ceiling],
         ["الأرضية", state.floor],
         ["عدد الوقفات", `${state.stops} Stops`],
         ["مقاس البئر", `${state.shaftWidth} × ${state.shaftDepth} mm`],
         ["فتحة الباب", `${state.doorWidth} mm`],
         ["الحفرة", `${state.pit} mm`],
-        ["الأوفر هيد", `${state.oh} mm`],
+        ["الأوفر هيد", `${state.oh} mm`]
       ];
+    }
+
+    function renderSummaryAndScene() {
+      const activeCollection = cabinCollections.find(i => i.id === state.selectedCollection);
+      const summary = getSummary();
 
       summaryList.innerHTML = summary.map(item => `
         <div class="summary-item">
@@ -1209,14 +1215,14 @@
       const requestText = 'السلام عليكم، أريد عرض سعر من SMOU GROUP.
 ' + summary.map(item => `${item[0]}: ${item[1]}`).join('
 ');
-      const txt = encodeURIComponent(requestText);
-      whatsappBtn.href = `https://wa.me/971501035499?text=${txt}`;
-      downloadBtn.onclick = () => {
+      whatsappBtn.href = `https://wa.me/971501035499?text=${encodeURIComponent(requestText)}`;
+
+      const downloadAction = () => {
         const content = 'SMOU GROUP - Elevator Designer Request
 
 ' + summary.map(item => `${item[0]}: ${item[1]}`).join('
 ');
-        const blob = new Blob([content], {type:'text/plain;charset=utf-8'});
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -1229,6 +1235,8 @@
         localStorage.setItem('smouDesignerState', JSON.stringify(state));
         alert('تم حفظ التصميم على هذا الجهاز بنجاح');
       };
+
+      downloadBtn.onclick = downloadAction;
       saveBtn.onclick = saveAction;
       if (saveTopBtn) saveTopBtn.onclick = saveAction;
 
@@ -1244,12 +1252,8 @@
       miniFinish.textContent = state.finish;
       miniFloor.textContent = state.floor;
       miniCeiling.textContent = state.ceiling;
-    }
 
-    function renderScene(){
-      const activeCollection = cabinCollections.find(i => i.id === state.selectedCollection);
-      const [a,b,c] = activeCollection.scene;
-
+      const [a, b, c] = activeCollection.scene;
       [heroScene, liveScene].forEach(el => {
         el.style.setProperty('--scene-a', a);
         el.style.setProperty('--scene-b', b);
@@ -1259,14 +1263,13 @@
       const chosenColor = state.color || '#cfd8e3';
       const doorStyle = state.door.toLowerCase();
       const isGlass = doorStyle.includes('glass');
-      const isBlack = chosenColor.toLowerCase() === '#3b3b44';
       const panelBg = isGlass
-        ? `linear-gradient(180deg, rgba(180,225,255,.45), rgba(255,255,255,.12))`
+        ? 'linear-gradient(180deg, rgba(180,225,255,.45), rgba(255,255,255,.12))'
         : `linear-gradient(180deg, ${chosenColor}, rgba(255,255,255,.08))`;
       const sideBg = isGlass
         ? 'linear-gradient(180deg, rgba(180,225,255,.35), rgba(255,255,255,.10))'
         : `linear-gradient(180deg, ${chosenColor}, rgba(255,255,255,.06))`;
-      const borderClr = isBlack ? 'rgba(255,255,255,.10)' : 'rgba(255,255,255,.22)';
+      const borderClr = 'rgba(255,255,255,.22)';
 
       [heroDoorLeft, heroDoorRight, liveDoorL, liveDoorR].forEach(el => {
         el.style.background = panelBg;
@@ -1276,10 +1279,9 @@
         el.style.background = sideBg;
         el.style.borderColor = borderClr;
       });
-    });
     }
 
-    function renderCollectionsShowcase(){
+    function renderCollectionsShowcase() {
       collectionsShowcase.innerHTML = cabinCollections.map(item => `
         <div class="collection-card">
           <div class="collection-top" style="background:linear-gradient(135deg, ${item.scene[0]}, ${item.scene[1]}, ${item.scene[2]})"></div>
@@ -1292,18 +1294,18 @@
               <div>Ceiling: ${item.ceiling}</div>
             </div>
             <div class="collection-buttons">
-              <button class="btn btn-primary">عرض التفاصيل</button>
-              <button class="btn btn-secondary">ربط بالمعرض</button>
+              <button type="button" class="btn btn-primary">عرض التفاصيل</button>
+              <button type="button" class="btn btn-secondary">ربط بالمعرض</button>
             </div>
           </div>
         </div>
       `).join('');
     }
 
-    function renderFaqs(){
+    function renderFaqs() {
       faqList.innerHTML = faqs.map((item, i) => `
-        <div class="faq-item ${i===0 ? 'open' : ''}">
-          <button class="faq-q">
+        <div class="faq-item ${i === 0 ? 'open' : ''}">
+          <button type="button" class="faq-q">
             <span>${item.q}</span>
             <span class="faq-arrow">⌄</span>
           </button>
@@ -1318,7 +1320,7 @@
       });
     }
 
-    function renderAll(){
+    function renderAll() {
       renderTypes();
       renderCollections();
       renderOptionButtons(capacityWrap, capacities, 'capacity');
@@ -1328,8 +1330,7 @@
       renderOptionButtons(floorWrap, floorOptions, 'floor');
       renderColors();
       renderRanges();
-      renderSummary();
-      renderScene();
+      renderSummaryAndScene();
       renderCollectionsShowcase();
       renderFaqs();
     }
@@ -1342,7 +1343,9 @@
     if (savedState) {
       try {
         Object.assign(state, JSON.parse(savedState));
-      } catch (e) {}
+      } catch (e) {
+        console.warn('Saved state could not be loaded');
+      }
     }
 
     renderAll();
