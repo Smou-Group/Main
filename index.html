@@ -1,659 +1,806 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SMOU GROUP | مجموعة سمو</title>
+import React, { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Building2,
+  Phone,
+  Mail,
+  Globe,
+  ArrowLeft,
+  CheckCircle2,
+  Palette,
+  DoorOpen,
+  Lightbulb,
+  ShieldCheck,
+  Wrench,
+  Ruler,
+  Send,
+  MessageCircle,
+  ChevronDown,
+  Menu,
+  X,
+  Sparkles,
+  Download,
+} from "lucide-react";
 
-  <style>
-    :root{
-      --glass: rgba(255,255,255,.10);
-      --glass2: rgba(255,255,255,.16);
-      --border: rgba(255,255,255,.22);
-      --text:#ffffff;
-      --muted: rgba(255,255,255,.80);
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
-      --accent: rgba(40,150,255,.55);
-      --accent2: rgba(17,120,214,.35);
-    }
+const productTypes = [
+  {
+    id: "villa",
+    nameAr: "مصاعد فلل",
+    nameEn: "Villa Elevators",
+    desc: "حلول أنيقة للمنازل والفلل الخاصة",
+    image:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "passenger",
+    nameAr: "مصاعد ركاب",
+    nameEn: "Passenger Elevators",
+    desc: "أداء موثوق للمباني السكنية والتجارية",
+    image:
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "panoramic",
+    nameAr: "مصاعد بانورامية",
+    nameEn: "Panoramic Elevators",
+    desc: "زجاج وإطلالات مفتوحة بتصميم فاخر",
+    image:
+      "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "hospital",
+    nameAr: "مصاعد مستشفيات",
+    nameEn: "Hospital Elevators",
+    desc: "تشغيل مريح وآمن لاحتياجات القطاع الطبي",
+    image:
+      "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "dumbwaiter",
+    nameAr: "دَمب ويتر",
+    nameEn: "Dumbwaiters",
+    desc: "نقل ذكي وخفيف للمطاعم والفنادق",
+    image:
+      "https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    id: "freight",
+    nameAr: "مصاعد بضائع",
+    nameEn: "Freight Elevators",
+    desc: "حمولات أعلى وتحمل تشغيلي قوي",
+    image:
+      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80",
+  },
+];
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: "Tajawal","Cairo",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
-      background:#0a0f17;
-      color:var(--text);
-    }
+const cabinCollections = [
+  {
+    id: "silver",
+    name: "Silver Cabin",
+    ar: "الكابينة الفضية",
+    accent: "from-slate-200/90 via-slate-400/70 to-slate-700/80",
+    wall: "Mirror Stainless Steel",
+    floor: "Marble Grey",
+    ceiling: "Hidden Acrylic Light",
+  },
+  {
+    id: "gold",
+    name: "Golden Cabin",
+    ar: "الكابينة الذهبية",
+    accent: "from-amber-100/90 via-amber-400/70 to-yellow-700/80",
+    wall: "Gold Stainless Steel",
+    floor: "Royal Stone",
+    ceiling: "Warm LED Frame",
+  },
+  {
+    id: "black",
+    name: "Black Cabin",
+    ar: "الكابينة السوداء",
+    accent: "from-zinc-200/60 via-zinc-700/80 to-black",
+    wall: "Black Mirror Stainless",
+    floor: "Dark Marble",
+    ceiling: "Linear Spot Grid",
+  },
+  {
+    id: "rose",
+    name: "Rosegold Cabin",
+    ar: "الكابينة الوردية",
+    accent: "from-rose-100/90 via-orange-300/70 to-amber-700/80",
+    wall: "Rose Gold Hairline",
+    floor: "Beige Marble",
+    ceiling: "Soft Hidden Glow",
+  },
+  {
+    id: "wood",
+    name: "Wooden Cabin",
+    ar: "الكابينة الخشبية",
+    accent: "from-amber-100/60 via-orange-500/70 to-stone-900/90",
+    wall: "Wood + Stainless Accent",
+    floor: "Natural Stone",
+    ceiling: "Classic Panel Light",
+  },
+  {
+    id: "panoglass",
+    name: "Panoramic Glass",
+    ar: "البانوراما الزجاجية",
+    accent: "from-sky-100/90 via-cyan-400/70 to-slate-800/80",
+    wall: "Laminated Glass",
+    floor: "Anti Slip Stone",
+    ceiling: "Edge LED Light",
+  },
+];
 
-    /* ======= TOP BAR ======= */
-    .topbar{
-      position:fixed;
-      inset:0 0 auto 0;
-      height:74px;
-      display:flex;
-      align-items:center;
-      z-index:50;
-      background: rgba(10, 20, 33, .42);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,.10);
-    }
+const capacities = ["320 KG", "450 KG", "630 KG", "800 KG", "1000 KG", "1275 KG"];
+const doorOptions = [
+  "Center Opening",
+  "Side Opening",
+  "Glass Frameless",
+  "2 Panel Telescopic",
+  "Stainless Steel Door",
+  "Panoramic Glass Door",
+];
+const finishOptions = [
+  "Mirror Stainless Steel",
+  "Hairline Stainless Steel",
+  "Etched Stainless Steel",
+  "Glass + Steel",
+  "Wood + Stainless",
+  "Matte Gold Stainless",
+];
+const ceilingOptions = [
+  "Acrylic Hidden Light",
+  "Crystal Ceiling",
+  "LED Strip Frame",
+  "Linear Spot Light",
+  "Backlit Panel",
+];
+const floorOptions = [
+  "Marble Grey",
+  "Royal Stone",
+  "Dark Marble",
+  "PVC Heavy Duty",
+  "Granite Black",
+  "Custom Finish",
+];
 
-    .wrap{
-      width:min(1200px, 92vw);
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      gap:16px;
-    }
+const stats = [
+  { label: "Branches", value: "8+" },
+  { label: "Projects", value: "1650+" },
+  { label: "Consultants & Contractors", value: "900+" },
+  { label: "Countries", value: "3" },
+];
 
-    /* BRAND (Logo + Text) */
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 260px;
-    }
-    .brand img{
-      height:44px;
-      width:auto;
-      display:block;
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
-    }
+const processSteps = [
+  {
+    icon: Ruler,
+    title: "حدد المقاسات",
+    desc: "اختيار عرض وعمق البئر والحمولة وعدد الوقفات.",
+  },
+  {
+    icon: Palette,
+    title: "اختر التشطيب",
+    desc: "الجدران، الأبواب، الأرضية، السقف، والإضاءة.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "اعتماد المواصفات",
+    desc: "عرض ملخص هندسي واضح قبل إرسال طلب السعر.",
+  },
+  {
+    icon: Send,
+    title: "إرسال الطلب",
+    desc: "يرسل مباشرة إلى فريق SMOU للمراجعة والتسعير.",
+  },
+];
 
-    .brand-text{
-      display:flex;
-      flex-direction:column;
-      line-height:1.05;
-      white-space:nowrap;
-    }
-    .brand-text strong{
-      font-size:15px;
-      font-weight:1000;
-      letter-spacing:.6px;
-    }
-    .brand-text span{
-      font-size:13px;
-      opacity:.82;
-      font-weight:800;
-      margin-top:2px;
-    }
+const faqs = [
+  {
+    q: "هل يمكن ربط المصمم بطلب عرض سعر مباشر؟",
+    a: "نعم، النموذج النهائي يرسل جميع الاختيارات إلى فريق المبيعات عبر البريد الإلكتروني أو WhatsApp أو API داخلي.",
+  },
+  {
+    q: "هل يمكن إضافة اللغة الإنجليزية؟",
+    a: "نعم، هذا النموذج ثنائي اللغة من البداية ويمكن ربطه بمبدل لغة احترافي.",
+  },
+  {
+    q: "هل يمكن ربطه بصفحات Silver وBlack وRosegold؟",
+    a: "نعم، يمكن ربط كل مجموعة تشطيبات بصفحات SMOU الحالية أو بمعرض صور داخلي.",
+  },
+  {
+    q: "هل يمكن تطويره إلى 3D كامل؟",
+    a: "نعم، المرحلة الحالية واجهة احترافية، والمرحلة التالية يمكن أن تتضمن عارض 3D حقيقي باستخدام Three.js أو Spline.",
+  },
+];
 
-    .nav{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:22px;
-    }
-    .nav a{
-      color:rgba(255,255,255,.92);
-      text-decoration:none;
-      font-weight:800;
-      font-size:15px;
-      padding:10px 10px;
-      border-radius:12px;
-      transition:.2s ease;
-    }
-    .nav a:hover{
-      background: rgba(255,255,255,.10);
-    }
+function cx(...arr) {
+  return arr.filter(Boolean).join(" ");
+}
 
-    .actions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width: 260px;
-      justify-content:flex-end;
-    }
+function SectionTitle({ eyebrow, title, text, center = false }) {
+  return (
+    <div className={cx("mb-8", center && "text-center") }>
+      <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-cyan-200 backdrop-blur">
+        <Sparkles className="h-3.5 w-3.5" />
+        {eyebrow}
+      </div>
+      <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">{title}</h2>
+      <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300 md:text-base">{text}</p>
+    </div>
+  );
+}
 
-    .lang{
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.08);
-      color:#fff;
-      border-radius:999px;
-      padding:10px 14px;
-      font-weight:900;
-      cursor:pointer;
-      transition:.2s;
-    }
-    .lang:hover{ background: rgba(255,255,255,.14); }
+function FeatureCard({ icon: Icon, title, desc }) {
+  return (
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/10 backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/[0.07]">
+      <div className="mb-4 inline-flex rounded-2xl bg-cyan-400/10 p-3 text-cyan-200">
+        <Icon className="h-5 w-5" />
+      </div>
+      <h3 className="mb-2 text-lg font-semibold text-white">{title}</h3>
+      <p className="text-sm leading-7 text-slate-300">{desc}</p>
+    </div>
+  );
+}
 
-    /* ======= HERO ======= */
-    .hero{
-      min-height: 100vh;
-      display:grid;
-      place-items:center;
-      position:relative;
-      overflow:hidden;
-      padding-top:74px;
-    }
+function OptionButton({ active, onClick, children }) {
+  return (
+    <button
+      onClick={onClick}
+      className={cx(
+        "rounded-2xl border px-4 py-3 text-sm transition",
+        active
+          ? "border-cyan-300 bg-cyan-300/15 text-white shadow-lg shadow-cyan-900/20"
+          : "border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white"
+      )}
+    >
+      {children}
+    </button>
+  );
+}
 
-    /* الخلفية (الصورة في نفس المجلد) */
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: url("back.png") center/cover no-repeat;
-      transform: scale(1.03);
-      filter: saturate(1.08) contrast(1.08);
-      z-index:0;
-    }
+function FAQItem({ item, open, onToggle }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
+      <button
+        className="flex w-full items-center justify-between gap-4 px-5 py-4 text-right"
+        onClick={onToggle}
+      >
+        <span className="font-medium text-white">{item.q}</span>
+        <ChevronDown className={cx("h-5 w-5 shrink-0 text-slate-300 transition", open && "rotate-180")}/>
+      </button>
+      {open && <div className="px-5 pb-5 text-sm leading-7 text-slate-300">{item.a}</div>}
+    </div>
+  );
+}
 
-    /* Overlay فخم مثل DAMAC */
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(1200px 600px at 75% 40%, rgba(12,110,210,.30), transparent 60%),
-        linear-gradient(90deg, rgba(5,10,18,.86) 0%, rgba(5,10,18,.56) 45%, rgba(5,10,18,.25) 100%),
-        linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,.10) 45%, rgba(0,0,0,.55) 100%);
-      z-index:1;
-    }
+export default function SmouElevatorDesignerSite() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState(productTypes[0].id);
+  const [selectedCollection, setSelectedCollection] = useState(cabinCollections[0].id);
+  const [capacity, setCapacity] = useState(capacities[2]);
+  const [door, setDoor] = useState(doorOptions[0]);
+  const [finish, setFinish] = useState(finishOptions[0]);
+  const [ceiling, setCeiling] = useState(ceilingOptions[0]);
+  const [floor, setFloor] = useState(floorOptions[0]);
+  const [stops, setStops] = useState(4);
+  const [shaftWidth, setShaftWidth] = useState(1800);
+  const [shaftDepth, setShaftDepth] = useState(1800);
+  const [doorWidth, setDoorWidth] = useState(800);
+  const [pit, setPit] = useState(1000);
+  const [oh, setOh] = useState(3600);
+  const [openFaq, setOpenFaq] = useState(0);
 
-    .hero-content{
-      position:relative;
-      z-index:2;
-      width:min(1200px, 92vw);
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:28px;
-      align-items:center;
-      padding: 40px 0 70px;
-    }
+  const activeType = useMemo(
+    () => productTypes.find((p) => p.id === selectedType) || productTypes[0],
+    [selectedType]
+  );
 
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 14px;
-      border-radius:999px;
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.18);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      font-weight:900;
-      color: rgba(255,255,255,.92);
-      width: fit-content;
-    }
-    .badge .pulse{
-      width:10px;height:10px;border-radius:50%;
-      background: rgba(255,255,255,.95);
-      box-shadow: 0 0 0 8px rgba(255,255,255,.10);
-    }
+  const activeCollection = useMemo(
+    () => cabinCollections.find((c) => c.id === selectedCollection) || cabinCollections[0],
+    [selectedCollection]
+  );
 
-    /* ======= Text Slider ======= */
-    .slider{
-      position:relative;
-      min-height: 260px;
-    }
+  const summary = useMemo(
+    () => [
+      { label: "نوع المصعد", value: `${activeType.nameAr} / ${activeType.nameEn}` },
+      { label: "التصميم", value: `${activeCollection.ar} / ${activeCollection.name}` },
+      { label: "الحمولة", value: capacity },
+      { label: "الباب", value: door },
+      { label: "التشطيب", value: finish },
+      { label: "السقف", value: ceiling },
+      { label: "الأرضية", value: floor },
+      { label: "عدد الوقفات", value: `${stops} Stops` },
+      { label: "مقاس البئر", value: `${shaftWidth} × ${shaftDepth} mm` },
+      { label: "فتحة الباب", value: `${doorWidth} mm` },
+      { label: "الحفرة", value: `${pit} mm` },
+      { label: "الأوفر هيد", value: `${oh} mm` },
+    ],
+    [activeType, activeCollection, capacity, door, finish, ceiling, floor, stops, shaftWidth, shaftDepth, doorWidth, pit, oh]
+  );
 
-    .slide{
-      position:absolute;
-      inset:0;
-      opacity:0;
-      transform: translateY(10px);
-      transition: .55s ease;
-      pointer-events:none;
-    }
-    .slide.active{
-      opacity:1;
-      transform: translateY(0);
-      pointer-events:auto;
-    }
+  const whatsappText = encodeURIComponent(
+    `السلام عليكم، أريد عرض سعر من SMOU GROUP.%0A` +
+      summary.map((s) => `${s.label}: ${s.value}`).join("%0A")
+  );
 
-    h1{
-      margin:16px 0 10px;
-      font-size: clamp(34px, 4.5vw, 60px);
-      line-height:1.05;
-      letter-spacing:-.3px;
-      text-shadow: 0 20px 60px rgba(0,0,0,.35);
-    }
-    .sub{
-      margin: 0 0 22px;
-      font-size: clamp(15px, 1.35vw, 18px);
-      line-height:1.9;
-      color: var(--muted);
-      max-width: 64ch;
-    }
+  return (
+    <div className="min-h-screen bg-[#07111f] text-white" dir="rtl">
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,.18),transparent_25%),radial-gradient(circle_at_left,rgba(56,189,248,.13),transparent_22%),linear-gradient(180deg,#07111f_0%,#081a2d_45%,#06101d_100%)]" />
+        <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:42px_42px]" />
+      </div>
 
-    .dots{
-      display:flex;
-      gap:8px;
-      margin-top: 10px;
-      align-items:center;
-    }
-    .dot{
-      width:10px;height:10px;border-radius:999px;
-      background: rgba(255,255,255,.28);
-      border: 1px solid rgba(255,255,255,.20);
-      cursor:pointer;
-      transition:.2s ease;
-    }
-    .dot.active{
-      width:28px;
-      background: rgba(255,255,255,.75);
-      border-color: rgba(255,255,255,.55);
-    }
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#07111f]/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6 lg:px-8">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-sky-400 to-blue-700 shadow-lg shadow-cyan-900/30">
+              <Building2 className="h-5 w-5 text-slate-950" />
+            </div>
+            <div>
+              <div className="text-xs uppercase tracking-[0.22em] text-cyan-200">SMOU GROUP</div>
+              <div className="text-sm text-slate-300">Elevator Designer Platform</div>
+            </div>
+          </div>
 
-    /* ======= Glass Buttons ======= */
-    .cta-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      align-items:center;
-      margin-top: 18px;
-    }
+          <nav className="hidden items-center gap-6 text-sm text-slate-300 lg:flex">
+            <a href="#home" className="hover:text-white">الرئيسية</a>
+            <a href="#designer" className="hover:text-white">المصمم</a>
+            <a href="#collections" className="hover:text-white">التشطيبات</a>
+            <a href="#services" className="hover:text-white">الخدمات</a>
+            <a href="#contact" className="hover:text-white">التواصل</a>
+          </nav>
 
-    .btn{
-      appearance:none;
-      border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
-      color:#fff;
-      padding: 12px 18px;
-      border-radius: 999px;
-      font-weight: 1000;
-      font-size: 15px;
-      cursor:pointer;
-      transition: .2s ease;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.22);
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      user-select:none;
-    }
+          <div className="hidden items-center gap-3 lg:flex">
+            <a href="https://wa.me/971501035499" className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white transition hover:bg-white/10">
+              WhatsApp
+            </a>
+            <a href="#designer" className="rounded-2xl bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:scale-[1.02]">
+              ابدأ التصميم
+            </a>
+          </div>
 
-    .btn:hover{
-      transform: translateY(-1px);
-      background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.10));
-      border-color: rgba(255,255,255,.40);
-    }
-
-    .btn.primary{
-      border-color: var(--accent);
-      background: linear-gradient(180deg, var(--accent2), rgba(255,255,255,.10));
-    }
-
-    .btn .dot-i{
-      width:10px;height:10px;border-radius:50%;
-      background: rgba(255,255,255,.85);
-      box-shadow: 0 0 0 6px rgba(255,255,255,.12);
-    }
-
-    /* ======= LEFT CARD ======= */
-    .hero-card{
-      justify-self:start;
-      width:min(460px, 100%);
-      border-radius: 28px;
-      padding: 18px;
-      background: rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.16);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-card h3{
-      margin: 6px 0 8px;
-      font-size: 18px;
-      font-weight: 1100;
-      text-align:center;
-    }
-    .hero-card p{
-      margin:0 0 14px;
-      color: rgba(255,255,255,.82);
-      line-height:1.8;
-      font-size:14px;
-      text-align:center;
-    }
-
-    .mini-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-      margin-top:10px;
-    }
-
-    .mini{
-      border-radius: 18px;
-      padding:14px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      text-align:center;
-      transition:.2s ease;
-    }
-    .mini:hover{
-      background: rgba(255,255,255,.10);
-      border-color: rgba(255,255,255,.22);
-      transform: translateY(-1px);
-    }
-    .mini b{
-      display:block;
-      font-size:15px;
-      font-weight:1100;
-      margin-bottom:6px;
-    }
-    .mini span{
-      display:block;
-      font-size:13px;
-      color:rgba(255,255,255,.78);
-    }
-
-    /* ======= Sections (Placeholder) ======= */
-    section.block{
-      position:relative;
-      z-index:2;
-      padding: 80px 0;
-      background: #0b1220;
-      border-top: 1px solid rgba(255,255,255,.06);
-    }
-    section.block .wrap{justify-content:space-between}
-    .title{
-      font-size:28px;
-      font-weight:1000;
-      margin:0;
-    }
-    .desc{
-      margin:10px 0 0;
-      color:rgba(255,255,255,.75);
-      line-height:1.9;
-      max-width:70ch;
-    }
-
-    /* ======= Responsive ======= */
-    @media (max-width: 980px){
-      .nav{display:none;}
-      .brand{min-width:auto}
-      .actions{min-width:auto}
-      .hero-content{
-        grid-template-columns: 1fr;
-        padding: 28px 0 60px;
-      }
-      .hero-card{justify-self:stretch}
-      .slider{min-height: 300px;}
-    }
-  </style>
-</head>
-
-<body>
-  <!-- TOP BAR -->
-  <header class="topbar">
-    <div class="wrap">
-      <!-- Logo + Name -->
-      <div class="brand">
-        <img src="logo.png" alt="SMOU GROUP" />
-        <div class="brand-text">
-          <strong>SMOU GROUP</strong>
-          <span>مجموعة سمو</span>
+          <button className="lg:hidden" onClick={() => setMobileOpen((v) => !v)}>
+            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
-      </div>
+        {mobileOpen && (
+          <div className="border-t border-white/10 bg-[#08131f] px-4 py-4 lg:hidden">
+            <div className="flex flex-col gap-3 text-sm text-slate-300">
+              <a href="#home">الرئيسية</a>
+              <a href="#designer">المصمم</a>
+              <a href="#collections">التشطيبات</a>
+              <a href="#services">الخدمات</a>
+              <a href="#contact">التواصل</a>
+            </div>
+          </div>
+        )}
+      </header>
 
-      <nav class="nav" aria-label="Main">
-        <a href="#home">الرئيسية</a>
-        <a href="#about">من نحن</a>
-        <a href="#services">خدماتنا</a>
-        <a href="#products">منتجاتنا</a>
-        <a href="#media">الإعلام</a>
-        <a href="#contact">التواصل</a>
-      </nav>
+      <main>
+        <section id="home" className="mx-auto grid min-h-[92vh] max-w-7xl items-center gap-10 px-4 py-16 md:px-6 lg:grid-cols-[1.1fr_.9fr] lg:px-8 lg:py-20">
+          <div>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs text-cyan-100 backdrop-blur">
+              <Sparkles className="h-3.5 w-3.5" />
+              منصة تصميم مصاعد تفاعلية لمجموعة سمو
+            </div>
+            <h1 className="max-w-4xl text-4xl font-black leading-tight md:text-6xl">
+              صمّم مصعدك مع <span className="bg-gradient-tol from-cyan-200 via-sky-300 to-white bg-clip-text text-transparent">SMOU GROUP</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
+              موقع احترافي كامل لعرض خدمات SMOU GROUP في المصاعد والتحديث والصيانة، مع مصمم تفاعلي يساعد العميل على اختيار نوع المصعد، المقاسات، الأبواب، التشطيبات، والإضاءة ثم إرسال الطلب مباشرة لفريقكم.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="#designer" className="inline-flex items-center gap-2 rounded-2xl bg-cyan-300 px-5 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-900/20 transition hover:scale-[1.02]">
+                ابدأ التصميم الآن
+                <ArrowLeft className="h-4 w-4" />
+              </a>
+              <a href="#contact" className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-medium text-white transition hover:bg-white/10">
+                اطلب استشارة
+              </a>
+            </div>
 
-      <div class="actions">
-        <button class="lang" id="langToggle" type="button" aria-label="Change language">EN</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <main id="home" class="hero">
-    <section class="hero-content">
-
-      <!-- RIGHT: TEXT SLIDER -->
-      <div>
-        <div class="badge"><span class="pulse"></span> SMOU GROUP • Elevators & AC</div>
-
-        <div class="slider" id="heroSlider">
-          <!-- Slide 1 -->
-          <div class="slide active">
-            <h1 data-ar="ارتقِ مع سمو<br/>بمشروعك إلى الأفضل"
-                data-en="Elevate with SMOU<br/>to the next level"></h1>
-
-            <p class="sub"
-               data-ar="نُقدّم حلول المصاعد والتكييف بمنهج احترافي يجمع بين الدقة والجمال، مع التزام صارم بمعايير <b>الأمن والسلامة</b> في كل مرحلة."
-               data-en="We deliver elevators and AC solutions with a professional approach that blends precision and aesthetics, with strict commitment to <b>safety & compliance</b> at every step."></p>
+            <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+              {stats.map((item) => (
+                <div key={item.label} className="rounded-3xl border border-white/10 bg-white/5 p-4 text-center backdrop-blur-md">
+                  <div className="text-2xl font-bold text-white">{item.value}</div>
+                  <div className="mt-1 text-xs text-slate-300">{item.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <!-- Slide 2 -->
-          <div class="slide">
-            <h1 data-ar="الجودة مع سمو<br/>ليست خيارًا.. بل معيار"
-                data-en="Quality with SMOU<br/>is not an option—it's the standard"></h1>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="relative"
+          >
+            <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-cyan-400/20 via-sky-500/10 to-transparent blur-2xl" />
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-4 shadow-2xl backdrop-blur-xl">
+              <div className={cx("relative h-[560px] rounded-[1.5rem] bg-gradient-to-b p-6", activeCollection.accent)}>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.35),transparent_35%)]" />
+                <div className="mx-auto flex h-full max-w-[340px] flex-col rounded-[1.75rem] border border-white/30 bg-black/30 p-4 shadow-2xl">
+                  <div className="mx-auto mt-1 h-4 w-40 rounded-full bg-white/40 blur-[1px]" />
+                  <div className="mt-6 grid h-full grid-cols-[1fr_10px_1fr] gap-2 rounded-[1.2rem] border border-white/20 bg-black/25 p-4">
+                    <div className="rounded-[1rem] border border-white/20 bg-white/10 shadow-inner shadow-white/5" />
+                    <div className="rounded-full bg-white/30" />
+                    <div className="rounded-[1rem] border border-white/20 bg-white/10 shadow-inner shadow-white/5" />
+                  </div>
+                  <div className="mt-4 grid grid-cols-[1fr_auto] gap-4">
+                    <div className="rounded-2xl border border-white/20 bg-black/25 p-3 text-xs text-white/90">
+                      <div className="mb-1 font-semibold">{activeCollection.ar}</div>
+                      <div className="space-y-1 text-[11px] text-white/75">
+                        <div>Wall: {activeCollection.wall}</div>
+                        <div>Floor: {activeCollection.floor}</div>
+                        <div>Ceiling: {activeCollection.ceiling}</div>
+                      </div>
+                    </div>
+                    <div className="flex w-16 items-center justify-center rounded-2xl border border-white/20 bg-black/25">
+                      <div className="space-y-1 text-center text-[10px] text-white/75">
+                        <div>10</div>
+                        <div>9</div>
+                        <div>8</div>
+                        <div className="rounded-md bg-cyan-300 px-2 py-1 font-bold text-slate-950">G</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 grid grid-cols-2 gap-3 text-xs text-slate-300 md:grid-cols-4">
+                <div className="rounded-2xl border border-white/10 bg-[#07111f]/70 p-3">{capacity}</div>
+                <div className="rounded-2xl border border-white/10 bg-[#07111f]/70 p-3">{door}</div>
+                <div className="rounded-2xl border border-white/10 bg-[#07111f]/70 p-3">{shaftWidth}×{shaftDepth}</div>
+                <div className="rounded-2xl border border-white/10 bg-[#07111f]/70 p-3">{stops} Stops</div>
+              </div>
+            </div>
+          </motion.div>
+        </section>
 
-            <p class="sub"
-               data-ar="من التصميم إلى التنفيذ، نضمن جودة ثابتة وموثوقة، ونُطبّق أفضل الممارسات لضمان <b>اعتمادية التشغيل</b> وراحة المستخدم."
-               data-en="From design to delivery, we ensure consistent quality and apply best practices to maximize <b>reliability</b> and user comfort."></p>
+        <section className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {processSteps.map((step) => (
+              <FeatureCard key={step.title} icon={step.icon} title={step.title} desc={step.desc} />
+            ))}
           </div>
+        </section>
 
-          <!-- Slide 3 -->
-          <div class="slide">
-            <h1 data-ar="حلول متكاملة<br/>بأعلى معايير الاستدامة"
-                data-en="Integrated solutions<br/>built for sustainability"></h1>
+        <section id="designer" className="mx-auto max-w-7xl px-4 py-20 md:px-6 lg:px-8">
+          <SectionTitle
+            eyebrow="SMOU DESIGNER"
+            title="مصمم المصاعد التفاعلي"
+            text="واجهة كاملة تشبه مفهوم Elevator Designer لكن بهوية SMOU GROUP، مع خطوات واضحة وملخص نهائي جاهز للإرسال إلى فريق المبيعات أو التطوير الفني."
+          />
 
-            <p class="sub"
-               data-ar="حلول ذكية ترفع كفاءة الطاقة وتدعم <b>الاستدامة</b>، مع أنظمة حديثة تُحقق أداءً أعلى وتكلفة تشغيل أقل على المدى الطويل."
-               data-en="Smart solutions that enhance energy efficiency and support <b>sustainability</b>, delivering higher performance and lower operating cost over time."></p>
+          <div className="grid gap-6 xl:grid-cols-[1.1fr_.9fr]">
+            <div className="space-y-6 rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-2xl backdrop-blur-xl md:p-6">
+              <div>
+                <div className="mb-3 flex items-center gap-2 text-sm text-cyan-200"><Building2 className="h-4 w-4" /> نوع المصعد</div>
+                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  {productTypes.map((type) => (
+                    <button
+                      key={type.id}
+                      onClick={() => setSelectedType(type.id)}
+                      className={cx(
+                        "overflow-hidden rounded-3xl border text-right transition",
+                        selectedType === type.id ? "border-cyan-300 bg-white/10" : "border-white/10 bg-white/5 hover:bg-white/[0.07]"
+                      )}
+                    >
+                      <div className="h-28 bg-cover bg-center" style={{ backgroundImage: `url(${type.image})` }} />
+                      <div className="p-4">
+                        <div className="font-semibold text-white">{type.nameAr}</div>
+                        <div className="text-xs text-slate-400">{type.nameEn}</div>
+                        <div className="mt-2 text-xs leading-6 text-slate-300">{type.desc}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="mb-3 flex items-center gap-2 text-sm text-cyan-200"><Palette className="h-4 w-4" /> مجموعات التشطيب</div>
+                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  {cabinCollections.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => setSelectedCollection(item.id)}
+                      className={cx(
+                        "rounded-3xl border p-4 text-right transition",
+                        selectedCollection === item.id ? "border-cyan-300 bg-white/10" : "border-white/10 bg-white/5 hover:bg-white/[0.07]"
+                      )}
+                    >
+                      <div className={cx("mb-3 h-24 rounded-2xl bg-gradient-to-br", item.accent)} />
+                      <div className="font-semibold text-white">{item.ar}</div>
+                      <div className="text-xs text-slate-400">{item.name}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2">
+                <div>
+                  <div className="mb-3 flex items-center gap-2 text-sm text-cyan-200"><ShieldCheck className="h-4 w-4" /> المواصفات الأساسية</div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {capacities.map((item) => (
+                      <OptionButton key={item} active={capacity === item} onClick={() => setCapacity(item)}>{item}</OptionButton>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-3 flex items-center gap-2 text-sm text-cyan-200"><DoorOpen className="h-4 w-4" /> نوع الباب</div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {doorOptions.map((item) => (
+                      <OptionButton key={item} active={door === item} onClick={() => setDoor(item)}>{item}</OptionButton>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-3">
+                <div>
+                  <div className="mb-3 text-sm text-cyan-200">التشطيب</div>
+                  <div className="space-y-3">
+                    {finishOptions.map((item) => (
+                      <OptionButton key={item} active={finish === item} onClick={() => setFinish(item)}>{item}</OptionButton>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-3 text-sm text-cyan-200">السقف والإضاءة</div>
+                  <div className="space-y-3">
+                    {ceilingOptions.map((item) => (
+                      <OptionButton key={item} active={ceiling === item} onClick={() => setCeiling(item)}>{item}</OptionButton>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-3 text-sm text-cyan-200">الأرضية</div>
+                  <div className="space-y-3">
+                    {floorOptions.map((item) => (
+                      <OptionButton key={item} active={floor === item} onClick={() => setFloor(item)}>{item}</OptionButton>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="mb-3 flex items-center gap-2 text-sm text-cyan-200"><Ruler className="h-4 w-4" /> المقاسات الهندسية</div>
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  {[
+                    { label: "عدد الوقفات", value: stops, set: setStops, min: 2, max: 20, step: 1 },
+                    { label: "عرض البئر (mm)", value: shaftWidth, set: setShaftWidth, min: 1200, max: 3000, step: 50 },
+                    { label: "عمق البئر (mm)", value: shaftDepth, set: setShaftDepth, min: 1200, max: 3000, step: 50 },
+                    { label: "فتحة الباب (mm)", value: doorWidth, set: setDoorWidth, min: 700, max: 1600, step: 50 },
+                    { label: "الحفرة PIT (mm)", value: pit, set: setPit, min: 200, max: 2000, step: 50 },
+                    { label: "الأوفر هيد OH (mm)", value: oh, set: setOh, min: 2800, max: 6000, step: 100 },
+                  ].map((field) => (
+                    <div key={field.label} className="rounded-3xl border border-white/10 bg-white/5 p-4">
+                      <div className="mb-2 text-sm text-white">{field.label}</div>
+                      <input
+                        type="range"
+                        min={field.min}
+                        max={field.max}
+                        step={field.step}
+                        value={field.value}
+                        onChange={(e) => field.set(Number(e.target.value))}
+                        className="w-full accent-cyan-300"
+                      />
+                      <div className="mt-2 rounded-2xl bg-black/20 px-3 py-2 text-center text-sm text-cyan-100">{field.value}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-2xl backdrop-blur-xl md:p-6">
+                <div className="mb-4 flex items-center justify-between gap-4">
+                  <div>
+                    <div className="text-sm text-cyan-200">Live Preview</div>
+                    <h3 className="text-2xl font-bold text-white">معاينة التصميم</h3>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300">{activeCollection.name}</div>
+                </div>
+                <div className={cx("relative h-[380px] rounded-[1.6rem] border border-white/15 bg-gradient-to-b p-5", activeCollection.accent)}>
+                  <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.45),transparent_60%)]" />
+                  <div className="mx-auto h-full max-w-[250px] rounded-[1.5rem] border border-white/20 bg-black/25 p-3 shadow-2xl">
+                    <div className="h-8 rounded-2xl bg-white/20" />
+                    <div className="mt-3 grid h-[76%] grid-cols-[1fr_8px_1fr] gap-2 rounded-[1rem] border border-white/10 bg-white/10 p-2">
+                      <div className="rounded-[0.9rem] border border-white/10 bg-white/10" />
+                      <div className="rounded-full bg-white/35" />
+                      <div className="rounded-[0.9rem] border border-white/10 bg-white/10" />
+                    </div>
+                    <div className="mt-3 grid grid-cols-[1fr_56px] gap-3">
+                      <div className="rounded-2xl border border-white/10 bg-black/20 p-3 text-[11px] text-white/80">
+                        <div>{finish}</div>
+                        <div>{floor}</div>
+                        <div>{ceiling}</div>
+                      </div>
+                      <div className="rounded-2xl border border-white/10 bg-black/20 p-2 text-center text-[10px] text-white/70">
+                        <div>9</div>
+                        <div>8</div>
+                        <div>7</div>
+                        <div className="mt-1 rounded-md bg-cyan-300 px-1 py-1 font-bold text-slate-950">G</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-2xl backdrop-blur-xl md:p-6">
+                <div className="mb-4 flex items-center gap-2 text-cyan-200"><CheckCircle2 className="h-5 w-5" /> ملخص الطلب</div>
+                <div className="space-y-2">
+                  {summary.map((item) => (
+                    <div key={item.label} className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm">
+                      <span className="text-slate-300">{item.label}</span>
+                      <span className="font-medium text-white">{item.value}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-5 grid gap-3 md:grid-cols-2">
+                  <a href={`https://wa.me/971501035499?text=${whatsappText}`} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-cyan-300 px-4 py-3 font-semibold text-slate-950 transition hover:scale-[1.01]">
+                    <MessageCircle className="h-4 w-4" />
+                    إرسال عبر واتساب
+                  </a>
+                  <button className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 font-medium text-white transition hover:bg-white/10">
+                    <Download className="h-4 w-4" />
+                    تنزيل المواصفات PDF
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div class="dots" id="sliderDots" aria-label="Slider dots"></div>
+        <section id="collections" className="mx-auto max-w-7xl px-4 py-20 md:px-6 lg:px-8">
+          <SectionTitle
+            eyebrow="SMOU CABIN COLLECTIONS"
+            title="مجموعات تشطيبات قابلة للربط بمواقعكم الحالية"
+            text="تم تصميم هذا القسم ليستوعب المجموعات التي تعملون عليها حالياً مثل Silver Cabin وGolden Cabin وBlack Cabin وRosegold Cabin وPanoramic Glass مع إمكانية الربط بصفحات فرعية أو جولات 360° أو معارض صور."
+          />
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {cabinCollections.map((item) => (
+              <div key={item.id} className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 shadow-2xl backdrop-blur-md">
+                <div className={cx("h-48 bg-gradient-to-br", item.accent)} />
+                <div className="p-6">
+                  <div className="text-xl font-bold text-white">{item.ar}</div>
+                  <div className="text-sm text-slate-400">{item.name}</div>
+                  <div className="mt-4 space-y-2 text-sm text-slate-300">
+                    <div>Wall: {item.wall}</div>
+                    <div>Floor: {item.floor}</div>
+                    <div>Ceiling: {item.ceiling}</div>
+                  </div>
+                  <div className="mt-5 flex gap-3">
+                    <button className="rounded-2xl bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950">عرض التفاصيل</button>
+                    <button className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white">ربط بالمعرض</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="services" className="mx-auto max-w-7xl px-4 py-20 md:px-6 lg:px-8">
+          <SectionTitle
+            eyebrow="SERVICES"
+            title="خدمات مجموعة سمو"
+            text="يمكن توسيع الموقع ليكون أكثر من مجرد مصمم، بحيث يتحول إلى منصة تعريفية كاملة تشمل التصميم والتوريد والتركيب والصيانة والتحديث، مع صفحات منفصلة لكل خدمة ونماذج طلب مرتبطة بها."
+          />
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            <FeatureCard icon={Palette} title="Design" desc="تصميم المصاعد واختيار المواد والتشطيبات والمواصفات المناسبة للمشروع." />
+            <FeatureCard icon={Wrench} title="Installation" desc="توريد وتركيب المصاعد والأنظمة الملحقة وفق المعايير الفنية والموقع." />
+            <FeatureCard icon={ShieldCheck} title="Maintenance" desc="عقود صيانة دورية ووقائية واستجابة سريعة للأعطال وخدمة ما بعد البيع." />
+            <FeatureCard icon={Lightbulb} title="Modernization" desc="تحديث أنظمة التحكم والكابينة والأبواب ورفع الكفاءة التشغيلية للمصعد." />
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 py-20 md:px-6 lg:px-8">
+          <div className="grid gap-6 lg:grid-cols-[1fr_.9fr]">
+            <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-xl md:p-8">
+              <SectionTitle
+                eyebrow="WHY SMOU"
+                title="لماذا هذا التصميم مناسب لـ SMOU GROUP؟"
+                text="لأنه يجمع بين أسلوب الشركات العقارية الفاخرة والواجهة الهندسية العملية، ويخدم طبيعة SMOU في المصاعد والتكييف والتشطيبات المميزة، مع قابلية تطويره لاحقاً إلى منصة 3D وربطه بمخزون المنتجات أو صفحات المشاريع والتوريد والصيانة."
+              />
+              <div className="grid gap-4 md:grid-cols-2">
+                {[
+                  "تصميم فاخر مستوحى من الطابع المؤسسي الراقي",
+                  "واجهة عربية RTL مع جاهزية للإنجليزية",
+                  "إمكانية الربط مع WhatsApp ونماذج طلب السعر",
+                  "جاهز للربط مع صفحات الكابينات الحالية",
+                  "قابل للتحويل إلى موقع متعدد الصفحات",
+                  "مناسب للنشر على GitHub Pages أو استضافة مستقلة",
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-slate-200">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-cyan-200" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-xl md:p-8">
+              <SectionTitle
+                eyebrow="FAQ"
+                title="أسئلة متكررة"
+                text="أهم النقاط التي غالباً ستحتاجونها عند تشغيل المنصة وربطها بالموقع الرئيسي smougroup.com."
+              />
+              <div className="space-y-3">
+                {faqs.map((item, index) => (
+                  <FAQItem key={item.q} item={item} open={openFaq === index} onToggle={() => setOpenFaq(openFaq === index ? -1 : index)} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="mx-auto max-w-7xl px-4 py-20 md:px-6 lg:px-8">
+          <div className="grid gap-6 lg:grid-cols-[.95fr_1.05fr]">
+            <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-xl md:p-8">
+              <SectionTitle
+                eyebrow="CONTACT"
+                title="ابدأ مشروعك مع SMOU GROUP"
+                text="هذا القسم جاهز لربطه بنموذج حقيقي يرسل إلى البريد الرسمي أو CRM داخلي أو WhatsApp Business."
+              />
+              <div className="space-y-4 text-sm text-slate-300">
+                <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3"><Phone className="h-4 w-4 text-cyan-200" /> +971 50 103 5499</div>
+                <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3"><Mail className="h-4 w-4 text-cyan-200" /> info@smou.ae</div>
+                <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3"><Globe className="h-4 w-4 text-cyan-200" /> smougroup.com</div>
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-xl md:p-8">
+              <div className="grid gap-4 md:grid-cols-2">
+                <input className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none placeholder:text-slate-500" placeholder="الاسم الكامل" />
+                <input className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none placeholder:text-slate-500" placeholder="رقم الهاتف" />
+                <input className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none placeholder:text-slate-500 md:col-span-2" placeholder="البريد الإلكتروني" />
+                <input className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none placeholder:text-slate-500" placeholder="المدينة / الإمارة" />
+                <input className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none placeholder:text-slate-500" placeholder="نوع المشروع" />
+                <textarea rows={6} className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none placeholder:text-slate-500 md:col-span-2" placeholder="تفاصيل المشروع أو الطلب" />
+              </div>
+              <button className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-cyan-300 px-5 py-3 font-semibold text-slate-950 transition hover:scale-[1.01]">
+                <Send className="h-4 w-4" />
+                إرسال الطلب
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-white/10 bg-black/20">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 text-sm text-slate-400 md:px-6 lg:grid-cols-4 lg:px-8">
+          <div>
+            <div className="mb-3 text-lg font-bold text-white">SMOU GROUP</div>
+            <p className="leading-7">
+              منصة عرض وتصميم مصاعد احترافية قابلة للتطوير، مناسبة لهوية SMOU ومشاريعها في المصاعد والتشطيبات والخدمات الفنية.
+            </p>
+          </div>
+          <div>
+            <div className="mb-3 font-semibold text-white">روابط سريعة</div>
+            <div className="space-y-2">
+              <div>الرئيسية</div>
+              <div>المصمم</div>
+              <div>الخدمات</div>
+              <div>تواصل معنا</div>
+            </div>
+          </div>
+          <div>
+            <div className="mb-3 font-semibold text-white">الخدمات</div>
+            <div className="space-y-2">
+              <div>Passenger Elevators</div>
+              <div>Panoramic Elevators</div>
+              <div>Modernization</div>
+              <div>Maintenance</div>
+            </div>
+          </div>
+          <div>
+            <div className="mb-3 font-semibold text-white">Contact</div>
+            <div className="space-y-2">
+              <div>+971 50 103 5499</div>
+              <div>info@smou.ae</div>
+              <div>smougroup.com</div>
+            </div>
+          </div>
         </div>
-
-        <div class="cta-row">
-          <a class="btn primary" href="#services"><span class="dot-i"></span> خدماتنا</a>
-          <a class="btn" href="#contact"><span class="dot-i"></span> تواصل معنا</a>
-          <a class="btn" href="#products"><span class="dot-i"></span> استعرض المنتجات</a>
-        </div>
-      </div>
-
-      <!-- LEFT CARD -->
-      <aside class="hero-card">
-        <h3>سمو… خبرة تُترجم إلى ثقة</h3>
-        <p>حلول مصاعد وتكييف بمعايير عالية — فريق متخصص، تنفيذ مضبوط، ودعم مستمر.</p>
-
-        <div class="mini-grid">
-          <div class="mini">
-            <b>تكييف</b>
-            <span>توريد • تركيب • صيانة</span>
-          </div>
-          <div class="mini">
-            <b>مصاعد</b>
-            <span>توريد • تركيب • تحديث</span>
-          </div>
-          <div class="mini">
-            <b>صيانة</b>
-            <span>عقود • زيارات • طوارئ</span>
-          </div>
-          <div class="mini">
-            <b>تصميم</b>
-            <span>كبائن • بانوراما • ديكور</span>
-          </div>
-        </div>
-      </aside>
-
-    </section>
-  </main>
-
-  <!-- Sections (placeholders) -->
-  <section id="about" class="block">
-    <div class="wrap">
-      <div>
-        <h2 class="title">من نحن</h2>
-        <p class="desc">
-          مجموعة سمو تقدم حلول المصاعد والتكييف بأعلى المعايير، مع خبرة في التوريد والتركيب والصيانة،
-          وتركيز كامل على الجودة وتجربة العميل.
-        </p>
-      </div>
+      </footer>
     </div>
-  </section>
-
-  <section id="services" class="block">
-    <div class="wrap">
-      <div>
-        <h2 class="title">خدماتنا</h2>
-        <p class="desc">
-          توريد وتركيب المصاعد، تحديث المصاعد، صيانة شاملة، حلول تكييف للمشاريع السكنية والتجارية.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section id="products" class="block">
-    <div class="wrap">
-      <div>
-        <h2 class="title">منتجاتنا</h2>
-        <p class="desc">
-          كبائن متنوعة وتشطيبات فاخرة، حلول بانوراما، وموديلات متعددة تناسب كل مشروع.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section id="media" class="block">
-    <div class="wrap">
-      <div>
-        <h2 class="title">الإعلام</h2>
-        <p class="desc">أحدث الأخبار، المشاريع، والمواد التعريفية الخاصة بمجموعة سمو.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="block">
-    <div class="wrap">
-      <div>
-        <h2 class="title">التواصل</h2>
-        <p class="desc">
-          تواصل معنا لطلب عرض سعر أو استشارة فنية. WhatsApp: +971 50 103 5499
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <script>
-  (function(){
-    // ===== Slider =====
-    const slider = document.getElementById('heroSlider');
-    const slides = Array.from(slider.querySelectorAll('.slide'));
-    const dotsWrap = document.getElementById('sliderDots');
-    let index = 0;
-    let timer = null;
-
-    slides.forEach((_, i) => {
-      const d = document.createElement('div');
-      d.className = 'dot' + (i === 0 ? ' active' : '');
-      d.addEventListener('click', () => go(i, true));
-      dotsWrap.appendChild(d);
-    });
-    const dots = Array.from(dotsWrap.querySelectorAll('.dot'));
-
-    function setActive(i){
-      slides.forEach((s, k) => s.classList.toggle('active', k === i));
-      dots.forEach((d, k) => d.classList.toggle('active', k === i));
-      index = i;
-    }
-    function next(){ setActive((index + 1) % slides.length); }
-    function go(i, reset){
-      setActive(i);
-      if(reset){
-        clearInterval(timer);
-        timer = setInterval(next, 4500);
-      }
-    }
-    timer = setInterval(next, 4500);
-    slider.addEventListener('mouseenter', () => clearInterval(timer));
-    slider.addEventListener('mouseleave', () => {
-      clearInterval(timer);
-      timer = setInterval(next, 4500);
-    });
-
-    // ===== Language Toggle =====
-    const btn = document.getElementById('langToggle');
-    const html = document.documentElement;
-
-    const navLinks = Array.from(document.querySelectorAll('.nav a'));
-    const ctaBtns = {
-      services: document.querySelector('.cta-row a[href="#services"]'),
-      contact:  document.querySelector('.cta-row a[href="#contact"]'),
-      products: document.querySelector('.cta-row a[href="#products"]'),
-    };
-
-    const secAbout = document.querySelector('#about .title');
-    const secServices = document.querySelector('#services .title');
-    const secProducts = document.querySelector('#products .title');
-    const secMedia = document.querySelector('#media .title');
-    const secContact = document.querySelector('#contact .title');
-
-    const cardTitle = document.querySelector('.hero-card h3');
-    const cardPara  = document.querySelector('.hero-card p');
-    const miniTitles = Array.from(document.querySelectorAll('.mini b'));
-    const miniSubs   = Array.from(document.querySelectorAll('.mini span'));
-
-    function applyHeroLang(lang){
-      slides.forEach(slide => {
-        const h = slide.querySelector('h1');
-        const p = slide.querySelector('.sub');
-        if(h) h.innerHTML = (lang === 'en') ? h.dataset.en : h.dataset.ar;
-        if(p) p.innerHTML = (lang === 'en') ? p.dataset.en : p.dataset.ar;
-      });
-    }
-
-    function setLang(lang){
-      const isEn = lang === 'en';
-
-      html.lang = isEn ? 'en' : 'ar';
-      html.dir  = isEn ? 'ltr' : 'rtl';
-
-      btn.textContent = isEn ? 'AR' : 'EN';
-
-      applyHeroLang(lang);
-
-      const arNav = ['الرئيسية','من نحن','خدماتنا','منتجاتنا','الإعلام','التواصل'];
-      const enNav = ['Home','About','Services','Products','Media','Contact'];
-      navLinks.forEach((a,i)=> a.textContent = (isEn ? enNav[i] : arNav[i]));
-
-      if(ctaBtns.services) ctaBtns.services.innerHTML = `<span class="dot-i"></span> ${isEn ? 'Our Services' : 'خدماتنا'}`;
-      if(ctaBtns.contact)  ctaBtns.contact.innerHTML  = `<span class="dot-i"></span> ${isEn ? 'Contact Us' : 'تواصل معنا'}`;
-      if(ctaBtns.products) ctaBtns.products.innerHTML = `<span class="dot-i"></span> ${isEn ? 'Browse Products' : 'استعرض المنتجات'}`;
-
-      if(secAbout)    secAbout.textContent    = isEn ? 'About' : 'من نحن';
-      if(secServices) secServices.textContent = isEn ? 'Services' : 'خدماتنا';
-      if(secProducts) secProducts.textContent = isEn ? 'Products' : 'منتجاتنا';
-      if(secMedia)    secMedia.textContent    = isEn ? 'Media' : 'الإعلام';
-      if(secContact)  secContact.textContent  = isEn ? 'Contact' : 'التواصل';
-
-      if(cardTitle) cardTitle.textContent = isEn ? 'SMOU… Experience You Can Trust' : 'سمو… خبرة تُترجم إلى ثقة';
-      if(cardPara)  cardPara.textContent  = isEn ? 'Premium elevators & AC solutions — expert team, precise execution, and continuous support.'
-                                                : 'حلول مصاعد وتكييف بمعايير عالية — فريق متخصص، تنفيذ مضبوط، ودعم مستمر.';
-
-      const arMiniT = ['تكييف','مصاعد','صيانة','تصميم'];
-      const enMiniT = ['Air Conditioning','Elevators','Maintenance','Design'];
-      const arMiniS = ['توريد • تركيب • صيانة','توريد • تركيب • تحديث','عقود • زيارات • طوارئ','كبائن • بانوراما • ديكور'];
-      const enMiniS = ['Supply • Installation • Service','Supply • Installation • Modernization','Contracts • Visits • Emergency','Cabins • Panoramic • Décor'];
-
-      miniTitles.forEach((el,i)=> el.textContent = (isEn ? enMiniT[i] : arMiniT[i]));
-      miniSubs.forEach((el,i)=> el.textContent   = (isEn ? enMiniS[i] : arMiniS[i]));
-
-      localStorage.setItem('smou_lang', lang);
-    }
-
-    const saved = localStorage.getItem('smou_lang') || 'ar';
-    setLang(saved);
-
-    btn.addEventListener('click', () => {
-      const current = localStorage.getItem('smou_lang') || 'ar';
-      setLang(current === 'ar' ? 'en' : 'ar');
-    });
-  })();
-  </script>
-</body>
-</html>
+  );
+}
