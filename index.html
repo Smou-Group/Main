@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+
+<html dir="rtl" lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>مجموعة سمو للمصاعد والتكييف والحلول المنزلية | SMOU GROUP</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
 <style>
   :root{
     --navy-950:#04070D;
@@ -32,7 +33,9 @@
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
-    background:var(--navy-950);
+    background:
+      linear-gradient(rgba(4,7,13,.78),rgba(4,7,13,.88)),
+      url("back.png") center center / cover fixed no-repeat;
     color:var(--white);
     font-family:'Cairo',sans-serif;
     overflow-x:hidden;
@@ -478,507 +481,493 @@
   }
   @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
   .wa-float svg{width:27px;height:27px;color:var(--navy-950);}
+
+  /* ---------- custom images: background + service/product sections ---------- */
+  .service-image{
+    width:100%;
+    height:190px;
+    object-fit:cover;
+    border-radius:18px;
+    margin-bottom:22px;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 18px 45px rgba(0,0,0,.32);
+    transition:transform .55s var(--ease-soft), filter .55s var(--ease-soft);
+  }
+  .svc-card{overflow:hidden;}
+  .svc-card:hover .service-image{transform:scale(1.045);filter:saturate(1.08) contrast(1.04);}
+
+  .prod-card > img.prod-image{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:0;
+    opacity:.74;
+    transition:transform .7s var(--ease-soft), opacity .7s var(--ease-soft);
+  }
+  .prod-card:hover > img.prod-image{transform:scale(1.08);opacity:.88;}
+  .prod-card::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:linear-gradient(to top,rgba(4,7,13,.96),rgba(4,7,13,.38),rgba(4,7,13,.12));
+    pointer-events:none;
+  }
+  .prod-card .tag{z-index:3;}
+  .prod-card .content{z-index:3;}
+
+  .knx-photo{
+    width:100%;
+    min-height:420px;
+    border-radius:26px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    box-shadow:0 30px 70px rgba(0,0,0,.45);
+    position:relative;
+  }
+  .knx-photo img{width:100%;height:100%;object-fit:cover;min-height:420px;opacity:.86;}
+  .knx-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(4,7,13,.72),transparent 60%);}
+
 </style>
 </head>
 <body>
-
-  <div class="orb-field"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
-  <div class="grain"></div>
-
-  <!-- Cinematic intro -->
-  <div class="doors" id="doors">
-    <div class="door left"></div>
-    <div class="beam"></div>
-    <div class="brandmark">SMOU GROUP</div>
-    <div class="door right"></div>
-  </div>
-
-  <!-- scroll signature -->
-  <div class="floor-rail">
-    <div class="track"><div class="glow-node" id="floorGlow"></div></div>
-    <div class="label"><div class="fnum num" id="floorNum">01</div><div class="fname" id="floorLabel">الرئيسية</div></div>
-  </div>
-
-  <header id="siteHeader">
-    <div class="container">
-      <div class="nav-pill">
-        <div class="brand">
-          <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#04101F" stroke-width="2.4" stroke-linecap="round"><path d="M7 3v18M17 3v18M7 9l3-3 3 3M17 15l-3 3-3-3"/></svg></span>
-          <span>سمو<small>SMOU GROUP</small></span>
-        </div>
-        <nav class="main-nav">
-          <a href="#home">الرئيسية</a>
-          <a href="#services">خدماتنا</a>
-          <a href="#why">لماذا سمو</a>
-          <a href="#process">رحلتنا</a>
-          <a href="#products">منتجاتنا</a>
-          <a href="#smarthome">البيت الذكي</a>
-          <a href="#faq">الأسئلة</a>
-        </nav>
-        <a href="#contact" class="btn btn-primary header-cta">اطلب عرض سعر</a>
-        <button class="burger" id="burgerBtn" aria-label="فتح القائمة">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <div class="drawer" id="drawer">
-    <div class="close" id="drawerClose">×</div>
-    <a href="#home">الرئيسية</a>
-    <a href="#services">خدماتنا</a>
-    <a href="#why">لماذا سمو</a>
-    <a href="#process">رحلتنا</a>
-    <a href="#products">منتجاتنا</a>
-    <a href="#smarthome">البيت الذكي</a>
-    <a href="#faq">الأسئلة الشائعة</a>
-    <a href="#contact">تواصل معنا</a>
-  </div>
-
-  <!-- HERO -->
-  <section class="hero" id="home" data-floor="01" data-floor-name="الرئيسية">
-    <div class="container hero-grid">
-      <div>
-        <div class="eyebrow reveal"><span class="dot"></span> مجموعة سمو للمصاعد والتكييف والحلول المنزلية</div>
-        <h1 class="reveal"><span class="w-bold">نرتقي</span> <span class="w-light">بمشروعك إلى</span> <span class="accent">آفاق جديدة</span></h1>
-        <p class="lead reveal">نصمم، نركّب، ونصون المصاعد وأنظمة التكييف وحلول المنازل الذكية للمشاريع السكنية والتجارية والحكومية في جميع أنحاء الإمارات — بخبرة تمتد لأكثر من 14 عامًا وثقة أكثر من 1900 عميل.</p>
-        <div class="hero-actions reveal">
-          <a href="#contact" class="btn btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<div class="orb-field"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+<div class="grain"></div>
+<!-- Cinematic intro -->
+<div class="doors" id="doors">
+<div class="door left"></div>
+<div class="beam"></div>
+<div class="brandmark">SMOU GROUP</div>
+<div class="door right"></div>
+</div>
+<!-- scroll signature -->
+<div class="floor-rail">
+<div class="track"><div class="glow-node" id="floorGlow"></div></div>
+<div class="label"><div class="fnum num" id="floorNum">01</div><div class="fname" id="floorLabel">الرئيسية</div></div>
+</div>
+<header id="siteHeader">
+<div class="container">
+<div class="nav-pill">
+<div class="brand">
+<span class="mark"><svg fill="none" stroke="#04101F" stroke-linecap="round" stroke-width="2.4" viewbox="0 0 24 24"><path d="M7 3v18M17 3v18M7 9l3-3 3 3M17 15l-3 3-3-3"></path></svg></span>
+<span>سمو<small>SMOU GROUP</small></span>
+</div>
+<nav class="main-nav">
+<a href="#home">الرئيسية</a>
+<a href="#services">خدماتنا</a>
+<a href="#why">لماذا سمو</a>
+<a href="#process">رحلتنا</a>
+<a href="#products">منتجاتنا</a>
+<a href="#smarthome">البيت الذكي</a>
+<a href="#faq">الأسئلة</a>
+</nav>
+<a class="btn btn-primary header-cta" href="#contact">اطلب عرض سعر</a>
+<button aria-label="فتح القائمة" class="burger" id="burgerBtn">
+<svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+</button>
+</div>
+</div>
+</header>
+<div class="drawer" id="drawer">
+<div class="close" id="drawerClose">×</div>
+<a href="#home">الرئيسية</a>
+<a href="#services">خدماتنا</a>
+<a href="#why">لماذا سمو</a>
+<a href="#process">رحلتنا</a>
+<a href="#products">منتجاتنا</a>
+<a href="#smarthome">البيت الذكي</a>
+<a href="#faq">الأسئلة الشائعة</a>
+<a href="#contact">تواصل معنا</a>
+</div>
+<!-- HERO -->
+<section class="hero" data-floor="01" data-floor-name="الرئيسية" id="home">
+<div class="container hero-grid">
+<div>
+<div class="eyebrow reveal"><span class="dot"></span> مجموعة سمو للمصاعد والتكييف والحلول المنزلية</div>
+<h1 class="reveal"><span class="w-bold">نرتقي</span> <span class="w-light">بمشروعك إلى</span> <span class="accent">آفاق جديدة</span></h1>
+<p class="lead reveal">نصمم، نركّب، ونصون المصاعد وأنظمة التكييف وحلول المنازل الذكية للمشاريع السكنية والتجارية والحكومية في جميع أنحاء الإمارات — بخبرة تمتد لأكثر من 14 عامًا وثقة أكثر من 1900 عميل.</p>
+<div class="hero-actions reveal">
+<a class="btn btn-primary" href="#contact">
+<svg fill="none" height="16" stroke="currentColor" stroke-width="2.4" viewbox="0 0 24 24" width="16"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
             احصل على استشارة مجانية
           </a>
-          <a href="#services" class="btn btn-ghost">استكشف خدماتنا</a>
-        </div>
-        <div class="hero-stats reveal">
-          <div class="stat"><div class="num"><span class="counter" data-target="14">0</span><span class="plus">+</span></div><div class="stat-label">سنة خبرة</div></div>
-          <div class="stat"><div class="num"><span class="counter" data-target="1300">0</span><span class="plus">+</span></div><div class="stat-label">عميل موثوق</div></div>
-          <div class="stat"><div class="num"><span class="counter" data-target="8">0</span></div><div class="stat-label">أفرع في الدولة</div></div>
-        </div>
-      </div>
-
-      <div class="shaft glass reveal-scale">
-        <div class="shaft-head">
-          <span>لوحة تشغيل سمو المباشرة</span>
-          <div class="live"><i></i> حالة مباشرة</div>
-        </div>
-        <div class="ascend">
-          <div class="rail"></div>
-          <div class="flevel" style="bottom:80%">14<span> صيانة</span></div>
-          <div class="flevel" style="bottom:55%">08<span> تركيب</span></div>
-          <div class="flevel" style="bottom:28%">03<span> تصميم</span></div>
-          <div class="cab"></div>
-        </div>
-        <div class="shaft-footer">
-          <span>تتبّع لحظي لجميع مراحل تنفيذ مشروعك</span>
-          <a href="#contact" class="btn btn-primary" style="padding:10px 20px;font-size:13px;">تواصل الآن</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="pad" id="services" data-floor="02" data-floor-name="خدماتنا">
-    <div class="container">
-      <div class="section-head center">
-        <div class="kicker">خدماتنا</div>
-        <h2 class="section-title reveal">حلول متكاملة تحت سقف واحد</h2>
-        <p class="section-sub reveal">من التصميم الهندسي إلى التركيب والصيانة الدورية، نغطي دورة حياة المصعد ونظام التكييف بالكامل بمعايير عالمية.</p>
-      </div>
-
-      <div class="services-tabs reveal">
-        <button class="tab-btn active" data-tab="elevators">خدمات المصاعد</button>
-        <button class="tab-btn" data-tab="ac">خدمات التكييف</button>
-        <button class="tab-btn" data-tab="ac">الحلول المنزلية</button>
-      </div>
-
-      <div class="svc-panel active" id="elevators">
-        <div class="svc-card glass">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M9 9h6M9 13h6M9 17h6"/></svg></div>
-          <h3>تصميم المصاعد</h3>
-          <p>حلول تصميم مبتكرة تراعي طبيعة المبنى ومتطلبات السلامة والجماليات المعمارية.</p>
-        </div>
-        <div class="svc-card glass">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6-3 2-3-2z"/><path d="M4 22V10M20 22V10M4 22h16"/></svg></div>
-          <h3>تركيب المصاعد</h3>
-          <p>تنفيذ دقيق وفق أعلى المعايير العالمية للسلامة والجودة والالتزام بالجدول الزمني.</p>
-        </div>
-        <div class="svc-card glass">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"/></svg></div>
-          <h3>صيانة المصاعد</h3>
-          <p>فريق فني مختص يقدم عقود صيانة دورية ووقائية لضمان تشغيل آمن ومستمر.</p>
-        </div>
-        <div class="svc-card glass">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3.5-7.1M21 3v6h-6"/></svg></div>
-          <h3>تحديث المصاعد</h3>
-          <p>تجديد أو تغيير الأنظمة القديمة برفع الكفاءة وإطالة العمر التشغيلي للمصعد.</p>
-        </div>
-      </div>
-
-      <div class="svc-panel" id="ac">
-        <div class="svc-card glass">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3v18M6 6l3 3M18 6l-3 3M6 18l3-3M18 18l-3-3"/></svg></div>
-          <h3>تركيب التكييف</h3>
-          <p>تركيب أنظمة Split والمركزية والمبردة بالماء (Chillers) وفق أعلى المعايير.</p>
-        </div>
-        <div class="svc-card glass">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"/></svg></div>
-          <h3>صيانة التكييف</h3>
-          <p>صيانة دورية وإصلاحات وتعبئة غاز التبريد لضمان أعلى كفاءة تبريد.</p>
-        </div>
-        <div class="svc-card glass">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M9 9h6M9 13h6M9 17h6"/></svg></div>
-          <h3>الأنظمة المركزية</h3>
-          <p>حلول تكييف مركزية للمباني التجارية والحكومية الكبرى بكفاءة طاقة عالية.</p>
-        </div>
-        <div class="svc-card glass">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3.5-7.1M21 3v6h-6"/></svg></div>
-          <h3>تحسين الأداء</h3>
-          <p>خدمات تحسين أداء الأنظمة القائمة لخفض استهلاك الطاقة وإطالة عمرها.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY US -->
-  <section class="pad" id="why" data-floor="03" data-floor-name="لماذا سمو">
-    <div class="container">
-      <div class="why-grid">
-        <div>
-          <div class="kicker">لماذا سمو</div>
-          <h2 class="section-title reveal">أساس نجاحنا هو ثقتكم</h2>
-          <p class="section-sub reveal" style="margin-bottom:38px;">لا تُقاس إنجازاتنا بعدد المصاعد وأنظمة التكييف التي ركّبناها فحسب، بل بالثقة التي نلناها من عملائنا في أرقى الفنادق والمشاريع الحكومية والتجارية.</p>
-          <div class="why-list">
-            <div class="why-item reveal">
-              <div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg></div>
-              <div><h4>جودة عالمية</h4><p>نستخدم أفضل المواد والمكونات العالمية لضمان أداء مستدام وآمن.</p></div>
-            </div>
-            <div class="why-item reveal">
-              <div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-              <div><h4>فريق متخصص</h4><p>مهندسون وفنيون ذوو خبرة واسعة ملتزمون بتقديم الأفضل في كل مشروع.</p></div>
-            </div>
-            <div class="why-item reveal">
-              <div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11z"/></svg></div>
-              <div><h4>نزاهة وشفافية</h4><p>نلتزم بأعلى معايير الشفافية في كل خطوة من مراحل المشروع.</p></div>
-            </div>
-            <div class="why-item reveal">
-              <div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
-              <div><h4>تراخيص معتمدة</h4><p>عمليات مرخصة ومطابقة لأعلى معايير السلامة المعتمدة في الدولة.</p></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="why-visual glass reveal-scale">
-          <div class="cell"><span class="num">14+</span><span class="lbl">سنوات خبرة</span></div>
-          <div class="cell"><span class="num">1300+</span><span class="lbl">عميل</span></div>
-          <div class="cell"><span class="num">8</span><span class="lbl">أفرع</span></div>
-          <div class="cell"><span class="num">24/7</span><span class="lbl">دعم فني</span></div>
-          <div class="cell wide">
-            <div><h4 style="font-weight:800;margin-bottom:4px;">مشاريع في الفنادق الراقية والمباني الحكومية</h4><p style="color:var(--slate-400);font-size:13px;">مصاعد فاخرة وأنظمة تكييف متطورة بتنفيذ دقيق</p></div>
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--sky-400)" stroke-width="1.8"><path d="M3 21h18M6 21V9l6-4 6 4v12M10 21v-6h4v6"/></svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section class="pad" id="process" data-floor="04" data-floor-name="رحلتنا معك">
-    <div class="container">
-      <div class="section-head center">
-        <div class="kicker">رحلتنا معك</div>
-        <h2 class="section-title reveal">من الاستشارة إلى التشغيل الكامل</h2>
-        <p class="section-sub reveal">أربع محطات واضحة تأخذ مشروعك من الفكرة إلى التشغيل الآمن والمستدام.</p>
-      </div>
-      <div class="process-rail">
-        <div class="process-grid">
-          <div class="p-step reveal"><div class="badge">01</div><h4>استشارة ومعاينة</h4><p>دراسة احتياجات المبنى وتقديم التوصية الفنية والمالية المناسبة.</p></div>
-          <div class="p-step reveal"><div class="badge">02</div><h4>تصميم هندسي</h4><p>تصميم مخصص يراعي الطراز المعماري ومتطلبات السلامة.</p></div>
-          <div class="p-step reveal"><div class="badge">03</div><h4>تركيب وتشغيل</h4><p>تنفيذ دقيق بإشراف مهندسين معتمدين وفق الجدول الزمني المتفق عليه.</p></div>
-          <div class="p-step reveal"><div class="badge">04</div><h4>صيانة مستمرة</h4><p>عقود صيانة دورية ووقائية تضمن الأداء الآمن على مدار الساعة.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRODUCTS -->
-  <section class="pad" id="products" data-floor="05" data-floor-name="منتجاتنا">
-    <div class="container">
-      <div class="section-head center">
-        <div class="kicker">منتجاتنا</div>
-        <h2 class="section-title reveal">مجموعة متنوعة تلبي كل احتياج</h2>
-        <p class="section-sub reveal">من المصاعد السكنية الفاخرة إلى الأنظمة المركزية للمباني التجارية الكبرى.</p>
-      </div>
-      <div class="prod-grid">
-        <div class="prod-card glass reveal" style="--gx:30%;--gy:20%"><span class="tag">مصاعد</span><div class="content"><h4>مصاعد سكنية وتجارية</h4><p>تصاميم فاخرة تضفي لمسة راقية على مشروعك</p></div></div>
-        <div class="prod-card glass reveal" style="--gx:70%;--gy:30%"><span class="tag">مصاعد</span><div class="content"><h4>مصاعد بضائع ومستشفيات</h4><p>أعلى معايير الأمان والكفاءة للاستخدام المكثف</p></div></div>
-        <div class="prod-card glass reveal" style="--gx:40%;--gy:70%"><span class="tag">مصاعد</span><div class="content"><h4>مصاعد بانورامية</h4><p>حلول مخصصة تجمع بين الوظيفة والجمال المعماري</p></div></div>
-        <div class="prod-card glass reveal" style="--gx:60%;--gy:20%"><span class="tag">تكييف</span><div class="content"><h4>وحدات Split سكنية</h4><p>راحة مثالية لكل غرفة بأعلى كفاءة طاقة</p></div></div>
-        <div class="prod-card glass reveal" style="--gx:25%;--gy:60%"><span class="tag">تكييف</span><div class="content"><h4>أنظمة مركزية</h4><p>للمباني التجارية الكبرى بأداء موثوق</p></div></div>
-        <div class="prod-card glass reveal" style="--gx:75%;--gy:65%"><span class="tag">تكييف</span><div class="content"><h4>أنظمة Chillers</h4><p>تبريد بالماء لمشاريع النطاق الواسع</p></div></div>
-        <div class="prod-card glass reveal" style="--gx:75%;--gy:65%"><span class="tag">الحلول المنزلية </span><div class="content"><h4> SMART HOME</h4><p>نستخدم أنظمة تحكم عالمية KNX</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SMART HOME KNX — radial hub -->
-  <section class="pad" id="smarthome" data-floor="06" data-floor-name="البيت الذكي KNX">
-    <div class="container">
-      <div class="section-head center">
-        <div class="kicker">الحلول المنزلية</div>
-        <h2 class="section-title reveal">البيت الذكي KNX — كل نظام في منزلك، بلغة واحدة</h2>
-        <p class="section-sub reveal">نصمم وننفذ أنظمة أتمتة KNX العالمية التي توحّد الإضاءة والتكييف والستائر والأمن والطاقة والترفيه في منظومة ذكية واحدة، متوافقة مع أكثر من 500 علامة تجارية معتمدة حول العالم.</p>
-      </div>
-
-      <div class="knx-grid">
-        <div>
-          <div class="knx-badge reveal"><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--sky-400);"></span> معيار عالمي معتمد منذ أكثر من 30 عامًا</div>
-          <div class="why-list">
-            <div class="why-item reveal">
-              <div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0012 2z"/></svg></div>
-              <div><h4>إضاءة ذكية</h4><p>تحكم كامل بشدة الإضاءة وسيناريوهاتها حسب الوقت والمزاج والوجود داخل المكان.</p></div>
-            </div>
-            <div class="why-item reveal">
-              <div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"/></svg></div>
-              <div><h4>تحكم بالتكييف</h4><p>ضبط تلقائي لدرجة الحرارة في كل غرفة، مع جدولة ذكية توفر الطاقة دون التضحية بالراحة.</p></div>
-            </div>
-            <div class="why-item reveal">
-              <div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h18M3 15h18M6 4v16M18 4v16"/></svg></div>
-              <div><h4>ستائر وأنظمة تظليل</h4><p>فتح وإغلاق الستائر تلقائيًا مع أشعة الشمس أو حسب جدول زمني مخصص.</p></div>
-            </div>
-            <div class="why-item reveal">
-              <div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11z"/></svg></div>
-              <div><h4>الأمن والمراقبة</h4><p>مراقبة حية وتنبيهات فورية عبر الهاتف، مع سيناريوهات محاكاة الوجود لحماية إضافية.</p></div>
-            </div>
-            <div class="why-item reveal">
-              <div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4.5 12H11l-1 10 8.5-10H12z"/></svg></div>
-              <div><h4>إدارة الطاقة</h4><p>مراقبة استهلاك الطاقة لحظيًا وترشيده تلقائيًا لخفض الفواتير دون تدخل يدوي.</p></div>
-            </div>
-            <div class="why-item reveal">
-              <div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13M9 9l12-2M6 21a3 3 0 100-6 3 3 0 000 6zM18 19a3 3 0 100-6 3 3 0 000 6z"/></svg></div>
-              <div><h4>ترفيه وصوت</h4><p>تكامل مع أنظمة الصوت والترفيه المنزلي ضمن نفس لوحة التحكم الموحدة.</p></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hub-wrap glass reveal-scale">
-          <div class="hub" id="hub">
-            <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <line x1="50" y1="50" x2="50" y2="12"></line>
-              <line x1="50" y1="50" x2="82.9" y2="31"></line>
-              <line x1="50" y1="50" x2="82.9" y2="69"></line>
-              <line x1="50" y1="50" x2="50" y2="88"></line>
-              <line x1="50" y1="50" x2="17.1" y2="69"></line>
-              <line x1="50" y1="50" x2="17.1" y2="31"></line>
-            </svg>
-            <div class="hub-center"><strong>KNX</strong><span>لوحة موحّدة</span></div>
-            <div class="hub-node" style="left:50%;top:12%;animation-delay:0s;">
-              <div class="ic" style="animation-delay:.1s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0012 2z"/></svg></div>
-              <span>إضاءة</span>
-            </div>
-            <div class="hub-node" style="left:82.9%;top:31%;">
-              <div class="ic" style="animation-delay:.3s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"/></svg></div>
-              <span>تكييف</span>
-            </div>
-            <div class="hub-node" style="left:82.9%;top:69%;">
-              <div class="ic" style="animation-delay:.5s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h18M3 15h18M6 4v16M18 4v16"/></svg></div>
-              <span>ستائر</span>
-            </div>
-            <div class="hub-node" style="left:50%;top:88%;">
-              <div class="ic" style="animation-delay:.7s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11z"/></svg></div>
-              <span>أمن</span>
-            </div>
-            <div class="hub-node" style="left:17.1%;top:69%;">
-              <div class="ic" style="animation-delay:.9s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4.5 12H11l-1 10 8.5-10H12z"/></svg></div>
-              <span>طاقة</span>
-            </div>
-            <div class="hub-node" style="left:17.1%;top:31%;">
-              <div class="ic" style="animation-delay:1.1s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13M9 9l12-2M6 21a3 3 0 100-6 3 3 0 000 6zM18 19a3 3 0 100-6 3 3 0 000 6z"/></svg></div>
-              <span>ترفيه</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-stats reveal" style="border-top:1px solid var(--border);padding-top:30px;">
-        <div class="stat"><div class="num"><span class="counter" data-target="30">0</span><span class="plus">+</span></div><div class="stat-label">عامًا معيار عالمي</div></div>
-        <div class="stat"><div class="num"><span class="counter" data-target="8000">0</span><span class="plus">+</span></div><div class="stat-label">جهاز معتمد</div></div>
-        <div class="stat"><div class="num"><span class="counter" data-target="500">0</span><span class="plus">+</span></div><div class="stat-label">علامة تجارية متوافقة</div></div>
-        <div class="stat"><div class="num"><span class="counter" data-target="190">0</span><span class="plus">+</span></div><div class="stat-label">دولة حول العالم</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="pad" id="faq" data-floor="07" data-floor-name="الأسئلة الشائعة">
-    <div class="container">
-      <div class="section-head center">
-        <div class="kicker">الأسئلة الشائعة</div>
-        <h2 class="section-title reveal">كل ما تحتاج معرفته</h2>
-      </div>
-      <div class="faq-wrap">
-        <div class="faq-item glass reveal">
-          <div class="faq-q">ما هي أنواع المصاعد التي تقدمونها؟ <span class="plus">+</span></div>
-          <div class="faq-a"><p>نقدم مجموعة شاملة من المصاعد لتلبية مختلف الاحتياجات، بما في ذلك المصاعد السكنية، التجارية، مصاعد المستشفيات، ومصاعد البضائع، بالإضافة إلى المصاعد البانورامية والحلول المخصصة.</p></div>
-        </div>
-        <div class="faq-item glass reveal">
-          <div class="faq-q">هل تقدمون خدمات الصيانة الدورية للمصاعد؟ <span class="plus">+</span></div>
-          <div class="faq-a"><p>نعم، نقدم عقود صيانة شاملة ووقائية لجميع أنواع المصاعد، بهدف ضمان عمل المصعد بكفاءة وأمان على مدار الساعة وتقليل الأعطال المفاجئة.</p></div>
-        </div>
-        <div class="faq-item glass reveal">
-          <div class="faq-q">ما هي أنظمة التكييف التي تقومون بتركيبها؟ <span class="plus">+</span></div>
-          <div class="faq-a"><p>نقوم بتركيب أنظمة التكييف المنفصلة (Split)، والمركزية، والمبردة بالماء (Chillers) لتلبية كافة الاحتياجات.</p></div>
-        </div>
-        <div class="faq-item glass reveal">
-          <div class="faq-q">هل يمكنني تخصيص تصميم المصعد ليناسب ديكور المبنى؟ <span class="plus">+</span></div>
-          <div class="faq-a"><p>نعم، نقدم خيارات تخصيص واسعة تشمل الأبواب والأرضيات والإضاءة والمقصورات الداخلية، بما يتناسب مع التصميم المعماري لمبنى العميل.</p></div>
-        </div>
-        <div class="faq-item glass reveal">
-          <div class="faq-q">ما هي خدمات صيانة التكييف التي تقدمونها؟ <span class="plus">+</span></div>
-          <div class="faq-a"><p>نقدم صيانة دورية وإصلاحات وتعبئة لغاز التبريد، بالإضافة إلى خدمات تحسين الأداء لضمان كفاءة نظامك.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="pad" style="padding-top:0;">
-    <div class="container">
-      <div class="cta-banner glass reveal-scale">
-        <h3>جاهزون لنرتقي بمشروعك القادم؟ تواصل مع فريقنا اليوم واحصل على استشارة مجانية.</h3>
-        <div class="actions">
-          <a href="https://wa.me/971501035499" class="btn btn-primary">تواصل عبر واتساب</a>
-          <a href="tel:+97165370677" class="btn btn-ghost">اتصل بنا مباشرة</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="pad" id="contact" data-floor="08" data-floor-name="تواصل معنا">
-    <div class="container">
-      <div class="section-head center">
-        <div class="kicker">تواصل معنا</div>
-        <h2 class="section-title reveal">نحن مستعدون لخدمتك</h2>
-        <p class="section-sub reveal">فريق خدمة العملاء لدينا جاهز للرد على استفساراتك في جميع أفرعنا الثمانية بالدولة.</p>
-      </div>
-
-      <div class="contact-grid">
-        <div class="contact-info reveal">
-          <div class="info-row glass">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></div>
-            <div><div class="t">البريد الإلكتروني</div><div class="v">info@smou.ae</div></div>
-          </div>
-          <div class="info-row glass">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.35 1.79.68 2.63a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.45-1.25a2 2 0 012.11-.45c.84.33 1.73.56 2.63.68A2 2 0 0122 16.92z"/></svg></div>
-            <div><div class="t">الخط الساخن</div><div class="v">+971 6 537 0677</div></div>
-          </div>
-          <div class="info-row glass">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
-            <div><div class="t">واتساب</div><div class="v">+971 50 103 5499</div></div>
-          </div>
-          <div style="margin-top:10px;">
-            <div class="t" style="margin-bottom:12px;color:var(--slate-400);font-size:13px;">أفرعنا في الخليج</div>
-            <div class="branches-row">
-              <span class="branch-chip">دبي</span>
-              <span class="branch-chip">أبو ظبي</span>
-              <span class="branch-chip">الشارقة</span>
-              <span class="branch-chip">العين</span>
-              <span class="branch-chip">الرياض</span>
-              <span class="branch-chip">الدمام</span>
-              <span class="branch-chip">الاحساء</span>
-              <span class="branch-chip">الكويت</span>
-            </div>
-          </div>
-        </div>
-
-        <form class="contact-form glass reveal" onsubmit="event.preventDefault(); this.querySelector('.btn').textContent='تم إرسال طلبك بنجاح ✓';">
-          <div class="form-row">
-            <div class="field"><label>الاسم الكامل</label><input type="text" placeholder="أدخل اسمك" required></div>
-            <div class="field"><label>رقم الهاتف</label><input type="tel" placeholder="05xxxxxxxx" required></div>
-          </div>
-          <div class="form-row">
-            <div class="field">
-              <label>الإمارة</label>
-              <select required>
-                <option value="">اختر الإمارة</option>
-                <option>دبي</option><option>أبو ظبي</option><option>الشارقة</option>
-                <option>عجمان</option><option>أم القيوين</option><option>رأس الخيمة</option><option>الفجيرة</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>الخدمة المطلوبة</label>
-              <select required>
-                <option value="">اختر الخدمة</option>
-                <option>تصميم مصاعد</option><option>تركيب مصاعد</option><option>صيانة مصاعد</option>
-                <option>تركيب تكييف</option><option>صيانة تكييف</option><option>البيت الذكي KNX</option>
-              </select>
-            </div>
-          </div>
-          <div class="field" style="margin-bottom:20px;">
-            <label>تفاصيل إضافية</label>
-            <textarea rows="3" placeholder="أخبرنا عن مشروعك"></textarea>
-          </div>
-          <button class="btn btn-primary" type="submit">إرسال الطلب</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="brand">
-            <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#04101F" stroke-width="2.4" stroke-linecap="round"><path d="M7 3v18M17 3v18M7 9l3-3 3 3M17 15l-3 3-3-3"/></svg></span>
-            <span>سمو</span>
-          </div>
-          <p class="footer-desc">مجموعة سمو للمصاعد والتكييف والحلول المنزلية — رائدة متخصصة في تقديم حلول متكاملة على أسس راسخة من الابتكار والجودة، من تصميم وتركيب المصاعد وأنظمة التكييف إلى أتمتة المنازل الذكية.</p>
-          <div class="social-row">
-            <a href="https://www.instagram.com/smoulifts" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
-            <a href="https://x.com/smou_lift" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
-            <a href="https://vt.tiktok.com/ZSDsTV8qe/" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg></a>
-            <a href="https://youtube.com/@smoulift" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="M10 9l5 3-5 3z"/></svg></a>
-          </div>
-        </div>
-        <div>
-          <h5>من نحن</h5>
-          <ul>
-            <li><a href="#why">عن الشركة</a></li>
-            <li><a href="#why">الإدارة العليا</a></li>
-            <li><a href="#why">التراخيص</a></li>
-            <li><a href="#contact">سياسة الخصوصية</a></li>
-          </ul>
-        </div>
-        <div>
-          <h5>خدماتنا</h5>
-          <ul>
-            <li><a href="#services">تصميم المصاعد</a></li>
-            <li><a href="#services">تركيب المصاعد</a></li>
-            <li><a href="#services">صيانة المصاعد</a></li>
-            <li><a href="#services">صيانة وتركيب التكييف</a></li>
-            <li><a href="#smarthome">البيت الذكي KNX</a></li>
-          </ul>
-        </div>
-        <div>
-          <h5>تواصل معنا</h5>
-          <ul>
-            <li><a href="mailto:info@smou.ae">info@smou.ae</a></li>
-            <li><a href="tel:+97165370677" class="num">+971 6 537 0677</a></li>
-            <li><a href="https://wa.me/971501035499" class="num">+971 50 103 5499</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 مجموعة سمو للمصاعد والتكييف والحلول المنزلية، جميع الحقوق محفوظة</span>
-        <span class="num">SMOU GROUP</span>
-      </div>
-    </div>
-  </footer>
-
-  <a href="https://wa.me/971501035499" class="wa-float" aria-label="واتساب">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.85.5 3.58 1.35 5.06L2 22l5.2-1.36a9.9 9.9 0 004.84 1.23h.01c5.46 0 9.9-4.45 9.9-9.9C21.96 6.45 17.5 2 12.04 2zm0 18.05h-.01a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 01-1.25-4.28c0-4.5 3.66-8.16 8.17-8.16a8.13 8.13 0 018.15 8.16c0 4.5-3.67 8.14-8.08 8.14z"/></svg>
-  </a>
-
+<a class="btn btn-ghost" href="#services">استكشف خدماتنا</a>
+</div>
+<div class="hero-stats reveal">
+<div class="stat"><div class="num"><span class="counter" data-target="14">0</span><span class="plus">+</span></div><div class="stat-label">سنة خبرة</div></div>
+<div class="stat"><div class="num"><span class="counter" data-target="1300">0</span><span class="plus">+</span></div><div class="stat-label">عميل موثوق</div></div>
+<div class="stat"><div class="num"><span class="counter" data-target="8">0</span></div><div class="stat-label">أفرع في الدولة</div></div>
+</div>
+</div>
+<div class="shaft glass reveal-scale">
+<div class="shaft-head">
+<span>لوحة تشغيل سمو المباشرة</span>
+<div class="live"><i></i> حالة مباشرة</div>
+</div>
+<div class="ascend">
+<div class="rail"></div>
+<div class="flevel" style="bottom:80%">14<span> صيانة</span></div>
+<div class="flevel" style="bottom:55%">08<span> تركيب</span></div>
+<div class="flevel" style="bottom:28%">03<span> تصميم</span></div>
+<div class="cab"></div>
+</div>
+<div class="shaft-footer">
+<span>تتبّع لحظي لجميع مراحل تنفيذ مشروعك</span>
+<a class="btn btn-primary" href="#contact" style="padding:10px 20px;font-size:13px;">تواصل الآن</a>
+</div>
+</div>
+</div>
+</section>
+<!-- SERVICES -->
+<section class="pad" data-floor="02" data-floor-name="خدماتنا" id="services">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">خدماتنا</div>
+<h2 class="section-title reveal">حلول متكاملة تحت سقف واحد</h2>
+<p class="section-sub reveal">من التصميم الهندسي إلى التركيب والصيانة الدورية، نغطي دورة حياة المصعد ونظام التكييف بالكامل بمعايير عالمية.</p>
+</div>
+<div class="services-tabs reveal">
+<button class="tab-btn active" data-tab="elevators">خدمات المصاعد</button>
+<button class="tab-btn" data-tab="ac">خدمات التكييف</button>
+<button class="tab-btn" data-tab="ac">الحلول المنزلية</button>
+</div>
+<div class="svc-panel active" id="elevators">
+<div class="svc-card glass"><img alt="مصاعد سمو" class="service-image" src="lift.png"/>
+<div class="icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 4h16v16H4z"></path><path d="M9 9h6M9 13h6M9 17h6"></path></svg></div>
+<h3>تصميم المصاعد</h3>
+<p>حلول تصميم مبتكرة تراعي طبيعة المبنى ومتطلبات السلامة والجماليات المعمارية.</p>
+</div>
+<div class="svc-card glass"><img alt="مصاعد سمو" class="service-image" src="lift.png"/>
+<div class="icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l3 6-3 2-3-2z"></path><path d="M4 22V10M20 22V10M4 22h16"></path></svg></div>
+<h3>تركيب المصاعد</h3>
+<p>تنفيذ دقيق وفق أعلى المعايير العالمية للسلامة والجودة والالتزام بالجدول الزمني.</p>
+</div>
+<div class="svc-card glass"><img alt="مصاعد سمو" class="service-image" src="lift.png"/>
+<div class="icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"></path></svg></div>
+<h3>صيانة المصاعد</h3>
+<p>فريق فني مختص يقدم عقود صيانة دورية ووقائية لضمان تشغيل آمن ومستمر.</p>
+</div>
+<div class="svc-card glass"><img alt="مصاعد سمو" class="service-image" src="lift.png"/>
+<div class="icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 12a9 9 0 11-3.5-7.1M21 3v6h-6"></path></svg></div>
+<h3>تحديث المصاعد</h3>
+<p>تجديد أو تغيير الأنظمة القديمة برفع الكفاءة وإطالة العمر التشغيلي للمصعد.</p>
+</div>
+</div>
+<div class="svc-panel" id="ac">
+<div class="svc-card glass"><img alt="تكييف سمو" class="service-image" src="ac.png"/>
+<div class="icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 12h18M12 3v18M6 6l3 3M18 6l-3 3M6 18l3-3M18 18l-3-3"></path></svg></div>
+<h3>تركيب التكييف</h3>
+<p>تركيب أنظمة Split والمركزية والمبردة بالماء (Chillers) وفق أعلى المعايير.</p>
+</div>
+<div class="svc-card glass"><img alt="تكييف سمو" class="service-image" src="ac.png"/>
+<div class="icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"></path></svg></div>
+<h3>صيانة التكييف</h3>
+<p>صيانة دورية وإصلاحات وتعبئة غاز التبريد لضمان أعلى كفاءة تبريد.</p>
+</div>
+<div class="svc-card glass"><img alt="تكييف سمو" class="service-image" src="ac.png"/>
+<div class="icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 4h16v16H4z"></path><path d="M9 9h6M9 13h6M9 17h6"></path></svg></div>
+<h3>الأنظمة المركزية</h3>
+<p>حلول تكييف مركزية للمباني التجارية والحكومية الكبرى بكفاءة طاقة عالية.</p>
+</div>
+<div class="svc-card glass"><img alt="تكييف سمو" class="service-image" src="ac.png"/>
+<div class="icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 12a9 9 0 11-3.5-7.1M21 3v6h-6"></path></svg></div>
+<h3>تحسين الأداء</h3>
+<p>خدمات تحسين أداء الأنظمة القائمة لخفض استهلاك الطاقة وإطالة عمرها.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- WHY US -->
+<section class="pad" data-floor="03" data-floor-name="لماذا سمو" id="why">
+<div class="container">
+<div class="why-grid">
+<div>
+<div class="kicker">لماذا سمو</div>
+<h2 class="section-title reveal">أساس نجاحنا هو ثقتكم</h2>
+<p class="section-sub reveal" style="margin-bottom:38px;">لا تُقاس إنجازاتنا بعدد المصاعد وأنظمة التكييف التي ركّبناها فحسب، بل بالثقة التي نلناها من عملائنا في أرقى الفنادق والمشاريع الحكومية والتجارية.</p>
+<div class="why-list">
+<div class="why-item reveal">
+<div class="n"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"></path></svg></div>
+<div><h4>جودة عالمية</h4><p>نستخدم أفضل المواد والمكونات العالمية لضمان أداء مستدام وآمن.</p></div>
+</div>
+<div class="why-item reveal">
+<div class="n"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path></svg></div>
+<div><h4>فريق متخصص</h4><p>مهندسون وفنيون ذوو خبرة واسعة ملتزمون بتقديم الأفضل في كل مشروع.</p></div>
+</div>
+<div class="why-item reveal">
+<div class="n"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11z"></path></svg></div>
+<div><h4>نزاهة وشفافية</h4><p>نلتزم بأعلى معايير الشفافية في كل خطوة من مراحل المشروع.</p></div>
+</div>
+<div class="why-item reveal">
+<div class="n"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg></div>
+<div><h4>تراخيص معتمدة</h4><p>عمليات مرخصة ومطابقة لأعلى معايير السلامة المعتمدة في الدولة.</p></div>
+</div>
+</div>
+</div>
+<div class="why-visual glass reveal-scale">
+<div class="cell"><span class="num">14+</span><span class="lbl">سنوات خبرة</span></div>
+<div class="cell"><span class="num">1300+</span><span class="lbl">عميل</span></div>
+<div class="cell"><span class="num">8</span><span class="lbl">أفرع</span></div>
+<div class="cell"><span class="num">24/7</span><span class="lbl">دعم فني</span></div>
+<div class="cell wide">
+<div><h4 style="font-weight:800;margin-bottom:4px;">مشاريع في الفنادق الراقية والمباني الحكومية</h4><p style="color:var(--slate-400);font-size:13px;">مصاعد فاخرة وأنظمة تكييف متطورة بتنفيذ دقيق</p></div>
+<svg fill="none" height="34" stroke="var(--sky-400)" stroke-width="1.8" viewbox="0 0 24 24" width="34"><path d="M3 21h18M6 21V9l6-4 6 4v12M10 21v-6h4v6"></path></svg>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- PROCESS -->
+<section class="pad" data-floor="04" data-floor-name="رحلتنا معك" id="process">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">رحلتنا معك</div>
+<h2 class="section-title reveal">من الاستشارة إلى التشغيل الكامل</h2>
+<p class="section-sub reveal">أربع محطات واضحة تأخذ مشروعك من الفكرة إلى التشغيل الآمن والمستدام.</p>
+</div>
+<div class="process-rail">
+<div class="process-grid">
+<div class="p-step reveal"><div class="badge">01</div><h4>استشارة ومعاينة</h4><p>دراسة احتياجات المبنى وتقديم التوصية الفنية والمالية المناسبة.</p></div>
+<div class="p-step reveal"><div class="badge">02</div><h4>تصميم هندسي</h4><p>تصميم مخصص يراعي الطراز المعماري ومتطلبات السلامة.</p></div>
+<div class="p-step reveal"><div class="badge">03</div><h4>تركيب وتشغيل</h4><p>تنفيذ دقيق بإشراف مهندسين معتمدين وفق الجدول الزمني المتفق عليه.</p></div>
+<div class="p-step reveal"><div class="badge">04</div><h4>صيانة مستمرة</h4><p>عقود صيانة دورية ووقائية تضمن الأداء الآمن على مدار الساعة.</p></div>
+</div>
+</div>
+</div>
+</section>
+<!-- PRODUCTS -->
+<section class="pad" data-floor="05" data-floor-name="منتجاتنا" id="products">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">منتجاتنا</div>
+<h2 class="section-title reveal">مجموعة متنوعة تلبي كل احتياج</h2>
+<p class="section-sub reveal">من المصاعد السكنية الفاخرة إلى الأنظمة المركزية للمباني التجارية الكبرى.</p>
+</div>
+<div class="prod-grid">
+<div class="prod-card glass reveal" style="--gx:30%;--gy:20%"><img alt="قسم المصاعد" class="prod-image" src="lift.png"/><span class="tag">مصاعد</span><div class="content"><h4>مصاعد سكنية وتجارية</h4><p>تصاميم فاخرة تضفي لمسة راقية على مشروعك</p></div></div>
+<div class="prod-card glass reveal" style="--gx:70%;--gy:30%"><img alt="قسم المصاعد" class="prod-image" src="lift.png"/><span class="tag">مصاعد</span><div class="content"><h4>مصاعد بضائع ومستشفيات</h4><p>أعلى معايير الأمان والكفاءة للاستخدام المكثف</p></div></div>
+<div class="prod-card glass reveal" style="--gx:40%;--gy:70%"><img alt="قسم المصاعد" class="prod-image" src="lift.png"/><span class="tag">مصاعد</span><div class="content"><h4>مصاعد بانورامية</h4><p>حلول مخصصة تجمع بين الوظيفة والجمال المعماري</p></div></div>
+<div class="prod-card glass reveal" style="--gx:60%;--gy:20%"><img alt="قسم التكييف" class="prod-image" src="ac.png"/><span class="tag">تكييف</span><div class="content"><h4>وحدات Split سكنية</h4><p>راحة مثالية لكل غرفة بأعلى كفاءة طاقة</p></div></div>
+<div class="prod-card glass reveal" style="--gx:25%;--gy:60%"><img alt="قسم التكييف" class="prod-image" src="ac.png"/><span class="tag">تكييف</span><div class="content"><h4>أنظمة مركزية</h4><p>للمباني التجارية الكبرى بأداء موثوق</p></div></div>
+<div class="prod-card glass reveal" style="--gx:75%;--gy:65%"><img alt="قسم التكييف" class="prod-image" src="ac.png"/><span class="tag">تكييف</span><div class="content"><h4>أنظمة Chillers</h4><p>تبريد بالماء لمشاريع النطاق الواسع</p></div></div>
+<div class="prod-card glass reveal" style="--gx:75%;--gy:65%"><img alt="قسم البيت الذكي KNX" class="prod-image" src="knx.png"/><span class="tag">الحلول المنزلية </span><div class="content"><h4> SMART HOME</h4><p>نستخدم أنظمة تحكم عالمية KNX</p></div></div>
+</div>
+</div>
+</section>
+<!-- SMART HOME KNX — radial hub -->
+<section class="pad" data-floor="06" data-floor-name="البيت الذكي KNX" id="smarthome">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">الحلول المنزلية</div>
+<h2 class="section-title reveal">البيت الذكي KNX — كل نظام في منزلك، بلغة واحدة</h2>
+<p class="section-sub reveal">نصمم وننفذ أنظمة أتمتة KNX العالمية التي توحّد الإضاءة والتكييف والستائر والأمن والطاقة والترفيه في منظومة ذكية واحدة، متوافقة مع أكثر من 500 علامة تجارية معتمدة حول العالم.</p>
+</div>
+<div class="knx-grid">
+<div>
+<div class="knx-badge reveal"><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--sky-400);"></span> معيار عالمي معتمد منذ أكثر من 30 عامًا</div>
+<div class="why-list">
+<div class="why-item reveal">
+<div class="n"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0012 2z"></path></svg></div>
+<div><h4>إضاءة ذكية</h4><p>تحكم كامل بشدة الإضاءة وسيناريوهاتها حسب الوقت والمزاج والوجود داخل المكان.</p></div>
+</div>
+<div class="why-item reveal">
+<div class="n"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"></path></svg></div>
+<div><h4>تحكم بالتكييف</h4><p>ضبط تلقائي لدرجة الحرارة في كل غرفة، مع جدولة ذكية توفر الطاقة دون التضحية بالراحة.</p></div>
+</div>
+<div class="why-item reveal">
+<div class="n"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 9h18M3 15h18M6 4v16M18 4v16"></path></svg></div>
+<div><h4>ستائر وأنظمة تظليل</h4><p>فتح وإغلاق الستائر تلقائيًا مع أشعة الشمس أو حسب جدول زمني مخصص.</p></div>
+</div>
+<div class="why-item reveal">
+<div class="n"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11z"></path></svg></div>
+<div><h4>الأمن والمراقبة</h4><p>مراقبة حية وتنبيهات فورية عبر الهاتف، مع سيناريوهات محاكاة الوجود لحماية إضافية.</p></div>
+</div>
+<div class="why-item reveal">
+<div class="n"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M13 2L4.5 12H11l-1 10 8.5-10H12z"></path></svg></div>
+<div><h4>إدارة الطاقة</h4><p>مراقبة استهلاك الطاقة لحظيًا وترشيده تلقائيًا لخفض الفواتير دون تدخل يدوي.</p></div>
+</div>
+<div class="why-item reveal">
+<div class="n"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 18V5l12-2v13M9 9l12-2M6 21a3 3 0 100-6 3 3 0 000 6zM18 19a3 3 0 100-6 3 3 0 000 6z"></path></svg></div>
+<div><h4>ترفيه وصوت</h4><p>تكامل مع أنظمة الصوت والترفيه المنزلي ضمن نفس لوحة التحكم الموحدة.</p></div>
+</div>
+</div>
+</div>
+<div class="knx-photo glass reveal-scale"><img alt="حلول البيت الذكي KNX" src="knx.png"/></div>
+</div>
+<div class="hero-stats reveal" style="border-top:1px solid var(--border);padding-top:30px;">
+<div class="stat"><div class="num"><span class="counter" data-target="30">0</span><span class="plus">+</span></div><div class="stat-label">عامًا معيار عالمي</div></div>
+<div class="stat"><div class="num"><span class="counter" data-target="8000">0</span><span class="plus">+</span></div><div class="stat-label">جهاز معتمد</div></div>
+<div class="stat"><div class="num"><span class="counter" data-target="500">0</span><span class="plus">+</span></div><div class="stat-label">علامة تجارية متوافقة</div></div>
+<div class="stat"><div class="num"><span class="counter" data-target="190">0</span><span class="plus">+</span></div><div class="stat-label">دولة حول العالم</div></div>
+</div>
+</div>
+</section>
+<!-- FAQ -->
+<section class="pad" data-floor="07" data-floor-name="الأسئلة الشائعة" id="faq">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">الأسئلة الشائعة</div>
+<h2 class="section-title reveal">كل ما تحتاج معرفته</h2>
+</div>
+<div class="faq-wrap">
+<div class="faq-item glass reveal">
+<div class="faq-q">ما هي أنواع المصاعد التي تقدمونها؟ <span class="plus">+</span></div>
+<div class="faq-a"><p>نقدم مجموعة شاملة من المصاعد لتلبية مختلف الاحتياجات، بما في ذلك المصاعد السكنية، التجارية، مصاعد المستشفيات، ومصاعد البضائع، بالإضافة إلى المصاعد البانورامية والحلول المخصصة.</p></div>
+</div>
+<div class="faq-item glass reveal">
+<div class="faq-q">هل تقدمون خدمات الصيانة الدورية للمصاعد؟ <span class="plus">+</span></div>
+<div class="faq-a"><p>نعم، نقدم عقود صيانة شاملة ووقائية لجميع أنواع المصاعد، بهدف ضمان عمل المصعد بكفاءة وأمان على مدار الساعة وتقليل الأعطال المفاجئة.</p></div>
+</div>
+<div class="faq-item glass reveal">
+<div class="faq-q">ما هي أنظمة التكييف التي تقومون بتركيبها؟ <span class="plus">+</span></div>
+<div class="faq-a"><p>نقوم بتركيب أنظمة التكييف المنفصلة (Split)، والمركزية، والمبردة بالماء (Chillers) لتلبية كافة الاحتياجات.</p></div>
+</div>
+<div class="faq-item glass reveal">
+<div class="faq-q">هل يمكنني تخصيص تصميم المصعد ليناسب ديكور المبنى؟ <span class="plus">+</span></div>
+<div class="faq-a"><p>نعم، نقدم خيارات تخصيص واسعة تشمل الأبواب والأرضيات والإضاءة والمقصورات الداخلية، بما يتناسب مع التصميم المعماري لمبنى العميل.</p></div>
+</div>
+<div class="faq-item glass reveal">
+<div class="faq-q">ما هي خدمات صيانة التكييف التي تقدمونها؟ <span class="plus">+</span></div>
+<div class="faq-a"><p>نقدم صيانة دورية وإصلاحات وتعبئة لغاز التبريد، بالإضافة إلى خدمات تحسين الأداء لضمان كفاءة نظامك.</p></div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA -->
+<section class="pad" style="padding-top:0;">
+<div class="container">
+<div class="cta-banner glass reveal-scale">
+<h3>جاهزون لنرتقي بمشروعك القادم؟ تواصل مع فريقنا اليوم واحصل على استشارة مجانية.</h3>
+<div class="actions">
+<a class="btn btn-primary" href="https://wa.me/971501035499">تواصل عبر واتساب</a>
+<a class="btn btn-ghost" href="tel:+97165370677">اتصل بنا مباشرة</a>
+</div>
+</div>
+</div>
+</section>
+<!-- CONTACT -->
+<section class="pad" data-floor="08" data-floor-name="تواصل معنا" id="contact">
+<div class="container">
+<div class="section-head center">
+<div class="kicker">تواصل معنا</div>
+<h2 class="section-title reveal">نحن مستعدون لخدمتك</h2>
+<p class="section-sub reveal">فريق خدمة العملاء لدينا جاهز للرد على استفساراتك في جميع أفرعنا الثمانية بالدولة.</p>
+</div>
+<div class="contact-grid">
+<div class="contact-info reveal">
+<div class="info-row glass">
+<div class="ic"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 4h16v16H4z"></path><path d="M22 6l-10 7L2 6"></path></svg></div>
+<div><div class="t">البريد الإلكتروني</div><div class="v">info@smou.ae</div></div>
+</div>
+<div class="info-row glass">
+<div class="ic"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.35 1.79.68 2.63a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.45-1.25a2 2 0 012.11-.45c.84.33 1.73.56 2.63.68A2 2 0 0122 16.92z"></path></svg></div>
+<div><div class="t">الخط الساخن</div><div class="v">+971 6 537 0677</div></div>
+</div>
+<div class="info-row glass">
+<div class="ic"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path></svg></div>
+<div><div class="t">واتساب</div><div class="v">+971 50 103 5499</div></div>
+</div>
+<div style="margin-top:10px;">
+<div class="t" style="margin-bottom:12px;color:var(--slate-400);font-size:13px;">أفرعنا في الخليج</div>
+<div class="branches-row">
+<span class="branch-chip">دبي</span>
+<span class="branch-chip">أبو ظبي</span>
+<span class="branch-chip">الشارقة</span>
+<span class="branch-chip">العين</span>
+<span class="branch-chip">الرياض</span>
+<span class="branch-chip">الدمام</span>
+<span class="branch-chip">الاحساء</span>
+<span class="branch-chip">الكويت</span>
+</div>
+</div>
+</div>
+<form class="contact-form glass reveal" onsubmit="event.preventDefault(); this.querySelector('.btn').textContent='تم إرسال طلبك بنجاح ✓';">
+<div class="form-row">
+<div class="field"><label>الاسم الكامل</label><input placeholder="أدخل اسمك" required="" type="text"/></div>
+<div class="field"><label>رقم الهاتف</label><input placeholder="05xxxxxxxx" required="" type="tel"/></div>
+</div>
+<div class="form-row">
+<div class="field">
+<label>الإمارة</label>
+<select required="">
+<option value="">اختر الإمارة</option>
+<option>دبي</option><option>أبو ظبي</option><option>الشارقة</option>
+<option>عجمان</option><option>أم القيوين</option><option>رأس الخيمة</option><option>الفجيرة</option>
+</select>
+</div>
+<div class="field">
+<label>الخدمة المطلوبة</label>
+<select required="">
+<option value="">اختر الخدمة</option>
+<option>تصميم مصاعد</option><option>تركيب مصاعد</option><option>صيانة مصاعد</option>
+<option>تركيب تكييف</option><option>صيانة تكييف</option><option>البيت الذكي KNX</option>
+</select>
+</div>
+</div>
+<div class="field" style="margin-bottom:20px;">
+<label>تفاصيل إضافية</label>
+<textarea placeholder="أخبرنا عن مشروعك" rows="3"></textarea>
+</div>
+<button class="btn btn-primary" type="submit">إرسال الطلب</button>
+</form>
+</div>
+</div>
+</section>
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div>
+<div class="brand">
+<span class="mark"><svg fill="none" stroke="#04101F" stroke-linecap="round" stroke-width="2.4" viewbox="0 0 24 24"><path d="M7 3v18M17 3v18M7 9l3-3 3 3M17 15l-3 3-3-3"></path></svg></span>
+<span>سمو</span>
+</div>
+<p class="footer-desc">مجموعة سمو للمصاعد والتكييف والحلول المنزلية — رائدة متخصصة في تقديم حلول متكاملة على أسس راسخة من الابتكار والجودة، من تصميم وتركيب المصاعد وأنظمة التكييف إلى أتمتة المنازل الذكية.</p>
+<div class="social-row">
+<a aria-label="Instagram" href="https://www.instagram.com/smoulifts"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><rect height="20" rx="5" width="20" x="2" y="2"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg></a>
+<a aria-label="X" href="https://x.com/smou_lift"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M4 4l16 16M20 4L4 20"></path></svg></a>
+<a aria-label="TikTok" href="https://vt.tiktok.com/ZSDsTV8qe/"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"></path></svg></a>
+<a aria-label="YouTube" href="https://youtube.com/@smoulift"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><rect height="12" rx="3" width="20" x="2" y="6"></rect><path d="M10 9l5 3-5 3z"></path></svg></a>
+</div>
+</div>
+<div>
+<h5>من نحن</h5>
+<ul>
+<li><a href="#why">عن الشركة</a></li>
+<li><a href="#why">الإدارة العليا</a></li>
+<li><a href="#why">التراخيص</a></li>
+<li><a href="#contact">سياسة الخصوصية</a></li>
+</ul>
+</div>
+<div>
+<h5>خدماتنا</h5>
+<ul>
+<li><a href="#services">تصميم المصاعد</a></li>
+<li><a href="#services">تركيب المصاعد</a></li>
+<li><a href="#services">صيانة المصاعد</a></li>
+<li><a href="#services">صيانة وتركيب التكييف</a></li>
+<li><a href="#smarthome">البيت الذكي KNX</a></li>
+</ul>
+</div>
+<div>
+<h5>تواصل معنا</h5>
+<ul>
+<li><a href="mailto:info@smou.ae">info@smou.ae</a></li>
+<li><a class="num" href="tel:+97165370677">+971 6 537 0677</a></li>
+<li><a class="num" href="https://wa.me/971501035499">+971 50 103 5499</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 مجموعة سمو للمصاعد والتكييف والحلول المنزلية، جميع الحقوق محفوظة</span>
+<span class="num">SMOU GROUP</span>
+</div>
+</div>
+</footer>
+<a aria-label="واتساب" class="wa-float" href="https://wa.me/971501035499">
+<svg fill="currentColor" viewbox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.85.5 3.58 1.35 5.06L2 22l5.2-1.36a9.9 9.9 0 004.84 1.23h.01c5.46 0 9.9-4.45 9.9-9.9C21.96 6.45 17.5 2 12.04 2zm0 18.05h-.01a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 01-1.25-4.28c0-4.5 3.66-8.16 8.17-8.16a8.13 8.13 0 018.15 8.16c0 4.5-3.67 8.14-8.08 8.14z"></path></svg>
+</a>
 <script>
   // cinematic intro sequence
   window.addEventListener('load', () => {
