@@ -147,6 +147,20 @@
   .brand .mark svg{width:20px;height:20px;stroke:var(--brass-bright);}
   .brand small{display:block;font-size:10px;font-weight:500;color:var(--slate-400);letter-spacing:1px;font-family:var(--mono);direction:ltr;text-align:right;}
 
+  .header-actions{display:flex;align-items:center;gap:10px;}
+  .portal-btn{padding:12px 20px;font-size:13.5px;}
+  .lang-toggle{
+    display:flex;align-items:center;justify-content:center;
+    width:42px;height:42px;border-radius:50%;flex-shrink:0;cursor:pointer;
+    background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.015));
+    border:1px solid var(--border);color:var(--brass-bright);
+    font-family:var(--mono);font-weight:700;font-size:11.5px;letter-spacing:.5px;
+    transition:border-color .3s var(--ease), color .3s var(--ease), transform .3s var(--ease);
+  }
+  .lang-toggle:hover{border-color:var(--sky-400);color:var(--sky-300);transform:translateY(-2px);}
+  @media(max-width:920px){.header-actions{display:none;}}
+  .drawer .lang-toggle{width:auto;height:auto;padding:12px 26px;border-radius:999px;font-size:15px;}
+
   nav.main-nav{display:flex;gap:6px;align-items:center;}
   nav.main-nav a{
     font-size:14px;color:var(--slate-300);font-weight:600;padding:9px 16px;border-radius:999px;
@@ -612,7 +626,16 @@
 <a href="#smarthome">البيت الذكي</a>
 <a href="#faq">الأسئلة</a>
 </nav>
-<a class="btn btn-primary header-cta" href="#contact">اطلب عرض سعر</a>
+<div class="header-actions">
+<a class="btn btn-ghost portal-btn" href="https://portal.smougroup.com/" target="_blank" rel="noopener">
+<svg fill="none" height="15" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24" width="15"><path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4M15 3h6v6M10 14 21 3"></path></svg>
+<span data-i18n>البوابة الرسمية</span>
+</a>
+<a class="btn btn-primary header-cta" href="#contact"><span data-i18n>اطلب عرض سعر</span></a>
+<button class="lang-toggle" id="langToggle" type="button" aria-label="Toggle language">
+<span id="langToggleLabel">EN</span>
+</button>
+</div>
 <button aria-label="فتح القائمة" class="burger" id="burgerBtn">
 <svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
 </button>
@@ -628,7 +651,11 @@
 <a href="#products">منتجاتنا</a>
 <a href="#smarthome">البيت الذكي</a>
 <a href="#faq">الأسئلة الشائعة</a>
-<a href="#contact">تواصل معنا</a>
+<a href="#contact"><span data-i18n>تواصل معنا</span></a>
+<a href="https://portal.smougroup.com/" target="_blank" rel="noopener"><span data-i18n>البوابة الرسمية</span></a>
+<button class="lang-toggle" id="langToggleDrawer" type="button" style="margin-top:10px;">
+<span id="langToggleLabelDrawer">English</span>
+</button>
 </div>
 <!-- HERO -->
 <section class="hero" data-floor="01" data-floor-name="الرئيسية" id="home">
@@ -1107,6 +1134,259 @@
     });
   }, { threshold: 0.5 });
   floorSections.forEach(el => floorIO.observe(el));
+
+  // ---------- Language toggle (AR <-> EN) ----------
+  const translations = {
+  "دبي": "Dubai",
+  "سمو": "SMOU",
+  "أفرع": "Branches",
+  "عميل": "Clients",
+  "العين": "Al Ain",
+  "تركيب": "Installation",
+  "تصميم": "Design",
+  "تكييف": "AC",
+  "صيانة": "Maintenance",
+  "عجمان": "Ajman",
+  "مصاعد": "Elevators",
+  "نرتقي": "We Elevate",
+  "الدمام": "Dammam",
+  "الرياض": "Riyadh",
+  "الكويت": "Kuwait",
+  "رحلتنا": "Our Journey",
+  "من نحن": "About Us",
+  "واتساب": "WhatsApp",
+  "أبو ظبي": "Abu Dhabi",
+  "الأسئلة": "FAQ",
+  "الإمارة": "Emirate",
+  "الاحساء": "Al Ahsa",
+  "الشارقة": "Sharjah",
+  "الفجيرة": "Fujairah",
+  "خدماتنا": "Services",
+  "دعم فني": "Support",
+  "التراخيص": "Licenses",
+  "الرئيسية": "Home",
+  "سنة خبرة": "Years of Experience",
+  "منتجاتنا": "Products",
+  "أدخل اسمك": "Enter your name",
+  "عن الشركة": "About the Company",
+  "لماذا سمو": "Why SMOU",
+  "آفاق جديدة": "New Heights",
+  "أم القيوين": "Umm Al Quwain",
+  "إضاءة ذكية": "Smart Lighting",
+  "ترفيه وصوت": "Audio & Entertainment",
+  "تواصل الآن": "Contact Now",
+  "تواصل معنا": "Contact Us",
+  "رأس الخيمة": "Ras Al Khaimah",
+  "رحلتنا معك": "Our Journey With You",
+  "رقم الهاتف": "Phone Number",
+  "سنوات خبرة": "Years of Experience",
+  "عميل موثوق": "Trusted Clients",
+  "فريق متخصص": "Specialized Team",
+  "مجموعة سمو": "SMOU Group",
+  "إرسال الطلب": "Send Request",
+  "اختر الخدمة": "Select Service",
+  "البيت الذكي": "Smart Home",
+  "الخط الساخن": "Hotline",
+  "بمشروعك إلى": "Your Project To",
+  "تركيب تكييف": "AC Installation",
+  "تركيب مصاعد": "Elevator Installation",
+  "تصميم مصاعد": "Elevator Design",
+  "تصميم هندسي": "Engineering Design",
+  "جودة عالمية": "Global Quality",
+  "حالة مباشرة": "Live Status",
+  "صيانة تكييف": "AC Maintenance",
+  "صيانة مصاعد": "Elevator Maintenance",
+  "فتح القائمة": "Open Menu",
+  "أنظمة مركزية": "Central Systems",
+  "إدارة الطاقة": "Energy Management",
+  "اختر الإمارة": "Select Emirate",
+  "اطلب عرض سعر": "Get a Quote",
+  "الاسم الكامل": "Full Name",
+  "تحسين الأداء": "Performance Optimization",
+  "تركيب وتشغيل": "Installation & Commissioning",
+  "صيانة مستمرة": "Ongoing Maintenance",
+  "تحديث المصاعد": "Elevator Modernization",
+  "تحكم بالتكييف": "AC Control",
+  "تراخيص معتمدة": "Certified Licenses",
+  "تركيب التكييف": "AC Installation",
+  "تركيب المصاعد": "Elevator Installation",
+  "تصميم احترافي": "Professional Designs",
+  "تصميم المصاعد": "Elevator Design",
+  "تفاصيل إضافية": "Additional Details",
+  "خدمات التكييف": "AC Services",
+  "خدمات المصاعد": "Elevator Services",
+  "صيانة التكييف": "AC Maintenance",
+  "صيانة المصاعد": "Elevator Maintenance",
+  "نزاهة وشفافية": "Integrity & Transparency",
+  "أفرع في الدولة": "Branches Nationwide",
+  "أنظمة Chillers": "Chiller Systems",
+  "استكشف خدماتنا": "Explore Our Services",
+  "الإدارة العليا": "Executive Management",
+  "سياسة الخصوصية": "Privacy Policy",
+  "اتصل بنا مباشرة": "Call Us Directly",
+  "استشارة ومعاينة": "Consultation & Survey",
+  "الأسئلة الشائعة": "Frequently Asked Questions",
+  "الأمن والمراقبة": "Security & Surveillance",
+  "البيت الذكي KNX": "KNX Smart Home",
+  "الحلول المنزلية": "Home Solutions",
+  "الخدمة المطلوبة": "Service Required",
+  "عامًا من الخبرة": "Years of Experience",
+  "مصاعد بانورامية": "Panoramic Elevators",
+  "أخبرنا عن مشروعك": "Tell us about your project",
+  "أفرعنا في الخليج": "Our Branches in the Gulf",
+  "الأنظمة المركزية": "Central Systems",
+  "تواصل عبر واتساب": "Chat on WhatsApp",
+  "البريد الإلكتروني": "Email",
+  "وحدات Split سكنية": "Residential Split Units",
+  "ستائر وأنظمة تظليل": "Curtains & Shading Systems",
+  "كل ما تحتاج معرفته": "Everything You Need to Know",
+  "نحن مستعدون لخدمتك": "We're Ready to Serve You",
+  "مصاعد سكنية وتجارية": "Residential & Commercial Elevators",
+  "أساس نجاحنا هو ثقتكم": "Your Trust Is the Foundation of Our Success",
+  "صيانة وتركيب التكييف": "AC Installation & Maintenance",
+  "علامة تجارية متوافقة": "Compatible Brands",
+  "مصاعد بضائع ومستشفيات": "Freight & Hospital Elevators",
+  "احصل على استشارة مجانية": "Get a Free Consultation",
+  "لوحة تشغيل سمو المباشرة": "SMOU Live Operations Panel",
+  "حلول متكاملة تحت سقف واحد": "Integrated Solutions Under One Roof",
+  "مجموعة متنوعة تلبي كل احتياج": "A Diverse Range for Every Need",
+  "نستخدم أنظمة تحكم عالمية KNX": "We use global KNX control systems",
+  "من الاستشارة إلى التشغيل الكامل": "From Consultation to Full Operation",
+  "مكتب استشاري وشركة مقاولات معتمد": "Certified Consultants & Contractors",
+  "تبريد بالماء لمشاريع النطاق الواسع": "Water-cooled solutions for large-scale projects",
+  "ما هي أنواع المصاعد التي تقدمونها؟": "What types of elevators do you offer?",
+  "تتبّع لحظي لجميع مراحل تنفيذ مشروعك": "Live tracking of every stage of your project",
+  "للمباني التجارية الكبرى بأداء موثوق": "For large commercial buildings with reliable performance",
+  "راحة مثالية لكل غرفة بأعلى كفاءة طاقة": "Perfect comfort for every room at the highest energy efficiency",
+  "معيار عالمي معتمد منذ أكثر من 30 عامًا": "A global standard certified for over 30 years",
+  "تصاميم فاخرة تضفي لمسة راقية على مشروعك": "Luxurious designs that add a refined touch to your project",
+  "ما هي خدمات صيانة التكييف التي تقدمونها؟": "What AC maintenance services do you offer?",
+  "هل تقدمون خدمات الصيانة الدورية للمصاعد؟": "Do you provide periodic elevator maintenance services?",
+  "ما هي أنظمة التكييف التي تقومون بتركيبها؟": "What AC systems do you install?",
+  "مشاريع في الفنادق الراقية والمباني الحكومية": "Projects in premium hotels and government buildings",
+  "مصاعد فاخرة وأنظمة تكييف متطورة بتنفيذ دقيق": "Luxury elevators and advanced AC systems with precise execution",
+  "أعلى معايير الأمان والكفاءة للاستخدام المكثف": "The highest safety and efficiency standards for heavy use",
+  "حلول مخصصة تجمع بين الوظيفة والجمال المعماري": "Custom solutions combining function and architectural beauty",
+  "مجموعة سمو للمصاعد والتكييف والحلول المنزلية": "SMOU Group for Elevators, AC & Home Solutions",
+  "البيت الذكي KNX — كل نظام في منزلك، بلغة واحدة": "KNX Smart Home — Every system in your home, one language",
+  "هل يمكنني تخصيص تصميم المصعد ليناسب ديكور المبنى؟": "Can I customize the elevator design to match the building's decor?",
+  "تصميم مخصص يراعي الطراز المعماري ومتطلبات السلامة.": "Custom design that respects the architectural style and safety requirements.",
+  "نلتزم بأعلى معايير الشفافية في كل خطوة من مراحل المشروع.": "We uphold the highest transparency standards at every stage of the project.",
+  "مجموعة سمو للمصاعد والتكييف والحلول المنزلية | SMOU GROUP": "SMOU Group for Elevators, AC & Home Solutions | SMOU GROUP",
+  "عقود صيانة دورية ووقائية تضمن الأداء الآمن على مدار الساعة.": "Periodic and preventive maintenance contracts ensuring safe 24/7 performance.",
+  "عمليات مرخصة ومطابقة لأعلى معايير السلامة المعتمدة في الدولة.": "Licensed operations compliant with the country's highest approved safety standards.",
+  "نستخدم أفضل المواد والمكونات العالمية لضمان أداء مستدام وآمن.": "We use the finest global materials and components to ensure sustainable, safe performance.",
+  "دراسة احتياجات المبنى وتقديم التوصية الفنية والمالية المناسبة.": "Studying the building's needs and providing the right technical and financial recommendation.",
+  "صيانة دورية وإصلاحات وتعبئة غاز التبريد لضمان أعلى كفاءة تبريد.": "Periodic maintenance, repairs and refrigerant refilling to ensure top cooling efficiency.",
+  "تنفيذ دقيق بإشراف مهندسين معتمدين وفق الجدول الزمني المتفق عليه.": "Precise execution supervised by certified engineers according to the agreed schedule.",
+  "فتح وإغلاق الستائر تلقائيًا مع أشعة الشمس أو حسب جدول زمني مخصص.": "Automatic opening and closing of curtains with sunlight or on a custom schedule.",
+  "مهندسون وفنيون ذوو خبرة واسعة ملتزمون بتقديم الأفضل في كل مشروع.": "Engineers and technicians with extensive experience committed to delivering the best in every project.",
+  "تكامل مع أنظمة الصوت والترفيه المنزلي ضمن نفس لوحة التحكم الموحدة.": "Integration with home audio and entertainment systems within the same unified control panel.",
+  "خدمات تحسين أداء الأنظمة القائمة لخفض استهلاك الطاقة وإطالة عمرها.": "Performance-optimization services for existing systems to cut energy use and extend lifespan.",
+  "أربع محطات واضحة تأخذ مشروعك من الفكرة إلى التشغيل الآمن والمستدام.": "Four clear stages that take your project from concept to safe, sustainable operation.",
+  "فريق فني مختص يقدم عقود صيانة دورية ووقائية لضمان تشغيل آمن ومستمر.": "A specialized technical team providing periodic and preventive maintenance contracts for safe, continuous operation.",
+  "حلول تكييف مركزية للمباني التجارية والحكومية الكبرى بكفاءة طاقة عالية.": "Central AC solutions for major commercial and government buildings with high energy efficiency.",
+  "© 2026 مجموعة سمو للمصاعد والتكييف والحلول المنزلية، جميع الحقوق محفوظة": "© 2026 SMOU Group for Elevators, AC & Home Solutions. All rights reserved",
+  "من المصاعد السكنية الفاخرة إلى الأنظمة المركزية للمباني التجارية الكبرى.": "From luxury residential elevators to central systems for major commercial buildings.",
+  "تجديد أو تغيير الأنظمة القديمة برفع الكفاءة وإطالة العمر التشغيلي للمصعد.": "Renovating or replacing old systems, boosting efficiency and extending the elevator's operational life.",
+  "تركيب أنظمة Split والمركزية والمبردة بالماء (Chillers) وفق أعلى المعايير.": "Installation of Split, central and water-cooled (chiller) systems to the highest standards.",
+  "مراقبة استهلاك الطاقة لحظيًا وترشيده تلقائيًا لخفض الفواتير دون تدخل يدوي.": "Real-time energy monitoring with automatic optimization to lower bills, no manual intervention needed.",
+  "تحكم كامل بشدة الإضاءة وسيناريوهاتها حسب الوقت والمزاج والوجود داخل المكان.": "Full control of lighting intensity and scenes based on time, mood and occupancy.",
+  "حلول تصميم مبتكرة تراعي طبيعة المبنى ومتطلبات السلامة والجماليات المعمارية.": "Innovative design solutions that respect the building's nature, safety requirements and architectural aesthetics.",
+  "جاهزون لنرتقي بمشروعك القادم؟ تواصل مع فريقنا اليوم واحصل على استشارة مجانية.": "Ready to elevate your next project? Contact our team today for a free consultation.",
+  "تنفيذ دقيق وفق أعلى المعايير العالمية للسلامة والجودة والالتزام بالجدول الزمني.": "Precise execution to the highest global standards of safety, quality and schedule commitment.",
+  "مراقبة حية وتنبيهات فورية عبر الهاتف، مع سيناريوهات محاكاة الوجود لحماية إضافية.": "Live monitoring and instant phone alerts, with presence-simulation scenes for extra protection.",
+  "فريق خدمة العملاء لدينا جاهز للرد على استفساراتك في جميع أفرعنا الثمانية بالدولة.": "Our customer service team is ready to answer your questions across all eight branches nationwide.",
+  "ضبط تلقائي لدرجة الحرارة في كل غرفة، مع جدولة ذكية توفر الطاقة دون التضحية بالراحة.": "Automatic temperature control in every room, with smart scheduling that saves energy without sacrificing comfort.",
+  "نقدم صيانة دورية وإصلاحات وتعبئة لغاز التبريد، بالإضافة إلى خدمات تحسين الأداء لضمان كفاءة نظامك.": "We provide periodic maintenance, repairs and refrigerant refilling, plus performance-optimization services to keep your system efficient.",
+  "نقوم بتركيب أنظمة التكييف المنفصلة (Split)، والمركزية، والمبردة بالماء (Chillers) لتلبية كافة الاحتياجات.": "We install split, central and water-cooled (chiller) AC systems to meet every need.",
+  "من التصميم الهندسي إلى التركيب والصيانة الدورية، نغطي دورة حياة المصعد ونظام التكييف بالكامل بمعايير عالمية.": "From engineering design to installation and periodic maintenance, we cover the full elevator and AC lifecycle to global standards.",
+  "نعم، نقدم خيارات تخصيص واسعة تشمل الأبواب والأرضيات والإضاءة والمقصورات الداخلية، بما يتناسب مع التصميم المعماري لمبنى العميل.": "Yes, we offer extensive customization including doors, flooring, lighting and cabin interiors to match the client's building design.",
+  "نعم، نقدم عقود صيانة شاملة ووقائية لجميع أنواع المصاعد، بهدف ضمان عمل المصعد بكفاءة وأمان على مدار الساعة وتقليل الأعطال المفاجئة.": "Yes, we provide comprehensive and preventive maintenance contracts for all elevator types, ensuring safe, efficient 24/7 operation and reducing sudden breakdowns.",
+  "لا تُقاس إنجازاتنا بعدد المصاعد وأنظمة التكييف التي ركّبناها فحسب، بل بالثقة التي نلناها من عملائنا في أرقى الفنادق والمشاريع الحكومية والتجارية.": "Our achievements are measured not only by the number of elevators and AC systems we install, but by the trust we earn from clients in premium hotels, government and commercial projects.",
+  "نصمم وننفذ أنظمة أتمتة KNX العالمية التي توحّد الإضاءة والتكييف والستائر والأمن والطاقة والترفيه في منظومة ذكية واحدة، متوافقة مع أكثر من 500 علامة تجارية معتمدة حول العالم.": "We design and implement global KNX automation systems that unify lighting, AC, curtains, security, energy and entertainment into one smart system, compatible with over 500 certified brands worldwide.",
+  "نقدم مجموعة شاملة من المصاعد لتلبية مختلف الاحتياجات، بما في ذلك المصاعد السكنية، التجارية، مصاعد المستشفيات، ومصاعد البضائع، بالإضافة إلى المصاعد البانورامية والحلول المخصصة.": "We offer a comprehensive range of elevators to meet every need, including residential, commercial, hospital and freight elevators, plus panoramic elevators and custom solutions.",
+  "نصمم، نركّب، ونصون المصاعد وأنظمة التكييف وحلول المنازل الذكية للمشاريع السكنية والتجارية والحكومية في جميع أنحاء الإمارات — بخبرة تمتد لأكثر من 14 عامًا وثقة أكثر من 1900 عميل.": "We design, install and maintain elevators, AC systems and smart home solutions for residential, commercial and government projects across the UAE — with over 14 years of experience and the trust of more than 1,900 clients.",
+  "مجموعة سمو للمصاعد والتكييف والحلول المنزلية — رائدة متخصصة في تقديم حلول متكاملة على أسس راسخة من الابتكار والجودة، من تصميم وتركيب المصاعد وأنظمة التكييف إلى أتمتة المنازل الذكية.": "SMOU Group for Elevators, AC & Home Solutions — a specialized leader delivering integrated solutions built on innovation and quality, from elevator and AC design and installation to smart home automation."
+};
+
+  let currentLang = 'ar';
+  function translateTree(root, toEnglish){
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node){
+        const p = node.parentElement;
+        if(!p) return NodeFilter.FILTER_REJECT;
+        const tag = p.tagName;
+        if(tag === 'SCRIPT' || tag === 'STYLE') return NodeFilter.FILTER_REJECT;
+        if(p.classList && p.classList.contains('num')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = [];
+    let n;
+    while(n = walker.nextNode()) nodes.push(n);
+    nodes.forEach(node => {
+      const raw = node.nodeValue;
+      const trimmed = raw.trim();
+      if(!trimmed) return;
+      if(toEnglish){
+        const en = translations[trimmed];
+        if(en){
+          if(node.dataset === undefined) node._origAr = raw;
+          node._origAr = raw;
+          node.nodeValue = raw.replace(trimmed, en);
+        }
+      } else {
+        if(node._origAr !== undefined){
+          node.nodeValue = node._origAr;
+        }
+      }
+    });
+  }
+  function translateAttrs(toEnglish){
+    document.querySelectorAll('[placeholder]').forEach(el => {
+      const cur = el.getAttribute('placeholder');
+      if(toEnglish){
+        const en = translations[cur.trim()];
+        if(en){ el.dataset.origPlaceholder = cur; el.setAttribute('placeholder', en); }
+      } else if(el.dataset.origPlaceholder){
+        el.setAttribute('placeholder', el.dataset.origPlaceholder);
+      }
+    });
+    document.querySelectorAll('title').forEach(el => {
+      const cur = el.textContent;
+      if(toEnglish){
+        const en = translations[cur.trim()];
+        if(en){ el.dataset.origTitle = cur; el.textContent = en; }
+      } else if(el.dataset.origTitle){
+        el.textContent = el.dataset.origTitle;
+      }
+    });
+  }
+  function setLanguage(lang){
+    const toEnglish = lang === 'en';
+    translateTree(document.body, toEnglish);
+    translateAttrs(toEnglish);
+    document.documentElement.setAttribute('lang', toEnglish ? 'en' : 'ar');
+    document.documentElement.setAttribute('dir', toEnglish ? 'ltr' : 'rtl');
+    document.body.classList.toggle('lang-en', toEnglish);
+    currentLang = lang;
+    const lbl = toEnglish ? 'AR' : 'EN';
+    const lblFull = toEnglish ? 'العربية' : 'English';
+    const t1 = document.getElementById('langToggleLabel');
+    const t2 = document.getElementById('langToggleLabelDrawer');
+    if(t1) t1.textContent = lbl;
+    if(t2) t2.textContent = lblFull;
+    try { localStorage.setItem('smouLang', lang); } catch(e){}
+  }
+  document.getElementById('langToggle')?.addEventListener('click', () => setLanguage(currentLang === 'ar' ? 'en' : 'ar'));
+  document.getElementById('langToggleDrawer')?.addEventListener('click', () => setLanguage(currentLang === 'ar' ? 'en' : 'ar'));
+
+  (function initLang(){
+    let saved = 'ar';
+    try { saved = localStorage.getItem('smouLang') || 'ar'; } catch(e){}
+    if(saved === 'en') setLanguage('en');
+  })();
 </script>
 </body>
 </html>
