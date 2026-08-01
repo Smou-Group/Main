@@ -587,6 +587,58 @@
   .knx-photo img{width:100%;height:100%;object-fit:cover;min-height:420px;opacity:.86;}
   .knx-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(4,7,13,.72),transparent 60%);}
 
+  /* ---------- mobile hardening pass ---------- */
+  @media(max-width:768px){
+    .container{padding:0 22px;}
+    .hero{padding:132px 0 56px;}
+    h1{font-size:clamp(28px,8.5vw,40px);line-height:1.22;}
+    .hero p.lead{font-size:16px;}
+    .section-title{font-size:clamp(24px,7vw,32px);}
+    .section-sub{font-size:15px;}
+    .section-head{margin-bottom:40px;}
+    .why-visual{grid-template-columns:1fr 1fr;padding:22px;gap:14px;}
+    .why-visual .cell{padding:18px;}
+    .why-visual .cell .num{font-size:26px;}
+    .why-visual .cell.wide{grid-column:1/-1;flex-direction:column;align-items:flex-start;gap:14px;padding:20px 18px;}
+    .cta-banner{padding:36px 22px;}
+    .cta-banner h3{font-size:22px;}
+    .contact-form{padding:22px;}
+    .svc-card{padding:22px 18px;}
+    .info-row{padding:16px 18px;}
+    .nav-pill{padding:9px 9px 9px 12px;}
+    .brand-logo{height:34px;max-width:120px;}
+    footer .brand-logo{height:32px;}
+    .wa-float{width:52px;height:52px;bottom:18px;left:18px;}
+    .wa-float svg{width:23px;height:23px;}
+    .services-tabs{gap:8px;}
+    .tab-btn{padding:9px 16px;font-size:12.5px;}
+    .hero-stats{gap:8px;flex-wrap:wrap;}
+    .hero-stats .stat{padding-left:8px;flex:1 1 30%;min-width:88px;}
+    .hero-stats .stat + .stat{padding-right:8px;}
+    .hero-stats .num{font-size:22px;}
+    .hero-stats .stat-label{font-size:11px;}
+    .prod-card{padding:18px;}
+    .prod-card h4{font-size:16px;}
+    footer{padding:50px 0 24px;}
+    .footer-desc{max-width:none;}
+    .knx-badge{font-size:11px;padding:7px 14px;}
+    .p-step .badge{width:52px;height:52px;font-size:15px;}
+    .faq-q{padding:18px 20px;font-size:14px;}
+    .faq-a p{padding:0 20px 18px;font-size:13.5px;}
+    .btn{padding:12px 22px;font-size:13.5px;}
+    .lang-toggle{width:38px;height:38px;font-size:10.5px;}
+    .drawer a{font-size:18px;}
+  }
+  @media(max-width:420px){
+    .container{padding:0 16px;}
+    .hero-actions{flex-direction:column;}
+    .hero-actions .btn{width:100%;justify-content:center;}
+    .hero-stats .stat{flex:1 1 100%;border-right:none !important;padding:10px 0 !important;border-top:1px solid var(--border);}
+    .hero-stats .stat:first-child{border-top:none;}
+    .form-row{gap:12px;}
+    .shaft{padding:20px;}
+    .ascend{height:210px;}
+  }
 </style>
 </head>
 <body>
