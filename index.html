@@ -39,6 +39,8 @@
   body{
     background:
       radial-gradient(circle at 50% 0%, rgba(205,168,106,.06), transparent 42%),
+      linear-gradient(180deg, rgba(3,6,12,.86), rgba(10,23,40,.9) 52%, rgba(5,12,24,.94)),
+      url("back.png") center center / cover fixed no-repeat,
       linear-gradient(180deg,#03060c,#0a1728 52%,#050c18);
     color:var(--white);
     font-family:'Tajawal','Cairo',sans-serif;
@@ -132,19 +134,13 @@
     box-shadow:0 16px 40px rgba(0,0,0,.35);
   }
   .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;font-family:'Cairo',sans-serif;}
-  .brand .mark{
-    width:38px;height:38px;border-radius:12px;position:relative;
-    background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.02));
-    border:1px solid var(--border);
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 8px 22px rgba(0,0,10,.4), inset 0 0 0 1px rgba(255,255,255,.06);
+  .brand-logo-link{transition:opacity .25s var(--ease);}
+  .brand-logo-link:hover{opacity:.85;}
+  .brand-logo{
+    height:44px;width:auto;max-width:168px;object-fit:contain;
+    filter:drop-shadow(0 6px 16px rgba(0,0,10,.45));
   }
-  .brand .mark::before{
-    content:'';position:absolute;inset:-1px;border-radius:inherit;z-index:-1;
-    background:conic-gradient(from 160deg, rgba(205,168,106,.85), rgba(143,214,255,.4), rgba(205,168,106,.5), rgba(143,214,255,.65), rgba(205,168,106,.85));
-    filter:blur(4px);opacity:.6;
-  }
-  .brand .mark svg{width:20px;height:20px;stroke:var(--brass-bright);}
+  footer .brand-logo{height:40px;}
   .brand small{display:block;font-size:10px;font-weight:500;color:var(--slate-400);letter-spacing:1px;font-family:var(--mono);direction:ltr;text-align:right;}
 
   .header-actions{display:flex;align-items:center;gap:10px;}
@@ -613,10 +609,9 @@
 <header id="siteHeader">
 <div class="container">
 <div class="nav-pill">
-<div class="brand">
-<span class="mark"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.2" viewbox="0 0 24 24"><path d="M7 3v18M17 3v18M7 9l3-3 3 3M17 15l-3 3-3-3"></path></svg></span>
-<span>مجموعة سمو<small>SMOU GROUP</small></span>
-</div>
+<a class="brand brand-logo-link" href="#home">
+<img alt="SMOU GROUP" class="brand-logo" src="logo.png"/>
+</a>
 <nav class="main-nav">
 <a href="#home">الرئيسية</a>
 <a href="#services">خدماتنا</a>
@@ -1001,8 +996,7 @@
 <div class="footer-grid">
 <div>
 <div class="brand">
-<span class="mark"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.2" viewbox="0 0 24 24"><path d="M7 3v18M17 3v18M7 9l3-3 3 3M17 15l-3 3-3-3"></path></svg></span>
-<span>سمو</span>
+<img alt="SMOU GROUP" class="brand-logo" src="logo.png"/>
 </div>
 <p class="footer-desc">مجموعة سمو للمصاعد والتكييف والحلول المنزلية — رائدة متخصصة في تقديم حلول متكاملة على أسس راسخة من الابتكار والجودة، من تصميم وتركيب المصاعد وأنظمة التكييف إلى أتمتة المنازل الذكية.</p>
 <div class="social-row">
