@@ -636,3 +636,25 @@ body::before{background:
   .hero .hero-bg{height:calc(100vw * 1.0)}
   .hero .hero-bg img{object-position:50% top}
 }
+
+/* language toggle */
+.lang-btn{appearance:none;font:inherit;font-family:var(--f-display);font-size:14px;font-weight:600;min-width:46px;height:42px;padding:0 14px;border-radius:999px;cursor:pointer;
+  background:rgba(243,217,142,.08);border:1px solid var(--line-gold);color:var(--gold-hi);transition:background .25s,transform .25s}
+.lang-btn:hover{background:rgba(243,217,142,.16);transform:translateY(-1px)}
+@media (max-width:1100px){.lang-btn{margin-inline-start:auto}.lang-btn + .burger{margin-inline-start:8px}}
+/* LTR adjustments */
+.lang-en body{font-size:16px;line-height:1.7}
+.lang-en .hero h1,.lang-en .phero h1{letter-spacing:-.01em;line-height:1.1}
+.lang-en .btn svg,.lang-en .go svg,.lang-en .more svg{transform:scaleX(-1)}
+.lang-en .div-card:hover .more svg{transform:scaleX(-1) translateX(-5px)}
+.lang-en .progress{transform-origin:left}
+.lang-en .marq .tr{animation-name:mqltr}
+@keyframes mqltr{to{transform:translateX(-50%)}}
+.lang-en .hero-bg::after{transform:scaleX(-1)}
+.lang-en .scene-log{direction:ltr}
+.menu a{white-space:nowrap}
+.lang-en .menu a{font-size:14.5px;padding:8px 11px}
+@media (max-width:1320px){.lang-en .hdr-cta .btn-line{display:none}}
+@media (max-width:1180px) and (min-width:1101px){.lang-en .menu a{padding:8px 8px;font-size:14px}}
+.lang-en .hero h1{font-size:clamp(34px,4.6vw,62px)}
+.lang-en .phero h1{font-size:clamp(32px,4.4vw,58px)}

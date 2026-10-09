@@ -51,7 +51,7 @@
     var L=[["kwi","dmm"],["dmm","hof"],["hof","ruh"],["dmm","ruh"],["hof","auh"],["auh","dxb"],["dxb","shj"],["auh","ain"],["dxb","ain"]],ls="";
     L.forEach(function(p){var a=by[p[0]],z=by[p[1]],mx=(a.x+z.x)/2,my=(a.y+z.y)/2-Math.hypot(z.x-a.x,z.y-a.y)*.18;ls+='<path class="flow" d="M'+a.x+','+a.y+' Q'+mx+','+my+' '+z.x+','+z.y+'" fill="none" stroke="rgba(243,217,142,.45)" stroke-width="1.6"/>'});
     map.querySelector("#links").innerHTML=ls;
-    var ns="";C.forEach(function(c){ns+='<g class="mnode" data-city="'+c.id+'"><circle cx="'+c.x+'" cy="'+c.y+'" r="26" fill="url(#glow)"/><circle class="node-pulse" cx="'+c.x+'" cy="'+c.y+'" r="8" fill="none" stroke="'+c.c+'" stroke-width="1.5" style="animation-delay:'+(Math.random()*2).toFixed(2)+'s"/><circle class="core" cx="'+c.x+'" cy="'+c.y+'" r="6.5" fill="'+c.c+'" stroke="#061a3d" stroke-width="2"/><text class="mlabel" x="'+(c.x+c.dx)+'" y="'+(c.y+c.dy)+'" text-anchor="'+(c.a==="e"?"end":"start")+'">'+c.n+'</text></g>'});
+    var ns="";C.forEach(function(c){ns+='<g class="mnode" data-city="'+c.id+'"><circle cx="'+c.x+'" cy="'+c.y+'" r="26" fill="url(#glow)"/><circle class="node-pulse" cx="'+c.x+'" cy="'+c.y+'" r="8" fill="none" stroke="'+c.c+'" stroke-width="1.5" style="animation-delay:'+(Math.random()*2).toFixed(2)+'s"/><circle class="core" cx="'+c.x+'" cy="'+c.y+'" r="6.5" fill="'+c.c+'" stroke="#061a3d" stroke-width="2"/><text class="mlabel" x="'+(c.x+c.dx)+'" y="'+(c.y+c.dy)+'" text-anchor="'+((c.a==="e")!==(window.SMOU_LANG==="en")?"end":"start")+'">'+(window.T||String)(c.n)+'</text></g>'});
     map.querySelector("#nodes").innerHTML=ns;
     function hl(id,on){D.querySelectorAll('[data-city="'+id+'"]').forEach(function(el){el.classList.toggle("hot",on);var k=el.querySelector&&el.querySelector(".core");if(k)k.setAttribute("r",on?10:6.5)})}
     D.querySelectorAll("[data-city]").forEach(function(el){var id=el.dataset.city;el.addEventListener("mouseenter",function(){hl(id,true)});el.addEventListener("mouseleave",function(){hl(id,false)})});
@@ -89,7 +89,7 @@
       night:{t:"وقت النوم",log:"> scene: NIGHT\n> lights: path 5%\n> doors: locked\n> AC: 24°C sleep"}
     };
     var log=D.getElementById("slog"),lbl=room.querySelector(".lbl");
-    function set(k){room.dataset.s=k;lbl.textContent=S[k].t;log.textContent=S[k].log;
+    function set(k){room.dataset.s=k;lbl.textContent=(window.T||String)(S[k].t);log.textContent=S[k].log;
       D.querySelectorAll(".sbtn").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.s===k))});
       var on={morning:{lamp:.5,curt:0,tv:0,ac:1,lock:0,cam:0},away:{lamp:0,curt:.5,tv:0,ac:.3,lock:1,cam:1},cinema:{lamp:.15,curt:1,tv:1,ac:1,lock:0,cam:0},night:{lamp:.06,curt:1,tv:0,ac:1,lock:1,cam:1}}[k];
       room.querySelectorAll("[data-el]").forEach(function(el){var v=on[el.dataset.el];el.style.opacity=el.dataset.el==="curt"?1:(.25+.75*v);if(el.dataset.el==="curt")el.setAttribute("transform","scale("+(0.08+0.92*v)+",1)")});
@@ -99,12 +99,13 @@
   }
 
   /* form → whatsapp */
-  var fm=D.getElementById("qform"),note=D.getElementById("fnote");
+  var fm=D.getElementById("qform"),note=D.getElementById("fnote"),TT=window.T||String,EN=window.SMOU_LANG==="en";
   if(fm)fm.addEventListener("submit",function(e){e.preventDefault();
     var miss=[].slice.call(fm.querySelectorAll("[required]")).filter(function(x){return !x.value.trim()});
-    if(miss.length){miss[0].focus();note.textContent="أكمل الحقول المطلوبة: "+miss.map(function(x){return fm.querySelector('label[for="'+x.id+'"]').textContent}).join("، ");return}
-    var m="طلب عرض سعر — مجموعة سمو\nالاسم: "+fm.name.value+"\nالهاتف: "+fm.phone.value+"\nالفرع: "+fm.branch.value+"\nالخدمة: "+fm.service.value+(fm.msg.value.trim()?"\nالتفاصيل: "+fm.msg.value:"");
-    note.innerHTML='طلبك جاهز. <a href="https://wa.me/971501035499?text='+encodeURIComponent(m)+'" target="_blank" rel="noopener">افتح واتساب لإرساله</a> أو أرسل البيانات إلى info@smou.ae.'});
+    if(miss.length){miss[0].focus();note.textContent=TT("أكمل الحقول المطلوبة: ")+miss.map(function(x){return fm.querySelector('label[for="'+x.id+'"]').textContent}).join(EN?", ":"، ");return}
+    var L=EN?["Quote request — SMOU GROUP","Name","Phone","Branch","Service","Details"]:["طلب عرض سعر — مجموعة سمو","الاسم","الهاتف","الفرع","الخدمة","التفاصيل"];
+    var m=L[0]+"\n"+L[1]+": "+fm.name.value+"\n"+L[2]+": "+fm.phone.value+"\n"+L[3]+": "+fm.branch.value+"\n"+L[4]+": "+fm.service.value+(fm.msg.value.trim()?"\n"+L[5]+": "+fm.msg.value:"");
+    note.innerHTML=TT("طلبك جاهز.")+' <a href="https://wa.me/971501035499?text='+encodeURIComponent(m)+'" target="_blank" rel="noopener">'+TT("افتح واتساب لإرساله")+'</a> '+TT("أو أرسل البيانات إلى info@smou.ae.");});
 
   /* scroll progress */
   var pr=D.querySelector(".progress");
